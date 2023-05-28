@@ -1,3 +1,4 @@
+using System.Runtime.Intrinsics.X86;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddCors();
 
 builder.Services.AddDbContext<DataContext>(opt =>
 {
@@ -17,6 +19,8 @@ builder.Services.AddDbContext<DataContext>(opt =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
