@@ -1,4 +1,4 @@
-namespace API;
+namespace BACKEND;
 
 public class WeatherForecast
 {

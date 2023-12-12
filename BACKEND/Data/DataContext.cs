@@ -1,7 +1,7 @@
-using API.entities;
+using BACKEND.entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.Data
+namespace BACKEND.Data
 {
     public class DataContext : DbContext
     {

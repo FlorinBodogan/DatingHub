@@ -1,5 +1,5 @@
 using System.Runtime.Intrinsics.X86;
-using API.Data;
+using BACKEND.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
