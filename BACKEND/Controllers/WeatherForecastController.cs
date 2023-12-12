@@ -1,4 +1,3 @@
-using BACKEND.Controllers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BACKEND.Controllers;
