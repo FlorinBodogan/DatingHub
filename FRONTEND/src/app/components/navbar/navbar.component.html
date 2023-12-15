@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-lg bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand text-white" routerLink="/">Dating App</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ng-container *ngIf="accountService.currentUser$| async">
+          <li class="nav-item">
+            <a class="nav-link active text-white" aria-current="page" routerLink="/users" routerLinkActive="active">Matches</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" routerLink="/lists" routerLinkActive="active">Lists</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" routerLink="/messages" routerLinkActive="active">Messages</a>
+          </li>
+        </ng-container>
+      </ul>
+      <form *ngIf="!(accountService.currentUser$| async)" #loginForm="ngForm" class="d-flex" role="search" (ngSubmit)="login()">
+        <input name="username" [(ngModel)]="model.username" class="form-control me-2" type="text" placeholder="Username" aria-label="Search">
+        <input name="password" [(ngModel)]="model.password" class="form-control me-2" type="password" placeholder="Password" aria-label="Search">
+        <button class="btn btn-success" type="submit">Login</button>
+      </form>
+      <button *ngIf="accountService.currentUser$| async" class="btn btn-success" type="submit" (click)="logout()">Logout</button>
+    </div>
+  </div>
+</nav>
