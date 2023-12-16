@@ -1,5 +1,6 @@
 using BACKEND.Data;
 using BACKEND.interfaces;
+using BACKEND.Interfaces;
 using BACKEND.services;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +17,8 @@ namespace BACKEND.Extensions
             });
             services.AddCors();
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             return services;
         }

@@ -8,6 +8,8 @@ import { UserListComponent } from './components/users/user-list/user-list.compon
 import { MessagesComponent } from './components/messages/messages.component';
 import { ListsComponent } from './components/lists/lists.component';
 import { SharedModule } from 'src/shared/modules/shared.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ErrorInterceptor } from './services/interceptors/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -18,12 +20,14 @@ import { SharedModule } from 'src/shared/modules/shared.module';
     UserDetailComponent,
     UserListComponent,
     MessagesComponent,
-    ListsComponent
+    ListsComponent,
   ],
   imports: [
     SharedModule
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
