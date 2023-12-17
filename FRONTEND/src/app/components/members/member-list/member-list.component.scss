@@ -1,0 +1,19 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  justify-content: center;
+  align-items: center;
+  height: fit-content;
+  width: 90%;
+  background-color: inherit;
+  font-family: 'Baloo Paaji 2', cursive;
+}
+
+@media(max-width: 61.875rem) {
+  .container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

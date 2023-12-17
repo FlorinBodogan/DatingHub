@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
-import { UserListComponent } from './components/users/user-list/user-list.component';
-import { UserDetailComponent } from './components/users/user-detail/user-detail.component';
 import { ListsComponent } from './components/lists/lists.component';
 import { MessagesComponent } from './components/messages/messages.component';
 import { authGuard } from './services/guards/auth.guard';
+import { MemberListComponent } from './components/members/member-list/member-list.component';
+import { MemberDetailsComponent } from './components/members/member-details/member-details.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -13,8 +13,8 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     canActivate: [authGuard],
     children: [
-      {path: 'users', component: UserListComponent},
-      {path: 'users/:id', component: UserDetailComponent},
+      {path: 'members', component: MemberListComponent},
+      {path: 'members/:username', component: MemberDetailsComponent},
       {path: 'lists', component: ListsComponent},
       {path: 'messages', component: MessagesComponent},
     ]
