@@ -9,7 +9,6 @@ import { SharedModule } from 'src/shared/modules/shared.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorInterceptor } from './services/interceptors/error.interceptor';
 import { MemberListComponent } from './components/members/member-list/member-list.component';
-import { MemberDetailsComponent } from './components/members/member-details/member-details.component';
 import { MemberCardComponent } from './components/members/member-card/member-card.component';
 import { JwtInterceptor } from './services/interceptors/jwt.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -23,7 +22,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MessagesComponent,
     ListsComponent,
     MemberListComponent,
-    MemberDetailsComponent,
     MemberCardComponent,
   ],
   imports: [

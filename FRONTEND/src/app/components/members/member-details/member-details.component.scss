@@ -1,18 +1,19 @@
 .profile-container {
   display: flex;
   margin: 1rem;
-  height: 100%;
-  gap: 2rem;
+  height: 85%;
+  gap: 1rem;
 }
 
 /* First CONTAINER -- Member BASIC INFO */
 .card {
   background-color: #0e1014;
   height: 100%;
-  width: 35%;
+  width: 33%;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
   box-shadow: rgba(0, 0, 0, 0.7);
   color: white;
@@ -172,7 +173,8 @@
 /* SECOND CONTAINER -- MEMBER DETAILS*/
 .tabs-container {
   height: 100%;
-  width: 65%;
+  min-width: 67%;
+  max-width: 67%;
   background-color: #0e1014;
 
   p {
@@ -182,3 +184,36 @@
     line-height: 2.3rem;
   }
 }
+
+gallery {
+    background-color: inherit;
+    height: 77vh;
+    margin: 1rem;
+}
+
+@media(max-height: 62.5rem) {
+  gallery {
+    background-color: inherit;
+    height: 73vh;
+    margin: 1rem;
+  }
+}
+
+@media(max-width: 61.875rem) {
+  .profile-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .card {
+    width: 100%;
+  }
+
+  .tabs-container {
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 100%;
+  }
+}
+

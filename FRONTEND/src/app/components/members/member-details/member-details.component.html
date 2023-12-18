@@ -2,7 +2,7 @@
 
     <div class="card">
         <p class="card__name">{{member?.knownAs}}</p>
-        <img src="{{member?.photoUrl}}" alt="{{member?.knownAs}}" class="card__image">
+        <img src="{{member?.photoUrl || './assets/user.png'}}" alt="{{member?.knownAs}}" class="card__image">
 
         <div class="grid-container">
             <div class="grid-child-location">
@@ -30,11 +30,6 @@
             <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
             <li><a href="#"><i class="fa fa-codepen"></i></a></li>
         </ul>
-
-        <div class="btn-container">
-            <button class="btn draw-border" routerLink="/members/{{member?.userName}}">Details</button>
-            <button class="btn draw-border">Message</button>
-        </div>
     </div>
 
     <mat-tab-group class="tabs-container" [color]="'primary'" [backgroundColor]="'accent'">
@@ -44,8 +39,8 @@
         <mat-tab label="Interests">
             <p>{{member?.interests}}</p>
         </mat-tab>
-        <mat-tab label="Photos">
-            <p>Photos will go here</p>
+        <mat-tab label="Photos" #photoTab>
+            <gallery *ngIf="photoTab.isActive" [items]="images"></gallery>
         </mat-tab>
         <mat-tab label="Messages" aria-label="primary">
             <p>Messages will go here</p>
