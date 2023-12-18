@@ -1,3 +1,11 @@
 .navbar {
     background: linear-gradient(to left, #3d091e8a, #eb196d66);
 }
+
+.user-photo {
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 100%;
+    border: 1px solid #e91c6ef1;
+    cursor: pointer;
+}

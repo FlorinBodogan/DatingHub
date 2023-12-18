@@ -33,19 +33,25 @@ $FRONTEND-theme: mat.define-light-theme((
 // that you are using.
 @include mat.all-component-themes($FRONTEND-theme);
 
-//my styles
+//styles FOR ANGULAR MATERIAL COMPONENTS
 @import "app/scss/am-components/tabs";
+@import "app/scss/am-components/menu";
 
-*{
+
+//UNIVERSAL SETTINGS
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body { 
+    height: 100%; 
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { 
+    margin: 0; 
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
+}
 
 .btn--login--logout {
     border-radius: 5px;

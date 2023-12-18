@@ -12,6 +12,8 @@ import { MemberListComponent } from './components/members/member-list/member-lis
 import { MemberCardComponent } from './components/members/member-card/member-card.component';
 import { JwtInterceptor } from './services/interceptors/jwt.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MemberEditComponent } from './components/members/member-edit/member-edit.component';
+import { LoadingInterceptor } from './services/interceptors/loading.interceptor';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ListsComponent,
     MemberListComponent,
     MemberCardComponent,
+    MemberEditComponent,
   ],
   imports: [
     SharedModule,
@@ -30,7 +33,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
   ],
   bootstrap: [AppComponent]
 })

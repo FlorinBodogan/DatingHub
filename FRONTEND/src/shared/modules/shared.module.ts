@@ -8,6 +8,9 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 import { ToastrModule } from 'ngx-toastr';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu'; 
+import { MatIconModule } from '@angular/material/icon';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [
@@ -25,6 +28,11 @@ import { MatButtonModule } from '@angular/material/button';
     }),
     MatTabsModule,
     MatButtonModule,
+    MatMenuModule,
+    MatIconModule,
+    NgxSpinnerModule.forRoot({
+      type: 'ball-clip-rotate'
+    }),
   ],
   exports: [
     BrowserAnimationsModule,
@@ -34,7 +42,10 @@ import { MatButtonModule } from '@angular/material/button';
     FormsModule,
     ToastrModule,
     MatTabsModule,
+    MatMenuModule,
     MatButtonModule,
+    MatIconModule,
+    NgxSpinnerModule
   ]
 })
 export class SharedModule { }

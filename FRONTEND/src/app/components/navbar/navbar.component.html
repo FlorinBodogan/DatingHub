@@ -18,16 +18,7 @@
             <a class="nav-link" routerLink="/messages" routerLinkActive="active">Messages</a>
           </li>
         </ng-container>
-        <!-- <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Separated link</a>
-          </div>
-        </li> -->
+
       </ul>
       <form *ngIf="!(accountService.currentUser$| async)" #loginForm="ngForm" class="d-flex" role="search"
         (ngSubmit)="login()">
@@ -37,8 +28,20 @@
           placeholder="Password" aria-label="Search">
         <button class="btn--login--logout" type="submit">Login</button>
       </form>
-      <button *ngIf="accountService.currentUser$| async" class="btn--login--logout" type="submit"
-        (click)="logout()">Logout</button>
+
+      <div *ngIf="(accountService.currentUser$| async) as user" class="user-icon" [matMenuTriggerFor]="menu">
+        <img src="{{member?.photoUrl || './assets/user.png'}}" alt="user photo" class="user-photo">
+      </div>
+      <mat-menu #menu="matMenu" class="user-menu">
+        <button mat-menu-item routerLink="/member/edit">
+          <mat-icon aria-hidden="false" class="mat-menu-item">edit {{user?.username}}</mat-icon>
+          <span class="mat-menu-item">Edit</span>
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon aria-hidden="false" class="mat-menu-item">logout</mat-icon>
+          <span class="mat-menu-item">Logout</span>
+        </button>
+      </mat-menu>
 
     </div>
   </div>

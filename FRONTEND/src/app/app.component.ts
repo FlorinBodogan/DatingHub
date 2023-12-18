@@ -7,13 +7,11 @@ import { User } from './interfaces/user';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
-  constructor(private accountService: AccountService) {}
-
-  ngOnInit(): void {
-      this.setCurrentUser();
-  }; 
-
+export class AppComponent {
+  constructor(private accountService: AccountService) {
+    this.setCurrentUser();
+  }
+  
   setCurrentUser() {
     const userString = localStorage.getItem('user');
     if(!userString) return;

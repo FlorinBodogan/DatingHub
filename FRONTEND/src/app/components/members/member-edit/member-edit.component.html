@@ -1,0 +1,73 @@
+<div class="profile-container" *ngIf="member">
+
+    <div class="card">
+        <p class="card__name">{{member.knownAs}}</p>
+        <img src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}" class="card__image">
+
+        <div class="grid-container-wrapper">
+            <div class="grid-container">
+                <div class="grid-child-location">
+                    <strong>Location: </strong>
+                    <p>{{member.city}}, {{member.country}}</p>
+                </div>
+
+                <div class="grid-child-age">
+                    <strong>Age: </strong>
+                    <p>{{member.age}}</p>
+                </div>
+                <div class="grid-child-lastActive">
+                    <strong>Last active: </strong>
+                    <p>{{member.lastActive | date:'dd-MM-yyyy'}}</p>
+                </div>
+                <div class="grid-child-memberSince">
+                    <strong>Member since: </strong>
+                    <p>{{member.created | date:'dd-MM-yyyy'}}</p>
+                </div>
+            </div>
+        </div>
+
+        <ul class="social-icons">
+            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+            <li><a href="#"><i class="fa fa-codepen"></i></a></li>
+        </ul>
+    </div>
+
+    <mat-tab-group class="tabs-container" [color]="'primary'" [backgroundColor]="'accent'">
+        <mat-tab label="About" aria-label="primary">
+            <form #editForm="ngForm" id="editForm" (ngSubmit)="updateMember()">
+                <h4 class="mt-2">Description:</h4>
+                <textarea [(ngModel)]="member.introduction" name="introduction" class="form-control" cols="30"
+                    rows="6"></textarea>
+                <h4 class="mt-2">Looking for:</h4>
+                <textarea [(ngModel)]="member.lookingFor" name="lookingFor" class="form-control" cols="30"
+                    rows="6"></textarea>
+                <h4 class="mt-2">Interests:</h4>
+                <textarea [(ngModel)]="member.interests" name="interests" class="form-control" cols="30"
+                    rows="6"></textarea>
+                <h4 class="mt-2">Location:</h4>
+                <div class="d-flex flex-row align-items-center">
+                    <strong><label for="city">City: </label></strong>
+                    <input type="text" [(ngModel)]="member.city" name="city" class="form-control mx-2">
+                    <strong><label for="country">Country: </label></strong>
+                    <input type="text" [(ngModel)]="member.country" name="country" class="form-control mx-2">
+                </div>
+            </form>
+
+            <div class="btn-wrapper">
+                <button mat-raised-button type="submit" form="editForm" color="accent" style="font-size: 1.2rem;">Save
+                    Changes
+                </button>
+            </div>
+        </mat-tab>
+        <mat-tab label="Edit Photos" #photoTab>
+            martinica
+
+            <div class="btn-wrapper">
+                <button mat-raised-button color="accent" style="font-size: 1.2rem;">Save Changes</button>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+
+</div>

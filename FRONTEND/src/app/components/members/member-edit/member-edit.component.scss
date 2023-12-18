@@ -183,32 +183,25 @@
   max-width: 67%;
   background-color: #0e1014;
 
-  .tab1--wrapper {
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    color: #dcdcdc;
-
-    p {
-      font-size: 1.8rem;
-      line-height: 2rem;
-    }
+  p {
+    font-size: 1.8rem;
+    line-height: 2rem;
   }
-}
 
-gallery {
-    background-color: inherit;
-    height: 77vh;
-    margin: 1rem;
+  input, textarea {
+    background-color: #1c2028;
+    color: #fff;
+  }
+
+  .btn-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0 1rem 0;
+  }
 }
 
 @media(max-height: 62.5rem) {
-  gallery {
-    background-color: inherit;
-    height: 73vh;
-    margin: 1rem;
-  }
-
   .grid-container {
     font-size: 1.2rem;
   }
