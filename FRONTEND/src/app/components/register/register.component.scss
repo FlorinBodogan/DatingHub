@@ -1,0 +1,27 @@
+.form {
+    height: fit-content;
+    width: 100%;
+
+    .form-title {
+        font-size: 2rem;
+        color: #c61071;
+    }
+
+    .btn-register {
+        color: #c61071;
+        border-color: #c61071;
+    }
+
+    .btn-register:hover {
+        background-color: #c61071;
+        color: #fff;
+    }
+}
+
+.is-invalid {
+    border: 3px solid red;
+}
+
+input {
+    border: 3px solid RGBA(0,0,0,0);
+}

@@ -37,7 +37,9 @@
     <mat-tab-group class="tabs-container" [color]="'primary'" [backgroundColor]="'accent'">
         <mat-tab label="Description" aria-label="primary">
             <div class="tab1--wrapper">
-                <h2>{{member?.lookingFor}}</h2>
+                <h2>Looking For:</h2>
+                <p>{{member?.lookingFor}}</p>
+                <h2>About Me:</h2>
                 <p>{{member?.introduction}}</p>
             </div>
         </mat-tab>

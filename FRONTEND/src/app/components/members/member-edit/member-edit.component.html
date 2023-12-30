@@ -35,8 +35,8 @@
     </div>
 
     <mat-tab-group class="tabs-container" [color]="'primary'" [backgroundColor]="'accent'">
-        <mat-tab label="About" aria-label="primary">
-            <form #editForm="ngForm" id="editForm" (ngSubmit)="updateMember()">
+        <mat-tab label="About" aria-label="primary" class="mat-tab">
+            <form #editForm="ngForm" id="editForm" (ngSubmit)="updateMember()" class="mat-tab-form">
                 <h4 class="mt-2">Description:</h4>
                 <textarea [(ngModel)]="member.introduction" name="introduction" class="form-control" cols="30"
                     rows="6"></textarea>
@@ -61,12 +61,8 @@
                 </button>
             </div>
         </mat-tab>
-        <mat-tab label="Edit Photos" #photoTab>
-            martinica
-
-            <div class="btn-wrapper">
-                <button mat-raised-button color="accent" style="font-size: 1.2rem;">Save Changes</button>
-            </div>
+        <mat-tab label="Photos" #photoTab>
+            <app-photo-editor [member]="member"></app-photo-editor>
         </mat-tab>
     </mat-tab-group>
 

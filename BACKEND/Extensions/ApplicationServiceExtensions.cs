@@ -1,7 +1,9 @@
 using BACKEND.Data;
+using BACKEND.Helpers;
 using BACKEND.interfaces;
 using BACKEND.Interfaces;
 using BACKEND.services;
+using BACKEND.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace BACKEND.Extensions
@@ -19,6 +21,9 @@ namespace BACKEND.Extensions
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
+            services.AddScoped<IPhotoService, PhotoService>();
+            services.AddScoped<LogUserActivity>();
 
             return services;
         }

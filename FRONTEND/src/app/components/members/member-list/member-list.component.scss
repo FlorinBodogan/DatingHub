@@ -1,4 +1,9 @@
 .container {
+  width: 100%;
+  margin-bottom: 1rem;  
+}
+
+.container-members {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
@@ -7,13 +12,52 @@
   justify-content: center;
   align-items: center;
   height: fit-content;
-  width: 90%;
+  width: 100%;
   background-color: inherit;
   font-family: 'Baloo Paaji 2', cursive;
 }
 
+.filters-form {
+  width: 100%;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+
+  .select-items {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 1rem;
+  }
+}
+
+.paginator-bar {
+  margin: 0 auto;
+}
+
+mat-paginator {
+  background-color: #222222;
+}
+
 @media(max-width: 61.875rem) {
-  .container {
+  .container-members {
     grid-template-columns: repeat(1, 1fr);
+  }
+
+  .filters-form {
+    display: flex;
+    flex-direction: column;
+
+      .select-items {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+      }
+  }
+
+  .action-buttons {
+    justify-content: center;
   }
 }

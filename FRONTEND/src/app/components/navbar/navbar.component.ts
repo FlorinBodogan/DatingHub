@@ -15,27 +15,20 @@ import { MemberService } from 'src/app/services/members/member.service';
 })
 export class NavbarComponent implements OnInit{
   model: any = {}
-  member: Member | undefined;
-  user: User | null = null;
 
   constructor(
     public accountService: AccountService,
     private router: Router,
     private toastr: ToastrService,
-    private memberService: MemberService
-  ) {
-    this.accountService.currentUser$.pipe(take(1)).subscribe({
-      next: user => this.user = user
-    })
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.loadMember();
+    
   };
 
   login(): void {
     this.accountService.login(this.model).subscribe({
-      next: () => this.router.navigateByUrl('/users'),
+      next: () => this.router.navigateByUrl('/members'),
       error: error => this.toastr.error(error.error)
     })
   };
@@ -43,16 +36,5 @@ export class NavbarComponent implements OnInit{
   logout(): void {
     this.accountService.logout();
     this.router.navigateByUrl('/')
-  };
-
-  loadMember(): void {
-    console.log(this.user?.username)
-    if(!this.user) return;
-    this.memberService.getMember(this.user.username).subscribe({
-      next: member => {
-        this.member = member
-        console.log("lalala + " + member)
-      }
-    })
   };
 }

@@ -1,0 +1,95 @@
+<div class="photo-section-container">
+
+    <div class="photo-gallery">
+        <div class="photos" *ngFor="let photo of member?.photos">
+            <img src="{{photo.url}}" alt="photo of user" class="user-photo">
+            <div class="photo-gallery-btns-wrapper">
+                <button mat-mini-fab color="primary" aria-label="main-photo" [disabled]="photo.isMain"
+                    (click)="setMainPhoto(photo)">
+                    <mat-icon>favorite</mat-icon>
+                </button>
+                <button mat-mini-fab color="warn" aria-label="delete-photo" (click)="deletePhoto(photo.id)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PHOTO EDITOR -->
+    <div class="photo-editor-container">
+        <div class="photo-editor-container-wrapper">
+            <p class="add-photo-tag">Add photos</p>
+            <div class="file-over-wrapper">
+                <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)"
+                    [uploader]="uploader" class="card bg-faded p-3 text-center mb-3 my-drop-zone">
+                    <i class="fa fa-upload fa-3x"></i>
+                    Drop photos here
+                </div>
+            </div>
+
+            <div class="input-files-container">
+                <div class="single-file">
+                    <button mat-raised-button color="accent" class="file-button">
+                        <label for="file-upload-single" class="file-upload-single" file-upload-single>Single File
+                        </label>
+                    </button>
+                    <input type="file" id="file-upload-single" ng2FileSelect [uploader]="uploader" />
+                </div>
+
+                <div class="multiple-files">
+                    <button mat-raised-button color="warn" class="file-button">
+                        <label for="file-upload-multiple" class="file-upload-multiple">Multiples Files</label>
+                    </button>
+                    <input type="file" id="file-upload-multiple" ng2FileSelect [uploader]="uploader" multiple />
+                </div>
+            </div>
+        </div>
+
+        <div class="uploader-container" *ngIf="uploader?.queue?.length">
+            <div class="headers-wrapper">
+                <h3>Upload queue</h3>
+                <p>Queue length: {{ uploader?.queue?.length }}</p>
+            </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th width="50%">Name</th>
+                        <th>Size</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of uploader?.queue">
+                        <td><strong>{{ item?.file?.name }}</strong></td>
+                        <td *ngIf="uploader?.options?.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div>
+                <div>
+                    Queue progress:
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader?.progress + '%' }">
+                        </div>
+                    </div>
+                </div>
+                <div class="btns-upload-wrapper">
+                    <button type="button" class="btn btn-success btn-s" (click)="uploader?.uploadAll()"
+                        [disabled]="!uploader?.getNotUploadedItems()?.length">
+                        <span class="fa fa-upload"></span> Upload all
+                    </button>
+                    <button type="button" class="btn btn-warning btn-s" (click)="uploader?.cancelAll()"
+                        [disabled]="!uploader?.isUploading">
+                        <span class="fa fa-ban"></span> Cancel all
+                    </button>
+                    <button type="button" class="btn btn-danger btn-s" (click)="uploader?.clearQueue()"
+                        [disabled]="!uploader?.queue?.length">
+                        <span class="fa fa-trash"></span> Remove all
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

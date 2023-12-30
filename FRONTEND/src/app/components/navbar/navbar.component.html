@@ -30,11 +30,11 @@
       </form>
 
       <div *ngIf="(accountService.currentUser$| async) as user" class="user-icon" [matMenuTriggerFor]="menu">
-        <img src="{{member?.photoUrl || './assets/user.png'}}" alt="user photo" class="user-photo">
+        <img src="{{user?.photo || './assets/user.png'}}" alt="user photo" class="user-photo">
       </div>
       <mat-menu #menu="matMenu" class="user-menu">
         <button mat-menu-item routerLink="/member/edit">
-          <mat-icon aria-hidden="false" class="mat-menu-item">edit {{user?.username}}</mat-icon>
+          <mat-icon aria-hidden="false" class="mat-menu-item">edit</mat-icon>
           <span class="mat-menu-item">Edit</span>
         </button>
         <button mat-menu-item (click)="logout()">
