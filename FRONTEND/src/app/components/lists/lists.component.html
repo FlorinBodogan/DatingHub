@@ -1,1 +1,16 @@
-<p>lists works!</p>
+<mat-tab-group (selectedIndexChange)="onSelectedIndexChange($event)" class="tab-group" [backgroundColor]="'accent'">
+    <mat-tab label="Members who I like">
+        <div class="cards">
+            <div *ngFor="let member of members">
+                <app-member-card [member]="member" [ellementOffOnLists]="true"></app-member-card>
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab label="Members who likes me">
+        <div class="cards">
+            <div *ngFor="let member of members">
+                <app-member-card [member]="member" [ellementOffOnLists]="true"></app-member-card>
+            </div>
+        </div>
+    </mat-tab>
+</mat-tab-group>

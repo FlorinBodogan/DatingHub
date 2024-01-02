@@ -171,5 +171,12 @@
   grid-template-columns: 1fr 1fr;
   grid-gap: 20px;
   font-size: 1.2em;
-  justify-items: center;
+
+  .grid-child-city {
+    justify-self: start;
+  }
+
+  .grid-child-age {
+    justify-self: end;
+  }
 }

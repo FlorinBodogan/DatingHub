@@ -45,7 +45,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatPaginatorModule,
     MatInputModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
   ],
   exports: [
     BrowserAnimationsModule,

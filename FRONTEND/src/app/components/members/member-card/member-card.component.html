@@ -1,23 +1,26 @@
-<div class="card">
-    <img src="{{member?.photoUrl || './assets/user.png'}}" alt="{{member?.knownAs}}" class="card__image">
-    <p class="card__name">{{member?.knownAs}}</p>
+<div class="card" *ngIf="member" [style.height.rem]="ellementOffOnLists ? '30' : '37'">
+    <img src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}" class="card__image">
+    <p class="card__name">{{member.knownAs}}</p>
     <div class="grid-container">
-
         <div class="grid-child-city">
-            City: {{member?.city}}
+            City: {{member.city}}
         </div>
 
-        <div class="grid-child-followers">
-            Age: {{member?.age}}
+        <div class="grid-child-age">
+            Age: {{member.age}}
         </div>
-
     </div>
+
+    <button class="btn draw-border" routerLink="/members/{{member.userName}}">Details</button>
+    <button class="btn draw-border">Message</button>
+
     <ul class="social-icons">
-        <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+        <!-- <li><a href="#"><i class="fa fa-instagram"></i></a></li>
         <li><a href="#"><i class="fa fa-twitter"></i></a></li>
         <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-        <li><a href="#"><i class="fa fa-codepen"></i></a></li>
+        <li><a href="#"><i class="fa fa-codepen"></i></a></li> -->
+        <button *ngIf="!ellementOffOnLists" mat-fab color="accent" aria-label="like button" (click)="addLike(member)">
+            <mat-icon>thumb_up</mat-icon>
+        </button>
     </ul>
-    <button class="btn draw-border" routerLink="/members/{{member?.userName}}">Details</button>
-    <button class="btn draw-border">Message</button>
 </div>

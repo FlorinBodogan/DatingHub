@@ -123,4 +123,13 @@ export class MemberService {
   deletePhoto(photoId: number): Observable<any> {
     return this.http.delete(this.baseURL + 'users/delete-photo/' + photoId);
   };
+
+  //Like feature
+  addLike(username: string): Observable<any> {
+    return this.http.post(this.baseURL + 'likes/' + username, this.httpOptions);
+  };
+
+  getLikes(predicate: string): Observable<Member[]> {
+    return this.http.get<Member[]>(this.baseURL + 'likes?predicate=' + predicate, this.httpOptions);
+  };
 }
