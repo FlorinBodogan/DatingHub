@@ -7,11 +7,11 @@ import { MemberService } from 'src/app/services/members/member.service';
   templateUrl: './lists.component.html',
   styleUrls: ['./lists.component.scss']
 })
-export class ListsComponent implements OnInit{
+export class ListsComponent implements OnInit {
   members: Member[] | undefined;
   private currentTabIndex = 0;
 
-  constructor(private memberService: MemberService) {}
+  constructor(private memberService: MemberService) { }
 
   ngOnInit(): void {
     this.loadLikes("liked");
@@ -25,9 +25,9 @@ export class ListsComponent implements OnInit{
     })
   };
 
-  public onSelectedIndexChange(tabIndex: number): void {
+  onSelectedIndexChange(tabIndex: number): void {
     this.currentTabIndex = tabIndex;
-    if(this.currentTabIndex === 0) {
+    if (this.currentTabIndex === 0) {
       this.loadLikes("liked");
     } else if (this.currentTabIndex === 1) {
       this.loadLikes("likedBy");

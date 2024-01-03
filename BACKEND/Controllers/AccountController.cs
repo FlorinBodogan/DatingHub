@@ -32,8 +32,6 @@ namespace BACKEND.Controllers
             using var hmac = new HMACSHA512();
 
             user.UserName = registerDto.Username.ToLower();
-            user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password));
-            user.PasswordSalt = hmac.Key;
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
@@ -53,15 +51,6 @@ namespace BACKEND.Controllers
             var user = await _context.Users.Include(p => p.Photos).SingleOrDefaultAsync(user => user.UserName == loginDto.Username);
 
             if(user == null) return Unauthorized("Invalid username");
-
-            using var hmac = new HMACSHA512(user.PasswordSalt);
-
-            var computeHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
-
-            for(int i = 0; i < computeHash.Length; i++)
-            {
-                if(computeHash[i] != user.PasswordHash[i]) return Unauthorized("Invalid password");
-            }
 
             return new UserDto 
             {

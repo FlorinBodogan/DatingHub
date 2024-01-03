@@ -8,15 +8,17 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 import { ToastrModule } from 'ngx-toastr';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
-import { MatMenuModule } from '@angular/material/menu'; 
+import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { FileUploadModule } from 'ng2-file-upload';
 import { MatRadioModule } from '@angular/material/radio';
-import { MatPaginatorModule } from '@angular/material/paginator'; 
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
+import { TimeagoModule, TimeagoIntl, TimeagoFormatter, TimeagoCustomFormatter } from 'ngx-timeago';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatInputModule,
     MatFormFieldModule,
     MatSelectModule,
+    MatTableModule,
+    TimeagoModule
   ],
   exports: [
     BrowserAnimationsModule,
@@ -65,7 +69,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatPaginatorModule,
     MatInputModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTableModule,
+    TimeagoModule
   ]
 })
 export class SharedModule { }

@@ -34,6 +34,9 @@
   box-shadow: 0 10px 50px #eb196e;
 }
 
+.btn-container {
+  display: flex;
+}
 
 .draw-border {
   box-shadow: inset 0 0 0 4px #58cdd1;
@@ -172,7 +175,8 @@
   font-size: 2rem;
 }
 
-.grid-child-location, .grid-child-lastActive {
+.grid-child-location,
+.grid-child-lastActive {
   margin-right: 1rem;
 }
 
@@ -197,9 +201,9 @@
 }
 
 gallery {
-    background-color: inherit;
-    height: 77vh;
-    margin: 1rem;
+  background-color: inherit;
+  height: 77vh;
+  margin: 1rem;
 }
 
 @media(max-height: 62.5rem) {
@@ -231,4 +235,3 @@ gallery {
     min-height: 100%;
   }
 }
-

@@ -1,1 +1,106 @@
-<p>messages works!</p>
+<mat-tab-group (selectedIndexChange)="onSelectedIndexChange($event)" class="tab-group" [backgroundColor]="'accent'">
+    <mat-tab label="Unread Messages">
+
+        <div class="table-with-no-data" *ngIf="dataSource.data.length === 0">
+            <h1>No messages</h1>
+            <mat-icon class="icon"> email</mat-icon>
+        </div>
+    </mat-tab>
+
+    <mat-tab label="Received Messages">
+        <mat-table [dataSource]="dataSource" class="mat-elevation-z8 table">
+            <ng-container matColumnDef="content">
+                <mat-header-cell *matHeaderCellDef [style.background-color]="backgroundColorHeader"> Message
+                </mat-header-cell>
+                <mat-cell *matCellDef="let message" [style.background-color]="backgroundColorRow">
+                    {{message.content}}
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="senderUsername">
+                <mat-header-cell *matHeaderCellDef [style.background-color]="backgroundColorHeader"> From
+                </mat-header-cell>
+                <mat-cell *matCellDef="let message" [style.background-color]="backgroundColorRow">
+                    <img class="user-img" src="{{message.senderPhotoUrl || './assets/user.png'}}" alt="user photo"
+                        routerLink="{{'/members/' + message.senderUsername}}">
+                    {{message.senderUsername | titlecase}}
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="messageSent">
+                <mat-header-cell *matHeaderCellDef [style.background-color]="backgroundColorHeader"> Received
+                </mat-header-cell>
+                <mat-cell *matCellDef="let message" [style.background-color]="backgroundColorRow">
+                    {{message.messageSent | date:'dd-MM-yyyy'}}
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef [style.background-color]="backgroundColorHeader"></mat-header-cell>
+                <mat-cell *matCellDef="let message" [style.background-color]="backgroundColorRow">
+                    <button mat-raised-button color="accent" routerLink="/members/{{message.senderUsername}}"
+                        [queryParams]="{tab: 'Messages'}">
+                        Go to Chat
+                    </button>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+
+        <div class="table-with-no-data" *ngIf="dataSource.data.length === 0">
+            <h1>No messages</h1>
+            <mat-icon class="icon"> email</mat-icon>
+        </div>
+    </mat-tab>
+
+    <mat-tab label="Sent Messages">
+        <mat-table [dataSource]="dataSource" class="mat-elevation-z8 table">
+            <ng-container matColumnDef="content">
+                <mat-header-cell *matHeaderCellDef [style.background-color]="backgroundColorHeader"> Message
+                </mat-header-cell>
+                <mat-cell *matCellDef="let message" [style.background-color]="backgroundColorRow">
+                    {{message.content}}
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="senderUsername">
+                <mat-header-cell *matHeaderCellDef [style.background-color]="backgroundColorHeader"> To
+                </mat-header-cell>
+                <mat-cell *matCellDef="let message" [style.background-color]="backgroundColorRow">
+                    <img class="user-img" src="{{message.recipientPhotoUrl || './assets/user.png'}}" alt="user photo"
+                        routerLink="{{'/members/' + message.recipientUsername}}">
+                    {{message.recipientUsername | titlecase}}
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="messageSent">
+                <mat-header-cell *matHeaderCellDef [style.background-color]="backgroundColorHeader"> Sent
+                </mat-header-cell>
+                <mat-cell *matCellDef="let message" [style.background-color]="backgroundColorRow">
+                    {{message.messageSent | date:'dd-MM-yyyy'}}
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef [style.background-color]="backgroundColorHeader"></mat-header-cell>
+                <mat-cell *matCellDef="let message" [style.background-color]="backgroundColorRow">
+                    <button mat-raised-button color="accent" routerLink="/members/{{message.recipientUsername}}"
+                        [queryParams]="{tab: 'Messages'}">
+                        Go to Chat
+                    </button>
+                    <button mat-raised-button color="warn" (click)="deleteMessage(message.id)">Delete</button>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+
+        <div class="table-with-no-data" *ngIf="dataSource.data.length === 0">
+            <h1>No messages</h1>
+            <mat-icon class="icon"> email</mat-icon>
+        </div>
+    </mat-tab>
+</mat-tab-group>

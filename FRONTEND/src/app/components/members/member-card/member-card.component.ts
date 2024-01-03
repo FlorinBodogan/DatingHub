@@ -12,11 +12,11 @@ export class MemberCardComponent {
   @Input() member: Member | undefined;
   @Input() ellementOffOnLists = false;
 
-  constructor(private memberService: MemberService, private toastr: ToastrService) {}
+  constructor(private memberService: MemberService, private toastr: ToastrService) { }
 
   addLike(member: Member) {
     this.memberService.addLike(member.userName).subscribe({
-      next: () => this.toastr.success('You have liked ' + member.knownAs)
+      next: () => this.toastr.success('You have liked ' + member.knownAs),
     })
-  }
+  };
 }

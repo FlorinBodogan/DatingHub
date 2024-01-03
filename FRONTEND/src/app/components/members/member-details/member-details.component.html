@@ -1,57 +1,56 @@
-<div class="profile-container">
-
+<div class="profile-container" *ngIf="member">
     <div class="card">
-        <p class="card__name">{{member?.knownAs}}</p>
-        <img src="{{member?.photoUrl || './assets/user.png'}}" alt="{{member?.knownAs}}" class="card__image">
+        <p class="card__name">{{member.knownAs}}</p>
+        <img src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}" class="card__image">
 
         <div class="grid-container-wrapper">
             <div class="grid-container">
                 <div class="grid-child-location">
                     <strong>Location: </strong>
-                    <p>{{member?.city}}, {{member?.country}}</p>
+                    <p>{{member.city}}, {{member.country}}</p>
                 </div>
 
                 <div class="grid-child-age">
                     <strong>Age: </strong>
-                    <p>{{member?.age}}</p>
+                    <p>{{member.age}}</p>
                 </div>
                 <div class="grid-child-lastActive">
                     <strong>Last active: </strong>
-                    <p>{{member?.lastActive | date:'dd-MM-yyyy'}}</p>
+                    <p>{{member.lastActive | date:'dd-MM-yyyy'}}</p>
                 </div>
                 <div class="grid-child-memberSince">
                     <strong>Member since: </strong>
-                    <p>{{member?.created | date:'dd-MM-yyyy'}}</p>
+                    <p>{{member.created | date:'dd-MM-yyyy'}}</p>
                 </div>
             </div>
         </div>
 
-        <ul class="social-icons">
-            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-            <li><a href="#"><i class="fa fa-codepen"></i></a></li>
-        </ul>
+        <div class="btn-container">
+            <button class="btn draw-border" (click)="addLike(member)">Like</button>
+            <button class="btn draw-border" (click)="switchToMessageTab()">
+                Message
+            </button>
+        </div>
     </div>
 
-    <mat-tab-group class="tabs-container" [color]="'primary'" [backgroundColor]="'accent'">
+    <mat-tab-group [(selectedIndex)]="selectedTabIndex" class="tabs-container" [color]="'primary'"
+        [backgroundColor]="'accent'">
         <mat-tab label="Description" aria-label="primary">
             <div class="tab1--wrapper">
                 <h2>Looking For:</h2>
-                <p>{{member?.lookingFor}}</p>
+                <p>{{member.lookingFor}}</p>
                 <h2>About Me:</h2>
-                <p>{{member?.introduction}}</p>
+                <p>{{member.introduction}}</p>
             </div>
         </mat-tab>
         <mat-tab label="Interests">
-            <p>{{member?.interests}}</p>
+            <p>{{member.interests}}</p>
         </mat-tab>
         <mat-tab label="Photos" #photoTab>
             <gallery *ngIf="photoTab.isActive" [items]="images"></gallery>
         </mat-tab>
-        <mat-tab label="Messages" aria-label="primary">
-            <p>Messages will go here</p>
+        <mat-tab label="Messages">
+            <app-member-messages [username]="member.userName"></app-member-messages>
         </mat-tab>
     </mat-tab-group>
-
 </div>

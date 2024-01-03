@@ -10,7 +10,12 @@
   "projects": {
     "FRONTEND": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+          "@schematics/angular:component": {
+            "style": "scss",
+            "standalone": false
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",

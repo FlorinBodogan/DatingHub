@@ -1,0 +1,95 @@
+.tab-group {
+  margin: 1rem;
+
+  .table {
+    margin: 1rem 0 0 0;
+
+    .mat-column-content {
+      display: flex;
+      flex: 0 0 40%;
+    }
+
+    .mat-column-senderUsername {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .mat-column-actions {
+      display: flex;
+      gap: 1rem;
+      flex: 0 0 15%;
+    }
+
+    .user-img {
+      cursor: pointer;
+      padding: 4px 0 4px 0;
+      width: 50px;
+      height: 50px;
+      border-radius: 100%;
+    }
+  }
+
+  .table-with-no-data {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #222;
+    height: 30rem;
+
+    .icon {
+      transform: scale(2);
+    }
+  }
+}
+
+@media only screen and (max-width: 900px) and (orientation:portrait) {
+
+  mat-header-row,
+  mat-row {
+    width: 150%;
+  }
+}
+
+@media only screen and (max-width: 800px) and (orientation:portrait) {
+
+  mat-header-row,
+  mat-row {
+    width: 200%;
+  }
+
+  .tab-group {
+
+    .table {
+      margin: 1rem 0 0 0;
+
+      .mat-column-content {
+        display: flex;
+        flex: 0 0 25%;
+      }
+
+      .mat-column-actions {
+        display: flex;
+        gap: 1rem;
+        flex: 0 0 30%;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) and (orientation:portrait) {
+
+  mat-header-row,
+  mat-row {
+    width: 250%;
+  }
+}
+
+@media only screen and (max-width: 355px) and (orientation:portrait) {
+
+  mat-header-row,
+  mat-row {
+    width: 300%;
+  }
+}

@@ -1,5 +1,4 @@
 using System.Security.Cryptography;
-using System.Text;
 using System.Text.Json;
 using BACKEND.entities;
 using Microsoft.EntityFrameworkCore;
@@ -23,8 +22,6 @@ namespace BACKEND.Data
                 using var hmac = new HMACSHA512();
 
                 user.UserName = user.UserName.ToLower();
-                user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("Pas$$w0rd"));
-                user.PasswordSalt = hmac.Key;
 
                 context.Users.Add(user);
             }
