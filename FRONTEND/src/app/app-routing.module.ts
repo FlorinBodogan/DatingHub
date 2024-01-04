@@ -8,21 +8,25 @@ import { MemberListComponent } from './components/members/member-list/member-lis
 import { MemberDetailsComponent } from './components/members/member-details/member-details.component';
 import { MemberEditComponent } from './components/members/member-edit/member-edit.component';
 import { preventUnsavedChangesGuard } from './services/guards/prevent-unsaved-changes.guard';
+import { AdminPanelComponent } from './components/admin/admin-panel/admin-panel.component';
+import { adminGuard } from './services/guards/admin.guard';
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
-  {path: '',
+  { path: '', component: HomeComponent },
+  {
+    path: '',
     runGuardsAndResolvers: 'always',
     canActivate: [authGuard],
     children: [
-      {path: 'members', component: MemberListComponent},
-      {path: 'members/:username', component: MemberDetailsComponent},
-      {path: 'member/edit', component: MemberEditComponent, canDeactivate: [preventUnsavedChangesGuard]},
-      {path: 'lists', component: ListsComponent},
-      {path: 'messages', component: MessagesComponent},
+      { path: 'members', component: MemberListComponent },
+      { path: 'members/:username', component: MemberDetailsComponent },
+      { path: 'member/edit', component: MemberEditComponent, canDeactivate: [preventUnsavedChangesGuard] },
+      { path: 'lists', component: ListsComponent },
+      { path: 'messages', component: MessagesComponent },
+      { path: 'admin', component: AdminPanelComponent, canActivate: [adminGuard] },
     ]
   },
-  {path: '**', component: HomeComponent, pathMatch: 'full'},
+  { path: '**', component: HomeComponent, pathMatch: 'full' },
 ];
 
 @NgModule({

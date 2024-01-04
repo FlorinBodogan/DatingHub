@@ -15,6 +15,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MemberEditComponent } from './components/members/member-edit/member-edit.component';
 import { LoadingInterceptor } from './services/interceptors/loading.interceptor';
 import { PhotoEditorComponent } from './components/members/photo-editor/photo-editor.component';
+import { AdminPanelComponent } from './components/admin/admin-panel/admin-panel.component';
+import { HasRoleDirective } from './directives/has-role.directive';
+import { UserManagementComponent } from './components/admin/user-management/user-management.component';
+import { PhotoManagementComponent } from './components/admin/photo-management/photo-management.component';
+import { EditRolesDialogComponent } from './components/admin/edit-roles-dialog/edit-roles-dialog.component';
 
 @NgModule({
   declarations: [
@@ -28,10 +33,15 @@ import { PhotoEditorComponent } from './components/members/photo-editor/photo-ed
     MemberCardComponent,
     MemberEditComponent,
     PhotoEditorComponent,
+    AdminPanelComponent,
+    UserManagementComponent,
+    PhotoManagementComponent,
+    EditRolesDialogComponent,
   ],
   imports: [
     SharedModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HasRoleDirective
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

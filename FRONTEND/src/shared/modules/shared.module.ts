@@ -18,7 +18,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
-import { TimeagoModule, TimeagoIntl, TimeagoFormatter, TimeagoCustomFormatter } from 'ngx-timeago';
+import { TimeagoModule } from 'ngx-timeago';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { TimeagoModule, TimeagoIntl, TimeagoFormatter, TimeagoCustomFormatter } 
     MatFormFieldModule,
     MatSelectModule,
     MatTableModule,
-    TimeagoModule
+    TimeagoModule,
+    MatDialogModule
   ],
   exports: [
     BrowserAnimationsModule,
@@ -71,7 +73,8 @@ import { TimeagoModule, TimeagoIntl, TimeagoFormatter, TimeagoCustomFormatter } 
     MatFormFieldModule,
     MatSelectModule,
     MatTableModule,
-    TimeagoModule
+    TimeagoModule,
+    MatDialogModule
   ]
 })
 export class SharedModule { }

@@ -28,6 +28,12 @@ namespace BACKEND.Extensions
             };
         });
 
+        services.AddAuthorization(opt => 
+        {
+            opt.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
+            opt.AddPolicy("ModeratePhotoRole", policy => policy.RequireRole("Admin", "Moderator"));
+        });
+
         return services;
         }
     }

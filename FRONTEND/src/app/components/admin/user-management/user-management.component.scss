@@ -1,0 +1,36 @@
+.table {
+    margin-top: 1rem;
+
+    .mat-column-name {
+        display: flex;
+    }
+
+    .mat-column-roles {
+        display: flex;
+    }
+
+    .mat-column-actions {
+        display: flex;
+        flex: 0 0 10%;
+    }
+}
+
+@media(max-width: 61.875rem) {
+    .table {
+        .mat-column-actions {
+            display: flex;
+            flex: 0 0 25%;
+        }
+    }
+}
+
+@media(max-width: 375px) {
+    .table {
+        width: 120%;
+
+        .mat-column-actions {
+            display: flex;
+            flex: 0 0 25%;
+        }
+    }
+}

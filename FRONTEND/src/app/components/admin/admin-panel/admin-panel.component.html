@@ -1,0 +1,8 @@
+<mat-tab-group backgroundColor="accent" class="tab-group">
+    <mat-tab label="Users Management" *appHasRole="['Admin']">
+        <app-user-management></app-user-management>
+    </mat-tab>
+    <mat-tab label="Photo Management" *appHasRole="['Admin', 'Moderator']">
+        <app-photo-management></app-photo-management>
+    </mat-tab>
+</mat-tab-group>

@@ -1,0 +1,30 @@
+<div class="dialog-container">
+    <div class="header">
+        <h2>User: {{data.member.userName}}</h2>
+    </div>
+
+    <form [formGroup]="rolesForm" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+            <mat-label>Roles</mat-label>
+            <mat-select formControlName="roles" multiple>
+                <mat-select-trigger>
+                    {{ rolesForm.value?.roles?.[0] || '' }}
+                    <span *ngIf="(rolesForm.value?.roles?.length || 0) > 1">
+                        (+{{ (rolesForm.value?.roles?.length || 0) - 1 }} {{ rolesForm.value?.roles?.length === 2 ?
+                        'other'
+                        : 'others' }})
+                    </span>
+                </mat-select-trigger>
+                <mat-option *ngFor="let role of availableRoles" [value]="role">
+                    {{ role }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div class="actions">
+            <button mat-raised-button [disabled]="data.member.userName === 'admin'" color="accent" type="submit">
+                Edit
+            </button>
+        </div>
+    </form>
+</div>
