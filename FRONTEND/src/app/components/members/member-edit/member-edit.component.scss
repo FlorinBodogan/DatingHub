@@ -105,60 +105,6 @@
   outline: 2px dotted #55d7dc;
 }
 
-.social-icons {
-  padding: 0;
-  list-style: none;
-  margin: 1em;
-}
-
-.social-icons li {
-  display: inline-block;
-  margin: 0.15em;
-  position: relative;
-  font-size: 1em;
-}
-
-.social-icons i {
-  color: #fff;
-  position: absolute;
-  top: 0.95em;
-  left: 0.96em;
-  transition: all 265ms ease-out;
-}
-
-.social-icons a {
-  display: inline-block;
-}
-
-.social-icons a:before {
-  transform: scale(1);
-  -ms-transform: scale(1);
-  -webkit-transform: scale(1);
-  content: " ";
-  width: 45px;
-  height: 45px;
-  border-radius: 100%;
-  display: block;
-  background: linear-gradient(45deg, #ff003c, #c648c8);
-  transition: all 265ms ease-out;
-}
-
-.social-icons a:hover:before {
-  transform: scale(0);
-  transition: all 265ms ease-in;
-}
-
-.social-icons a:hover i {
-  transform: scale(2.2);
-  -ms-transform: scale(2.2);
-  -webkit-transform: scale(2.2);
-  color: #ff003c;
-  background: -webkit-linear-gradient(45deg, #ff003c, #c648c8);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  transition: all 265ms ease-in;
-}
-
 .grid-container-wrapper {
   width: 100%;
 }
@@ -172,7 +118,8 @@
   font-size: 2rem;
 }
 
-.grid-child-location, .grid-child-lastActive {
+.grid-child-location,
+.grid-child-lastActive {
   margin-right: 1rem;
 }
 
@@ -192,7 +139,8 @@
     line-height: 2rem;
   }
 
-  input, textarea {
+  input,
+  textarea {
     background-color: #1c2028;
     color: #fff;
   }
@@ -228,4 +176,3 @@
     min-height: 100%;
   }
 }
-

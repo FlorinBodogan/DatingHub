@@ -13,22 +13,22 @@ import { MemberService } from 'src/app/services/members/member.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit{
+export class NavbarComponent implements OnInit {
   model: any = {}
 
   constructor(
     public accountService: AccountService,
     private router: Router,
     private toastr: ToastrService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    
+
   };
 
   login(): void {
     this.accountService.login(this.model).subscribe({
-      next: () => this.router.navigateByUrl('/members'),
+      next: () => this.router.navigateByUrl('/'),
       error: error => this.toastr.error(error.error)
     })
   };

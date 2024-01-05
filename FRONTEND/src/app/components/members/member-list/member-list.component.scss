@@ -1,6 +1,7 @@
-.container {
-  width: 100%;
-  margin-bottom: 1rem;  
+.container-list {
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 1rem;
 }
 
 .container-members {
@@ -51,13 +52,26 @@ mat-paginator {
     display: flex;
     flex-direction: column;
 
-      .select-items {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-      }
+    .select-items {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
   .action-buttons {
     justify-content: center;
+  }
+}
+
+.table-with-no-data {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #222;
+  height: 30rem;
+
+  .icon {
+    transform: scale(2);
   }
 }

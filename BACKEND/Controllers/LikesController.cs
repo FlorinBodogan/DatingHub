@@ -8,27 +8,24 @@ namespace BACKEND.Controllers
 {
     public class LikesController : BaseApiController
     {
-        private readonly ILikesRepository _likesRepository;
-        private readonly IUserRepository _userRepository;
-
-        public LikesController(IUserRepository userRepository, ILikesRepository likesRepository)
+        private readonly IUnitOfWork _uow;
+        public LikesController(IUnitOfWork uow)
         {
-            _likesRepository = likesRepository;
-            _userRepository = userRepository;
+            _uow = uow;
         }
 
         [HttpPost("{username}")]
         public async Task<ActionResult> AddLike(string username)
         {
             var sourceUserId = int.Parse(User.GetUserId());
-            var likedUser = await _userRepository.GetUserByUsernameAsync(username);
-            var sourceUser = await _likesRepository.GetUserWithLikes(sourceUserId);
+            var likedUser = await _uow.UserRepository.GetUserByUsernameAsync(username);
+            var sourceUser = await _uow.LikesRepository.GetUserWithLikes(sourceUserId);
 
             if (likedUser == null) return NotFound();
 
             if (sourceUser.UserName == username) return BadRequest("You cannot like yourself");
 
-            var userLike = await _likesRepository.GetUserLike(sourceUserId, likedUser.Id);
+            var userLike = await _uow.LikesRepository.GetUserLike(sourceUserId, likedUser.Id);
 
             if (userLike != null) return BadRequest("You already like this user");
 
@@ -40,7 +37,7 @@ namespace BACKEND.Controllers
 
             sourceUser.LikedUsers.Add(userLike);
 
-            if (await _userRepository.SaveAllAsync()) return Ok();
+            if (await _uow.Complete()) return Ok();
 
             return BadRequest("Failed to like user");
         }
@@ -48,7 +45,7 @@ namespace BACKEND.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<LikeDto>>> GetUserLikes(string predicate)
         {
-            var users = await _likesRepository.GetUserLikes(predicate, int.Parse(User.GetUserId()));
+            var users = await _uow.LikesRepository.GetUserLikes(predicate, int.Parse(User.GetUserId()));
 
             return Ok(users);
         }

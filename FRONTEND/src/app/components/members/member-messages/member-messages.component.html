@@ -1,44 +1,37 @@
-<div class="card">
-    <div class="card-body">
-        <div *ngIf="messages.length === 0">
-            No messages
-        </div>
-
-        <ul *ngIf="messages.length > 0" class="chat">
-            <li *ngFor="let message of messages">
-                <div>
-                    <span class="chat-img float-end">
-                        <img src="{{message.senderPhotoUrl || './assets/user.png'}}" alt="user image"
-                            class="rounded-circle">
-                    </span>
-                    <div class="chat-body">
-                        <div class="header">
-                            <small class="text-muted">
-                                <span class="fa fa-clock-o">{{message.messageSent | date:'dd-MM-yyyy'}}</span>
-                                <span class="text-danger"
-                                    *ngIf="!message.dateRead && message.senderUsername !== username">
-                                    (unread)
-                                </span>
-                                <span class="text-success"
-                                    *ngIf="message.dateRead && message.senderUsername !== username">
-                                    (read {{message.dateRead | date:'dd-MM-yyyy'}})
-                                </span>
-                            </small>
-                        </div>
-                        <p>{{message.content}}</p>
-                    </div>
+<div class="card" #scrollMe style="overflow: scroll; height: 80vh;">
+    <div class="card-body msg_card_body">
+        <div *ngFor="let message of (messageService.messageThread$ | async); let last = last">
+            <div *ngIf="message.recipientUsername !== username" class="d-flex justify-content-start mb-4">
+                <div class="img_cont_msg">
+                    <img src="{{message.senderPhotoUrl || './assets/user.png'}}" class="rounded-circle user_img_msg">
                 </div>
-            </li>
-        </ul>
-    </div>
-
-    <div class="card-footer">
-        <form #messageForm="ngForm" (ngSubmit)="sendMessage()">
+                <div class="msg_cotainer">
+                    {{message.content}}
+                    <span *ngIf="last && message.dateRead && message.recipientUsername === username" class="">
+                        Seen
+                    </span>
+                </div>
+            </div>
+            <div *ngIf="message.recipientUsername === username" class="d-flex justify-content-end mb-4">
+                <div class="msg_cotainer_send">
+                    {{message.content}}
+                    <span *ngIf="last && message.dateRead && message.recipientUsername === username"
+                        class="msg_time_send">
+                        Seen
+                    </span>
+                </div>
+                <div class="img_cont_msg">
+                    <img src="{{message.senderPhotoUrl || './assets/user.png'}}" class="rounded-circle user_img_msg">
+                </div>
+            </div>
+        </div>
+        <form class="card-footer" #messageForm="ngForm" (ngSubmit)="sendMessage()">
             <div class="input-group">
-                <input name="messageContent" [(ngModel)]="messageContent" required type="text"
-                    class="form-control input-sm" placeholder="Send a private message">
+                <textarea name="messageContent" [(ngModel)]="messageContent" required rows="2"
+                    class="form-control type_msg" placeholder="Type your message..."></textarea>
                 <div class="input-group-append">
-                    <button [disabled]="!messageForm.valid" mat-raised-button color="accent">Send</button>
+                    <button class="send-button" [disabled]="!messageForm.valid" mat-raised-button color="accent">Send
+                        message</button>
                 </div>
             </div>
         </form>

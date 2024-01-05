@@ -1,13 +1,20 @@
-<div class="container mt-5">
-    <div *ngIf="!registerMode" style="text-align: center;">
-        <h1>Find your match!</h1>
-        <p class="lead">Come on in to view your matches... all you need to do is sign up!</p>
-        <div class="text-center">
-            <button mat-raised-button color="accent" class="btn--register" (click)="registerToggle()">Register</button>
+<div class="container-home">
+    <div *ngIf="!registerMode" class="container-elem">
+        <div *ngIf="!registerMode" style="text-align: center;">
+            <h1 *ngIf="!user">Find your match!</h1>
+            <h1 *ngIf="user">Welcome back {{user.username}}!</h1>
+            <p *ngIf="!user" class="lead">Come on in to view your matches... all you need to do is sign up!</p>
+            <p *ngIf="user" class="lead">See your matches, chat with someone... do anything you want!</p>
+            <div *ngIf="!user" class="text-center">
+                <button mat-raised-button color="accent" class="btn" (click)="registerToggle()">Register</button>
+            </div>
+            <div *ngIf="user" class="text-center">
+                <button mat-raised-button color="accent" class="btn" routerLink="/members">Matches</button>
+            </div>
         </div>
     </div>
 
-    <div *ngIf="registerMode" class="container">
+    <div *ngIf="registerMode && !user" class="register-container">
         <app-register (cancelRegister)="cancelRegisterMode($event)"></app-register>
     </div>
 </div>

@@ -4,6 +4,7 @@ using BACKEND.interfaces;
 using BACKEND.Interfaces;
 using BACKEND.services;
 using BACKEND.Services;
+using BACKEND.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace BACKEND.Extensions
@@ -19,13 +20,13 @@ namespace BACKEND.Extensions
             });
             services.AddCors();
             services.AddScoped<ITokenService, TokenService>();
-            services.AddScoped<IUserRepository, UserRepository>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
             services.AddScoped<IPhotoService, PhotoService>();
             services.AddScoped<LogUserActivity>();
-            services.AddScoped<ILikesRepository, LikesRepository>();
-            services.AddScoped<IMessageRepository, MessageRepository>();
+            services.AddSignalR();
+            services.AddSingleton<PresenceTracker>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;
         }

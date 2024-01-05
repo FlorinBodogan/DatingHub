@@ -7,7 +7,7 @@
 
 /* First CONTAINER -- Member BASIC INFO */
 .card {
-  background-color: #0e1014;
+  background-color: #111;
   height: 100%;
   width: 33%;
   border-radius: 5px;
@@ -20,9 +20,38 @@
   transition: all 0.5s ease-in;
 }
 
-.card__name {
-  margin-top: 15px;
-  font-size: 2em;
+@keyframes fa-blink {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.4;
+  }
+}
+
+.user-name-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+
+  mat-icon {
+    font-size: 1.6rem;
+  }
+
+  .user-icon {
+    margin-top: 12px;
+  }
+
+  .is-online {
+    animation: fa-blink 1.5s linear infinite;
+    color: #20ef20;
+  }
+
+  .card__name {
+    margin-top: 15px;
+    font-size: 1.5rem;
+  }
 }
 
 .card__image {
@@ -108,76 +137,18 @@
   outline: 2px dotted #55d7dc;
 }
 
-.social-icons {
-  padding: 0;
-  list-style: none;
-  margin: 1em;
-}
-
-.social-icons li {
-  display: inline-block;
-  margin: 0.15em;
-  position: relative;
-  font-size: 1em;
-}
-
-.social-icons i {
-  color: #fff;
-  position: absolute;
-  top: 0.95em;
-  left: 0.96em;
-  transition: all 265ms ease-out;
-}
-
-.social-icons a {
-  display: inline-block;
-}
-
-.social-icons a:before {
-  transform: scale(1);
-  -ms-transform: scale(1);
-  -webkit-transform: scale(1);
-  content: " ";
-  width: 45px;
-  height: 45px;
-  border-radius: 100%;
-  display: block;
-  background: linear-gradient(45deg, #ff003c, #c648c8);
-  transition: all 265ms ease-out;
-}
-
-.social-icons a:hover:before {
-  transform: scale(0);
-  transition: all 265ms ease-in;
-}
-
-.social-icons a:hover i {
-  transform: scale(2.2);
-  -ms-transform: scale(2.2);
-  -webkit-transform: scale(2.2);
-  color: #ff003c;
-  background: -webkit-linear-gradient(45deg, #ff003c, #c648c8);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  transition: all 265ms ease-in;
-}
-
-.grid-container-wrapper {
+.flex-container-wrapper {
   width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  padding: 0 0 0 15%;
-  margin: 3rem 0 0 0;
-  line-height: 2rem;
-  font-size: 2rem;
-}
-
-.grid-child-location,
-.grid-child-lastActive {
-  margin-right: 1rem;
+.flex-container {
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.7rem;
+  font-size: 1.7rem;
 }
 
 /* SECOND CONTAINER -- MEMBER DETAILS*/
@@ -185,7 +156,11 @@
   height: 100%;
   min-width: 67%;
   max-width: 67%;
-  background-color: #0e1014;
+  background-color: #140e12;
+
+  .tab {
+    height: 100%;
+  }
 
   .tab1--wrapper {
     display: flex;
@@ -213,7 +188,7 @@ gallery {
     margin: 1rem;
   }
 
-  .grid-container {
+  .flex-container {
     font-size: 1.2rem;
   }
 }

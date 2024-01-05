@@ -20,6 +20,8 @@ import { HasRoleDirective } from './directives/has-role.directive';
 import { UserManagementComponent } from './components/admin/user-management/user-management.component';
 import { PhotoManagementComponent } from './components/admin/photo-management/photo-management.component';
 import { EditRolesDialogComponent } from './components/admin/edit-roles-dialog/edit-roles-dialog.component';
+import { RouteReuseStrategy } from '@angular/router';
+import { CustomRouteReuseStrategy } from './services/helpers/customRouteReuseStrategy';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,7 @@ import { EditRolesDialogComponent } from './components/admin/edit-roles-dialog/e
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
+    { provide: RouteReuseStrategy, useClass: CustomRouteReuseStrategy },
   ],
   bootstrap: [AppComponent]
 })

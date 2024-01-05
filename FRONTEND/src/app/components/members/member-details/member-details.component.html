@@ -1,24 +1,32 @@
 <div class="profile-container" *ngIf="member">
     <div class="card">
-        <p class="card__name">{{member.knownAs}}</p>
+        <div class="user-name-container">
+            <mat-icon class="user-icon"
+                [class.is-online]="(presenceService.onlineUsers$ | async)?.includes(member.userName)">
+                person
+            </mat-icon>
+            <p class="card__name">{{member.knownAs}}</p>
+        </div>
         <img src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}" class="card__image">
 
-        <div class="grid-container-wrapper">
-            <div class="grid-container">
-                <div class="grid-child-location">
+        <div class="flex-container-wrapper">
+            <div class="flex-container">
+                <div class="flex-child-location">
                     <strong>Location: </strong>
                     <p>{{member.city}}, {{member.country}}</p>
                 </div>
 
-                <div class="grid-child-age">
+                <div class="flex-child-age">
                     <strong>Age: </strong>
                     <p>{{member.age}}</p>
                 </div>
-                <div class="grid-child-lastActive">
+            </div>
+            <div class="flex-container">
+                <div class="flex-child-lastActive">
                     <strong>Last active: </strong>
                     <p>{{member.lastActive | date:'dd-MM-yyyy'}}</p>
                 </div>
-                <div class="grid-child-memberSince">
+                <div class="flex-child-memberSince">
                     <strong>Member since: </strong>
                     <p>{{member.created | date:'dd-MM-yyyy'}}</p>
                 </div>
@@ -35,7 +43,8 @@
 
     <mat-tab-group [(selectedIndex)]="selectedTabIndex" class="tabs-container" [color]="'primary'"
         [backgroundColor]="'accent'">
-        <mat-tab label="Description" aria-label="primary">
+
+        <mat-tab label="Description" aria-label="primary" class="tab">
             <div class="tab1--wrapper">
                 <h2>Looking For:</h2>
                 <p>{{member.lookingFor}}</p>
@@ -43,14 +52,16 @@
                 <p>{{member.introduction}}</p>
             </div>
         </mat-tab>
-        <mat-tab label="Interests">
+        <mat-tab label="Interests" class="tab">
             <p>{{member.interests}}</p>
         </mat-tab>
-        <mat-tab label="Photos" #photoTab>
+        <mat-tab label="Photos" #photoTab class="tab">
             <gallery *ngIf="photoTab.isActive" [items]="images"></gallery>
         </mat-tab>
-        <mat-tab label="Messages">
-            <app-member-messages [username]="member.userName"></app-member-messages>
+        <mat-tab label="Messages" class="tab">
+            <app-member-messages *ngIf="selectedTabIndex === 3" [user]="user"
+                [username]="member.userName"></app-member-messages>
         </mat-tab>
+
     </mat-tab-group>
 </div>
