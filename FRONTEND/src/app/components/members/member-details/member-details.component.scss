@@ -65,6 +65,7 @@
 
 .btn-container {
   display: flex;
+  justify-content: center;
 }
 
 .draw-border {
@@ -198,6 +199,10 @@ gallery {
     display: flex;
     flex-direction: column;
     gap: 2rem;
+
+    .btn-container {
+      width: 80%;
+    }
   }
 
   .card {

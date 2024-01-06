@@ -1,6 +1,5 @@
 <form [formGroup]="registerForm" (ngSubmit)="register()" class="form">
     <h2 class="text-center form-title">Sign Up</h2>
-    <hr>
 
     <div class="mb-3">
         <label style="margin-right: 10px;">Gender: </label>
@@ -22,11 +21,13 @@
             formControlName="knownAs" placeholder="known as">
         <div class="invalid-feedback">{{getErrorsMessageKnownAs()}}</div>
     </div>
+
     <div class="mb-3">
-        <input type="date" [class.is-invalid]="checkClassInvalid('dateOfBirth', submitted)" class="form-control"
-            formControlName="dateOfBirth" placeholder="date of birth">
+        <input type="text" [class.is-invalid]="checkClassInvalid('dateOfBirth', submitted)" class="form-control"
+            formControlName="dateOfBirth" placeholder="date 18+" bsDatepicker [bsConfig]="bsConfig" [maxDate]="maxDate">
         <div class="invalid-feedback">{{getErrorsMessageDateOfBirth()}}</div>
     </div>
+
     <div class="mb-3">
         <input type="text" [class.is-invalid]="checkClassInvalid('city', submitted)" class="form-control"
             formControlName="city" placeholder="city">

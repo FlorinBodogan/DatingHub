@@ -13,10 +13,10 @@
 }
 
 .type_msg {
-    background-color: rgba(0, 0, 0, 0.3) !important;
+    background-color: rgba(0, 0, 0, 0.4) !important;
     border: 0 !important;
     color: white !important;
-    height: 30px !important;
+    height: 37px !important;
     overflow-y: auto;
 }
 
@@ -90,6 +90,11 @@
     position: relative;
 }
 
+mat-icon {
+    transform: scale(1.5);
+    padding-left: 2px;
+}
+
 /* width */
 ::-webkit-scrollbar {
     width: 10px;
@@ -110,4 +115,22 @@
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #5454b6;
+}
+
+@media(max-height: 75rem) {
+    .card {
+        height: 83vh;
+    }
+}
+
+@media(max-height: 65rem) {
+    .card {
+        height: 81vh;
+    }
+}
+
+@media(max-height: 45rem) {
+    .card {
+        height: 80vh;
+    }
 }

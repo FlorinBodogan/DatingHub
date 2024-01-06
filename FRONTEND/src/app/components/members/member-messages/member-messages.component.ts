@@ -30,6 +30,7 @@ export class MemberMessagesComponent implements OnInit, OnDestroy {
 
   messageContent = '';
   lastMessage = false;
+  loading = false;
 
   constructor(public messageService: MessageService) { }
 
@@ -60,7 +61,9 @@ export class MemberMessagesComponent implements OnInit, OnDestroy {
 
   sendMessage(): void {
     if (!this.username) return;
-    this.messageService.sendMessage(this.username, this.messageContent);
-    this.messageForm?.reset();
+    this.loading = true;
+    this.messageService.sendMessage(this.username, this.messageContent)?.then(() => {
+      this.messageForm?.reset();
+    }).finally(() => this.loading = false);
   };
 }

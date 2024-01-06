@@ -7,6 +7,7 @@ import { BehaviorSubject, Observable, take } from 'rxjs';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { User } from 'src/app/interfaces/user';
 import { Group } from 'src/app/interfaces/group';
+import { LoadingEffectService } from '../effects/loading-effect.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,9 +23,10 @@ export class MessageService {
     headers: new HttpHeaders({ "Content-Type": "application/json" }),
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private loadingService: LoadingEffectService) { }
 
   createHubConnection(user: User, otherUsername: string): void {
+    this.loadingService.busy();
     this.hubConnection = new HubConnectionBuilder()
       .withUrl(this.hubUrl + 'message?user=' + otherUsername, {
         accessTokenFactory: () => user.token
@@ -32,7 +34,9 @@ export class MessageService {
       .withAutomaticReconnect()
       .build();
 
-    this.hubConnection.start().catch(error => console.log(error));
+    this.hubConnection.start()
+      .catch(error => console.log(error))
+      .finally(() => this.loadingService.idle());
 
     this.hubConnection.on('ReceiveMessageThread', messages => {
       this.messageThreadSource.next(messages);
@@ -64,6 +68,7 @@ export class MessageService {
 
   stopHubConnection(): void {
     if (this.hubConnection) {
+      this.messageThreadSource.next([]);
       this.hubConnection.stop();
     }
   };

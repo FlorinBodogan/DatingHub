@@ -1,5 +1,6 @@
 .form {
     height: fit-content;
+    width: 15rem;
 
     .form-title {
         font-size: 2rem;
@@ -19,8 +20,4 @@
 
 .is-invalid {
     border: 3px solid red;
-}
-
-input {
-    border: 3px solid RGBA(0, 0, 0, 0);
 }

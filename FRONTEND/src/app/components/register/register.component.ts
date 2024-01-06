@@ -1,6 +1,7 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output, Self } from '@angular/core';
+import { AbstractControl, ControlValueAccessor, FormBuilder, FormControl, FormGroup, NgControl, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from 'src/app/services/account/account.service';
 
@@ -9,8 +10,10 @@ import { AccountService } from 'src/app/services/account/account.service';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit{
+export class RegisterComponent implements OnInit, ControlValueAccessor {
   @Output() cancelRegister = new EventEmitter();
+  @Input() maxDate: Date | undefined;
+  bsConfig: Partial<BsDatepickerConfig> | undefined;
 
   registerForm: FormGroup = new FormGroup({});
   submitted = false;
@@ -19,22 +22,32 @@ export class RegisterComponent implements OnInit{
     private accountService: AccountService,
     private fb: FormBuilder,
     private router: Router,
-    private toastr:ToastrService
-  ) { }
+    private toastr: ToastrService,
+  ) {
+    this.bsConfig = {
+      containerClass: 'theme-red',
+      dateInputFormat: 'DD MMMM YYYY'
+    }
+  }
 
   ngOnInit(): void {
-      this.initializeForm();
+    this.initializeForm();
   };
+
+  writeValue(obj: any): void { }
+  registerOnChange(fn: any): void { }
+  registerOnTouched(fn: any): void { }
+  setDisabledState?(isDisabled: boolean): void { }
 
   initializeForm(): void {
     this.registerForm = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15)]],
+      username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15), Validators.pattern(/^[a-z][a-z0-9_-]{2,14}$/)]],
       gender: ['', [Validators.required]],
       knownAs: ['', [Validators.required]],
       dateOfBirth: ['', [Validators.required]],
       city: ['', [Validators.required]],
       country: ['', [Validators.required]],
-      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20), Validators.pattern(/^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])/)]],
       confirmPassword: ['', [Validators.required, this.matchValues('password')]],
     });
 
@@ -45,22 +58,25 @@ export class RegisterComponent implements OnInit{
 
   matchValues(matchTo: string): ValidatorFn {
     return (control: AbstractControl) => {
-      return control.value === control.parent?.get(matchTo)?.value ? null : {notMatching: true}
+      return control.value === control.parent?.get(matchTo)?.value ? null : { notMatching: true }
     }
   };
 
   checkClassInvalid(param: string, submitted: boolean) {
-    return this.registerForm.get(param)?.errors && this.registerForm.get(param)?.touched || this.registerForm.get(param)?.errors && submitted ? true: false;
+    return this.registerForm.get(param)?.errors && this.registerForm.get(param)?.touched || this.registerForm.get(param)?.errors && submitted ? true : false;
   };
 
-  register() {
+  register(): void {
     if (this.registerForm.invalid) {
       this.submitted = true;
       this.getErrorsMessage();
       return;
     }
+    const dob = this.GetDateOnly(this.registerForm.controls['dateOfBirth'].value)
+    console.log(dob)
     const newUser = {
-      ...this.registerForm.value
+      ...this.registerForm.value,
+      dateOfBirth: this.GetDateOnly(dob)
     }
 
     this.accountService.register(newUser).subscribe({
@@ -71,6 +87,12 @@ export class RegisterComponent implements OnInit{
       error: error => console.log(error)
     })
   };
+
+  private GetDateOnly(dob: string | undefined) {
+    if (!dob) return;
+    let theDob = new Date(dob);
+    return new Date(theDob.setMinutes(theDob.getMinutes() - theDob.getTimezoneOffset())).toISOString().slice(0, 10);
+  }
 
   cancel() {
     this.cancelRegister.emit(false);
@@ -95,6 +117,8 @@ export class RegisterComponent implements OnInit{
       return "Username it's too short.";
     } else if (this.registerForm.get('username')?.hasError('maxlength')) {
       return "Username it's too long.";
+    } else if (this.registerForm.get('username')?.hasError('pattern')) {
+      return "Username must start with a lowercase letter.";
     } else return '';
   };
 
@@ -135,6 +159,8 @@ export class RegisterComponent implements OnInit{
       return "Password it's too short.";
     } else if (this.registerForm.get('password')?.hasError('maxlength')) {
       return "Password it's too long.";
+    } else if (this.registerForm.get('password')?.hasError('pattern')) {
+      return "Password must contain at least one uppercase letter, one digit, and one special character.";
     } else return '';
   };
 
