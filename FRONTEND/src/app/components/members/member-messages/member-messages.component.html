@@ -1,5 +1,5 @@
-<div class="card" #scrollMe style="overflow: scroll;">
-    <div class="card-body msg_card_body">
+<div class="card">
+    <div class="card-body msg_card_body" #scrollMe style="overflow: scroll;">
         <div *ngFor="let message of (messageService.messageThread$ | async); let last = last">
             <div *ngIf="message.recipientUsername !== username" class="d-flex justify-content-start mb-4">
                 <div class="img_cont_msg">

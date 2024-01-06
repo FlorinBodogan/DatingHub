@@ -1,21 +1,31 @@
 .form {
+    margin-top: 2rem;
     height: fit-content;
-    width: 15rem;
+    width: 18rem;
+
+    .form-control {
+        font-size: 1.2rem;
+    }
 
     .form-title {
         font-size: 2rem;
-        color: #c61071;
+        margin-bottom: 2rem;
+        color: #d72525;
     }
 
     .btn-register {
-        color: #c61071;
-        border-color: #c61071;
+        color: #ff1515e4;
+        border-color: #ff1515e4;
     }
 
     .btn-register:hover {
-        background-color: #c61071;
+        background-color: #db1818a7;
         color: #fff;
     }
+}
+
+input {
+    border: 3px solid RGBA(0, 0, 0, 0);
 }
 
 .is-invalid {

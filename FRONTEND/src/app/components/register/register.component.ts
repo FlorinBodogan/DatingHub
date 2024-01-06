@@ -44,7 +44,7 @@ export class RegisterComponent implements OnInit, ControlValueAccessor {
       username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15), Validators.pattern(/^[a-z][a-z0-9_-]{2,14}$/)]],
       gender: ['', [Validators.required]],
       knownAs: ['', [Validators.required]],
-      dateOfBirth: ['', [Validators.required]],
+      dateOfBirth: ['', [Validators.required, this.ageValidator]],
       city: ['', [Validators.required]],
       country: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20), Validators.pattern(/^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])/)]],
@@ -94,6 +94,18 @@ export class RegisterComponent implements OnInit, ControlValueAccessor {
     return new Date(theDob.setMinutes(theDob.getMinutes() - theDob.getTimezoneOffset())).toISOString().slice(0, 10);
   }
 
+  ageValidator(control: any) {
+    const birthDate = new Date(control.value);
+    const currentDate = new Date();
+    const age = currentDate.getFullYear() - birthDate.getFullYear();
+
+    if (age < 18) {
+      return { invalidAge: true };
+    }
+
+    return null;
+  }
+
   cancel() {
     this.cancelRegister.emit(false);
   };
@@ -131,6 +143,8 @@ export class RegisterComponent implements OnInit, ControlValueAccessor {
   getErrorsMessageDateOfBirth(): string {
     if (this.registerForm.get('dateOfBirth')?.hasError('required')) {
       return 'Please select a date of birth.';
+    } else if (this.registerForm.get('dateOfBirth')?.hasError('invalidAge')) {
+      return "You must be at least 18 years old.";
     } else return '';
   };
 

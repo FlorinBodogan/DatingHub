@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -20,6 +20,8 @@ export class NavbarComponent implements OnInit {
     public accountService: AccountService,
     private router: Router,
     private toastr: ToastrService,
+    private renderer: Renderer2,
+    private el: ElementRef
   ) { }
 
   ngOnInit(): void {
@@ -28,7 +30,7 @@ export class NavbarComponent implements OnInit {
 
   login(): void {
     this.accountService.login(this.model).subscribe({
-      next: () => this.router.navigateByUrl('/'),
+      next: () => this.router.navigateByUrl('/members'),
       error: error => this.toastr.error(error.error)
     })
   };
@@ -36,5 +38,14 @@ export class NavbarComponent implements OnInit {
   logout(): void {
     this.accountService.logout();
     this.router.navigateByUrl('/')
+  };
+
+  closeNavbar() {
+    const navbarToggler = this.el.nativeElement.querySelector('.navbar-toggler');
+    const navbarCollapse = this.el.nativeElement.querySelector('.navbar-collapse');
+
+    if (navbarToggler && navbarCollapse) {
+      this.renderer.removeClass(navbarCollapse, 'show');
+    }
   };
 }

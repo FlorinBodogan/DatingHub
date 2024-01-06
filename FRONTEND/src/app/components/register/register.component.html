@@ -1,7 +1,7 @@
 <form [formGroup]="registerForm" (ngSubmit)="register()" class="form">
-    <h2 class="text-center form-title">Sign Up</h2>
+    <h1 class="text-center form-title">Sign Up</h1>
 
-    <div class="mb-3">
+    <div class="mb-3" style="font-size: 1rem;">
         <label style="margin-right: 10px;">Gender: </label>
         <label class="form-check-label" style="margin-right: 10px;">
             <input type="radio" class="form-check-input" value="male" formControlName="gender"> Male
@@ -24,7 +24,8 @@
 
     <div class="mb-3">
         <input type="text" [class.is-invalid]="checkClassInvalid('dateOfBirth', submitted)" class="form-control"
-            formControlName="dateOfBirth" placeholder="date 18+" bsDatepicker [bsConfig]="bsConfig" [maxDate]="maxDate">
+            formControlName="dateOfBirth" placeholder="date of birth" bsDatepicker [bsConfig]="bsConfig"
+            [maxDate]="maxDate">
         <div class="invalid-feedback">{{getErrorsMessageDateOfBirth()}}</div>
     </div>
 
