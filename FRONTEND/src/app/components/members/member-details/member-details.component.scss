@@ -198,6 +198,7 @@ gallery {
   .profile-container {
     display: flex;
     flex-direction: column;
+    height: fit-content;
     gap: 2rem;
 
     .btn-container {
