@@ -126,6 +126,9 @@ font-awesome
 ng-gallery
 MIT
 
+ng-particles
+MIT
+
 ng2-file-upload
 MIT
 

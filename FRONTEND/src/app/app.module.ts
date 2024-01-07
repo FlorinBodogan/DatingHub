@@ -23,6 +23,7 @@ import { EditRolesDialogComponent } from './components/admin/edit-roles-dialog/e
 import { RouteReuseStrategy } from '@angular/router';
 import { CustomRouteReuseStrategy } from './services/helpers/customRouteReuseStrategy';
 import { DatePickerComponent } from './forms/date-picker/date-picker.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { DatePickerComponent } from './forms/date-picker/date-picker.component';
     PhotoManagementComponent,
     EditRolesDialogComponent,
     DatePickerComponent,
+    LoginComponent,
   ],
   imports: [
     SharedModule,

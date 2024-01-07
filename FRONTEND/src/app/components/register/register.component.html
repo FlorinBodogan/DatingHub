@@ -1,56 +1,57 @@
-<form [formGroup]="registerForm" (ngSubmit)="register()" class="form">
-    <h1 class="text-center form-title">Sign Up</h1>
+<div class="register-container">
+    <form [formGroup]="registerForm" (ngSubmit)="register()" class="form">
+        <h1 class="text-center form-title">Sign Up</h1>
 
-    <div class="mb-3" style="font-size: 1rem;">
-        <label style="margin-right: 10px;">Gender: </label>
-        <label class="form-check-label" style="margin-right: 10px;">
-            <input type="radio" class="form-check-input" value="male" formControlName="gender"> Male
-        </label>
-        <label class="form-check-label">
-            <input type="radio" class="form-check-input" value="female" formControlName="gender"> Female
-        </label>
+        <div class="mb-3" style="font-size: 1rem;">
+            <label style="margin-right: 10px;">Gender: </label>
+            <label class="form-check-label" style="margin-right: 10px;">
+                <input type="radio" class="form-check-input" value="male" formControlName="gender"> Male
+            </label>
+            <label class="form-check-label">
+                <input type="radio" class="form-check-input" value="female" formControlName="gender"> Female
+            </label>
 
-    </div>
-    <div class="mb-3">
-        <input type="text" [class.is-invalid]="checkClassInvalid('username', submitted)" class="form-control"
-            formControlName="username" placeholder="username">
-        <div class="invalid-feedback">{{getErrorsMessageUsername()}}</div>
-    </div>
-    <div class="mb-3">
-        <input type="text" [class.is-invalid]="checkClassInvalid('knownAs', submitted)" class="form-control"
-            formControlName="knownAs" placeholder="known as">
-        <div class="invalid-feedback">{{getErrorsMessageKnownAs()}}</div>
-    </div>
+        </div>
+        <div class="mb-3">
+            <input type="text" [class.is-invalid]="checkClassInvalid('username', submitted)" class="form-control"
+                formControlName="username" placeholder="username">
+            <div class="invalid-feedback">{{getErrorsMessageUsername()}}</div>
+        </div>
+        <div class="mb-3">
+            <input type="text" [class.is-invalid]="checkClassInvalid('knownAs', submitted)" class="form-control"
+                formControlName="knownAs" placeholder="known as">
+            <div class="invalid-feedback">{{getErrorsMessageKnownAs()}}</div>
+        </div>
 
-    <div class="mb-3">
-        <input type="text" [class.is-invalid]="checkClassInvalid('dateOfBirth', submitted)" class="form-control"
-            formControlName="dateOfBirth" placeholder="date of birth" bsDatepicker [bsConfig]="bsConfig"
-            [maxDate]="maxDate">
-        <div class="invalid-feedback">{{getErrorsMessageDateOfBirth()}}</div>
-    </div>
+        <div class="mb-3">
+            <input type="text" [class.is-invalid]="checkClassInvalid('dateOfBirth', submitted)" class="form-control"
+                formControlName="dateOfBirth" placeholder="date of birth" bsDatepicker [bsConfig]="bsConfig"
+                [maxDate]="maxDate">
+            <div class="invalid-feedback">{{getErrorsMessageDateOfBirth()}}</div>
+        </div>
 
-    <div class="mb-3">
-        <input type="text" [class.is-invalid]="checkClassInvalid('city', submitted)" class="form-control"
-            formControlName="city" placeholder="city">
-        <div class="invalid-feedback">{{getErrorsMessageCity()}}</div>
-    </div>
-    <div class="mb-3">
-        <input type="text" [class.is-invalid]="checkClassInvalid('country', submitted)" class="form-control"
-            formControlName="country" placeholder="country">
-        <div class="invalid-feedback">{{getErrorsMessageCountry()}}</div>
-    </div>
-    <div class="mb-3">
-        <input type="password" [class.is-invalid]="checkClassInvalid('password', submitted)" class="form-control"
-            formControlName="password" placeholder="password">
-        <div class="invalid-feedback">{{getErrorsMessagePassword()}}</div>
-    </div>
-    <div class="mb-3">
-        <input type="password" [class.is-invalid]="checkClassInvalid('confirmPassword', submitted)" class="form-control"
-            formControlName="confirmPassword" placeholder="confirm password">
-        <div class="invalid-feedback">{{getErrorsMessageConfirmPassword()}}</div>
-    </div>
-    <div class="text-center">
-        <button class="btn btn-register me-2" type="submit">Register</button>
-        <button class="btn btn-outline-secondary" type="button" (click)="cancel()">Cancel</button>
-    </div>
-</form>
+        <div class="mb-3">
+            <input type="text" [class.is-invalid]="checkClassInvalid('city', submitted)" class="form-control"
+                formControlName="city" placeholder="city">
+            <div class="invalid-feedback">{{getErrorsMessageCity()}}</div>
+        </div>
+        <div class="mb-3">
+            <input type="text" [class.is-invalid]="checkClassInvalid('country', submitted)" class="form-control"
+                formControlName="country" placeholder="country">
+            <div class="invalid-feedback">{{getErrorsMessageCountry()}}</div>
+        </div>
+        <div class="mb-3">
+            <input type="password" [class.is-invalid]="checkClassInvalid('password', submitted)" class="form-control"
+                formControlName="password" placeholder="password">
+            <div class="invalid-feedback">{{getErrorsMessagePassword()}}</div>
+        </div>
+        <div class="mb-3">
+            <input type="password" [class.is-invalid]="checkClassInvalid('confirmPassword', submitted)"
+                class="form-control" formControlName="confirmPassword" placeholder="confirm password">
+            <div class="invalid-feedback">{{getErrorsMessageConfirmPassword()}}</div>
+        </div>
+        <div class="text-center">
+            <button mat-raised-button color="accent" type="submit">Register</button>
+        </div>
+    </form>
+</div>

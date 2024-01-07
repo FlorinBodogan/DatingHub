@@ -119,18 +119,18 @@ mat-icon {
 
 @media(max-height: 75rem) {
     .card {
-        height: 83vh;
+        height: 82vh;
     }
 }
 
 @media(max-height: 65rem) {
     .card {
-        height: 81vh;
+        height: 80vh;
     }
 }
 
-@media(max-height: 45rem) {
+@media (max-height: 45rem) and (min-width: 55rem) {
     .card {
-        height: 80vh;
+        height: 79vh;
     }
 }

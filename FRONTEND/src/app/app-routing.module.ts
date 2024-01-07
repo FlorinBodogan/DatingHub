@@ -10,6 +10,9 @@ import { MemberEditComponent } from './components/members/member-edit/member-edi
 import { preventUnsavedChangesGuard } from './services/guards/prevent-unsaved-changes.guard';
 import { AdminPanelComponent } from './components/admin/admin-panel/admin-panel.component';
 import { adminGuard } from './services/guards/admin.guard';
+import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent } from './components/login/login.component';
+import { nonAuthGuard } from './services/guards/non-auth.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -26,6 +29,8 @@ const routes: Routes = [
       { path: 'admin', component: AdminPanelComponent, canActivate: [adminGuard] },
     ]
   },
+  { path: 'register', component: RegisterComponent, canActivate: [nonAuthGuard] },
+  { path: 'login', component: LoginComponent, canActivate: [nonAuthGuard] },
   { path: '**', component: HomeComponent, pathMatch: 'full' },
 ];
 

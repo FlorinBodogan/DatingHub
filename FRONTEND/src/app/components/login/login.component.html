@@ -1,0 +1,16 @@
+<div class="login-container">
+    <form *ngIf="!(accountService.currentUser$| async)" #loginForm="ngForm" class="form" role="search"
+        (ngSubmit)="login()">
+        <h1 class="text-center form-title">Sign In</h1>
+        <input name="username" [(ngModel)]="model.username" class="form-control" type="text" placeholder="Username"
+            aria-label="Search">
+        <div class="password-input">
+            <input name="password" [(ngModel)]="model.password" class="form-control"
+                [type]="showPassword ? 'text' : 'password'" placeholder="Password" aria-label="Password">
+            <button type="button" (click)="togglePasswordVisibility()">
+                <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+        </div>
+        <button mat-raised-button class="btn" color="accent" type="submit">Login</button>
+    </form>
+</div>

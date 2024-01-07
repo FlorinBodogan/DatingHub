@@ -6,31 +6,28 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbar">
-      <ul class="navbar-nav me-auto">
-        <ng-container *ngIf="accountService.currentUser$| async">
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/members" routerLinkActive="active" (click)="closeNavbar()">Matches</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/lists" routerLinkActive="active" (click)="closeNavbar()">Lists</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/messages" routerLinkActive="active" (click)="closeNavbar()">Messages</a>
-          </li>
-          <li class="nav-item" *appHasRole="['Admin', 'Moderator']">
-            <a class="nav-link" routerLink="/admin" routerLinkActive="active" (click)="closeNavbar()">Admin</a>
-          </li>
-        </ng-container>
-
+      <ul class="navbar-nav me-auto" *ngIf="accountService.currentUser$| async">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/members" routerLinkActive="active" (click)="closeNavbar()">Matches</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/lists" routerLinkActive="active" (click)="closeNavbar()">Lists</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/messages" routerLinkActive="active" (click)="closeNavbar()">Messages</a>
+        </li>
+        <li class="nav-item" *appHasRole="['Admin', 'Moderator']">
+          <a class="nav-link" routerLink="/admin" routerLinkActive="active" (click)="closeNavbar()">Admin</a>
+        </li>
       </ul>
-      <form *ngIf="!(accountService.currentUser$| async)" #loginForm="ngForm" class="d-flex" role="search"
-        (ngSubmit)="login()">
-        <input name="username" [(ngModel)]="model.username" class="form-control me-sm-2" type="text"
-          placeholder="Username" aria-label="Search">
-        <input name="password" [(ngModel)]="model.password" class="form-control me-sm-2" type="password"
-          placeholder="Password" aria-label="Search">
-        <button class="btn--login--logout" type="submit">Login</button>
-      </form>
+      <ul class="navbar-nav me-auto" *ngIf="!(accountService.currentUser$ | async)">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/register" routerLinkActive="active" (click)="closeNavbar()">Register</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/login" routerLinkActive="active" (click)="closeNavbar()">Login</a>
+        </li>
+      </ul>
 
       <div *ngIf="(accountService.currentUser$| async) as user" class="user-icon" [matMenuTriggerFor]="menu">
         <img src="{{user?.photo || './assets/user.png'}}" alt="user photo" class="user-photo">

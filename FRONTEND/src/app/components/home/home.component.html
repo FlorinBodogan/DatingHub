@@ -1,20 +1,27 @@
 <div class="container-home">
-    <div *ngIf="!registerMode" class="container-elem">
-        <div *ngIf="!registerMode" style="text-align: center;">
-            <h1 *ngIf="!user">Find your match!</h1>
+    <div class="container-elem">
+        <div class="headers">
+            <h1 *ngIf="!user">Find Your Match</h1>
+            <h1 *ngIf="!user">With This Wonderfull App</h1>
             <h1 *ngIf="user">Welcome back {{user.username}}!</h1>
-            <p *ngIf="!user" class="lead">Come on in to view your matches... all you need to do is sign up!</p>
-            <p *ngIf="user" class="lead">See your matches, chat with someone... do anything you want!</p>
-            <div *ngIf="!user" class="text-center">
-                <button mat-raised-button color="accent" class="btn" (click)="registerToggle()">Register</button>
+        </div>
+        <div class="paraghraphs">
+            <p *ngIf="!user">Step into the realm of connections! Unlock your matches with just a simple move – sign up
+                now
+                and let the magic of
+                encounters unfold!</p>
+            <p *ngIf="user">See your matches, chat with someone... do anything you want!</p>
+        </div>
+        <div class="buttons">
+            <div *ngIf="!user">
+                <button mat-raised-button color="primary" class="btn" routerLink="/register">Register</button>
             </div>
-            <div *ngIf="user" class="text-center">
-                <button mat-raised-button color="accent" class="btn" routerLink="/members">Matches</button>
+            <div *ngIf="!user">
+                <button mat-raised-button color="accent" class="btn" routerLink="/login">Login</button>
+            </div>
+            <div *ngIf="user">
+                <button mat-raised-button color="primary" class="btn" routerLink="/members">Matches</button>
             </div>
         </div>
-    </div>
-
-    <div *ngIf="registerMode && !user" class="register-container">
-        <app-register (cancelRegister)="cancelRegisterMode($event)"></app-register>
     </div>
 </div>

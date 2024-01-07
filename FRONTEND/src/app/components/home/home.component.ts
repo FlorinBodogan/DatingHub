@@ -9,7 +9,6 @@ import { AccountService } from 'src/app/services/account/account.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  registerMode = false;
   user?: User | null;
 
   constructor(private accountService: AccountService) {
@@ -20,13 +19,5 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
 
-  };
-
-  registerToggle(): void {
-    this.registerMode = !this.registerMode;
-  };
-
-  cancelRegisterMode(event: boolean): void {
-    this.registerMode = event;
   };
 }

@@ -11,7 +11,6 @@ import { AccountService } from 'src/app/services/account/account.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit, ControlValueAccessor {
-  @Output() cancelRegister = new EventEmitter();
   @Input() maxDate: Date | undefined;
   bsConfig: Partial<BsDatepickerConfig> | undefined;
 
@@ -105,10 +104,6 @@ export class RegisterComponent implements OnInit, ControlValueAccessor {
 
     return null;
   }
-
-  cancel() {
-    this.cancelRegister.emit(false);
-  };
 
   // -------------------- MESSAGES ERROR FUNCTIONS -------------------
   getErrorsMessage(): void {
