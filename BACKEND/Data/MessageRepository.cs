@@ -39,30 +39,35 @@ namespace BACKEND.Data
 
             query = messageParams.Container switch
             {
+                "Unread" => query.Where(u => u.RecipientUsername == messageParams.Username && u.DateRead == null),
+
                 "Inbox" => query.Where(u => u.RecipientUsername == messageParams.Username),
+
                 "Outbox" => query.Where(u => u.SenderUsername == messageParams.Username),
-                _ => query.Where(u => u.RecipientUsername == messageParams.Username && u.DateRead == null)
+
+                _ => query
             };
 
-            var messages = query.ProjectTo<MessageDto>(this.mapper.ConfigurationProvider);
+            var result = query.ProjectTo<MessageDto>(this.mapper.ConfigurationProvider);
 
-            return await PagedList<MessageDto>.CreateAsync(messages, messageParams.PageNumber, messageParams.PageSize);
+            return await PagedList<MessageDto>.CreateAsync(result, messageParams.PageNumber, messageParams.PageSize);
         }
+
 
         public async Task<IEnumerable<MessageDto>> GetMessageThread(string currentUserName, string recipientUserName)
         {
             var query = this.context.Messages
                 .Where(
-                    m => m.RecipientUsername == currentUserName && 
+                    m => m.RecipientUsername == currentUserName &&
                     m.SenderUsername == recipientUserName ||
-                    m.RecipientUsername == recipientUserName && 
+                    m.RecipientUsername == recipientUserName &&
                     m.SenderUsername == currentUserName
                 )
                 .OrderBy(m => m.MessageSent)
                 .AsQueryable();
 
 
-            var unreadMessages = query.Where(m => m.DateRead == null && 
+            var unreadMessages = query.Where(m => m.DateRead == null &&
                 m.RecipientUsername == currentUserName).ToList();
 
             if (unreadMessages.Any())

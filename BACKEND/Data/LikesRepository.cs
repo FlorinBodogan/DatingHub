@@ -26,16 +26,27 @@ namespace BACKEND.Data
             var users = _context.Users.OrderBy(u => u.UserName).AsQueryable();
             var likes = _context.Likes.AsQueryable();
 
-            if(predicate == "liked")
+            if (predicate == "liked")
             {
                 likes = likes.Where(like => like.SourceUserId == userId);
                 users = likes.Select(like => like.TargetUser);
             }
 
-            if(predicate == "likedBy")
+            if (predicate == "likedBy")
             {
                 likes = likes.Where(like => like.TargetUserId == userId);
                 users = likes.Select(like => like.SourceUser);
+            }
+
+            if (predicate == "likedByEachOther")
+            {
+                likes = likes.Where(like => like.SourceUserId == userId || like.TargetUserId == userId);
+                var mutualLikes = likes
+                    .GroupBy(like => like.SourceUserId == userId ? like.TargetUserId : like.SourceUserId)
+                    .Where(group => group.Count() == 2)
+                    .Select(group => group.Key);
+
+                users = users.Where(user => mutualLikes.Contains(user.Id));
             }
 
             return await users.Select(user => new LikeDto

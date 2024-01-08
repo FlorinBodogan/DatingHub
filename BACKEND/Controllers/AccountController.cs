@@ -22,7 +22,7 @@ namespace BACKEND.Controllers
         private readonly IMapper _mapper;
         private readonly EmailService _emailService;
         private readonly IConfiguration _config;
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IMapper mapper, EmailService emailService, IConfiguration config) 
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IMapper mapper, EmailService emailService, IConfiguration config)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -55,12 +55,12 @@ namespace BACKEND.Controllers
             {
                 if (await SendConfirmEmailAsync(user))
                 {
-                    return Ok(new JsonResult(new {title = "Account Created", message = "Your account has been created, please confirm your email address." }));
+                    return Ok(new JsonResult(new { title = "Account Created", message = "Your account has been created, please confirm your email address." }));
                 }
 
                 return BadRequest("Failed to send email. Please contact admin.");
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return BadRequest("Failed to send email. Please contact admin.");
             }
@@ -73,13 +73,13 @@ namespace BACKEND.Controllers
 
             if (user == null) return Unauthorized("Invalid username");
 
-            if (user.EmailConfirmed == false) return Unauthorized("Email is not confirmed");    
+            // if (user.EmailConfirmed == false) return Unauthorized("Email is not confirmed");    
 
             var result = await _userManager.CheckPasswordAsync(user, loginDto.Password);
 
             if (!result) return Unauthorized("Invalid password");
 
-            return new UserDto 
+            return new UserDto
             {
                 Username = user.UserName,
                 Email = user.Email,
@@ -95,7 +95,7 @@ namespace BACKEND.Controllers
         public async Task<ActionResult<UserDto>> RefreshUserToken()
         {
             var user = await _userManager.FindByNameAsync(User.FindFirst(ClaimTypes.Name)?.Value);
-            return new UserDto 
+            return new UserDto
             {
                 Username = user.UserName,
                 Email = user.Email,
@@ -109,7 +109,7 @@ namespace BACKEND.Controllers
         [HttpPut("confirm-email")]
         public async Task<IActionResult> ConfirmEmail(ConfirmEmailDto model)
         {
-            var user = await _userManager.FindByEmailAsync(model.Email);            
+            var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null) return Unauthorized("This email address has not been registered yet");
 
             if (user.EmailConfirmed == true) return BadRequest("Your email was confirmed before. Please login to your account");
@@ -127,7 +127,7 @@ namespace BACKEND.Controllers
 
                 return BadRequest("Invalid token. Please try again");
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return BadRequest("Invalid token. Please try again");
             }
@@ -151,7 +151,7 @@ namespace BACKEND.Controllers
 
                 return BadRequest("Failed to send email. Please contact admin");
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return BadRequest("Failed to send email. PLease contact admin");
             }
@@ -176,7 +176,7 @@ namespace BACKEND.Controllers
 
                 return BadRequest("Failed to send email. Please contact admin");
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return BadRequest("Failed to send email. Please contact admin");
             }
@@ -202,7 +202,7 @@ namespace BACKEND.Controllers
 
                 return BadRequest("Invalid token. Please try again");
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return BadRequest("Invalid token. Please try again");
             }
@@ -317,7 +317,7 @@ namespace BACKEND.Controllers
                 </body>
                 </html>
             ";
-            
+
             var emailSend = new EmailSendDto(user.Email, "Forgot username or password", body);
 
             return await _emailService.SendEmailAsync(emailSend);

@@ -14,7 +14,7 @@ export class ListsComponent implements OnInit {
   constructor(private memberService: MemberService) { }
 
   ngOnInit(): void {
-    this.loadLikes("liked");
+    this.loadLikes("likedByEachOther");
   };
 
   loadLikes(value: string) {
@@ -28,8 +28,10 @@ export class ListsComponent implements OnInit {
   onSelectedIndexChange(tabIndex: number): void {
     this.currentTabIndex = tabIndex;
     if (this.currentTabIndex === 0) {
-      this.loadLikes("liked");
+      this.loadLikes("likedByEachOther");
     } else if (this.currentTabIndex === 1) {
+      this.loadLikes("liked");
+    } else if (this.currentTabIndex === 2) {
       this.loadLikes("likedBy");
     }
   };

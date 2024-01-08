@@ -8,10 +8,10 @@
     <div class="collapse navbar-collapse" id="navbar">
       <ul class="navbar-nav me-auto" *ngIf="accountService.currentUser$| async">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/members" routerLinkActive="active" (click)="closeNavbar()">Matches</a>
+          <a class="nav-link" routerLink="/members" routerLinkActive="active" (click)="closeNavbar()">Members</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/lists" routerLinkActive="active" (click)="closeNavbar()">Lists</a>
+          <a class="nav-link" routerLink="/lists" routerLinkActive="active" (click)="closeNavbar()">Matches</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/messages" routerLinkActive="active" (click)="closeNavbar()">Messages</a>
