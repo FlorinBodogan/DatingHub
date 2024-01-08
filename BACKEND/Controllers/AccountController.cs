@@ -146,10 +146,10 @@ namespace BACKEND.Controllers
             {
                 if (await SendConfirmEmailAsync(user))
                 {
-                    return Ok(new JsonResult(new { title = "Confirmation link sent", message = "Please confrim your email address" }));
+                    return Ok(new JsonResult(new { title = "Confirmation link sent", message = "Please confirm your email address" }));
                 }
 
-                return BadRequest("Failed to send email. PLease contact admin");
+                return BadRequest("Failed to send email. Please contact admin");
             }
             catch(Exception)
             {

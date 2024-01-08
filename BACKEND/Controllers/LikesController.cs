@@ -29,6 +29,12 @@ namespace BACKEND.Controllers
 
             if (userLike != null) return BadRequest("You already like this user");
 
+            var likeConnection = await _uow.LikesRepository.CheckLikeConnection(sourceUserId, likedUser.Id);
+
+            if (likeConnection) {
+                await _uow.LikesRepository.ConfirmUsersLikedEachOther(sourceUserId, likedUser.Id);
+            }
+
             userLike = new UserLike 
             {
                 SourceUserId = sourceUserId,

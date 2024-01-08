@@ -19,6 +19,8 @@ export class MessageService {
   private messageThreadSource = new BehaviorSubject<Message[]>([]);
   messageThread$ = this.messageThreadSource.asObservable();
 
+  errorMessageBot = '';
+
   httpOptions: { headers: HttpHeaders } = {
     headers: new HttpHeaders({ "Content-Type": "application/json" }),
   };
@@ -26,6 +28,7 @@ export class MessageService {
   constructor(private http: HttpClient, private loadingService: LoadingEffectService) { }
 
   createHubConnection(user: User, otherUsername: string): void {
+    this.errorMessageBot = '';
     this.loadingService.busy();
     this.hubConnection = new HubConnectionBuilder()
       .withUrl(this.hubUrl + 'message?user=' + otherUsername, {
@@ -52,6 +55,9 @@ export class MessageService {
               }
             })
             this.messageThreadSource.next([...messages]);
+          },
+          error: error => {
+            console.log(error);
           }
         })
       }
@@ -61,9 +67,12 @@ export class MessageService {
       this.messageThread$.pipe(take(1)).subscribe({
         next: messages => {
           this.messageThreadSource.next([...messages, message])
+        },
+        error: error => {
+          console.log(error);
         }
       })
-    })
+    });
   };
 
   stopHubConnection(): void {
@@ -74,18 +83,27 @@ export class MessageService {
   };
 
   getMessages(pageNumber: number, pageSize: number, container: string): Observable<any> {
+    this.errorMessageBot = '';
     let params = getPaginationHeaders(pageNumber, pageSize);
     params = params.append('Container', container);
     return getPaginatedResult<Message[]>(this.baseURL + 'messages', params, this.http);
   };
 
   getMessageThread(username: string): Observable<any> {
+    this.errorMessageBot = '';
     return this.http.get<Message[]>(this.baseURL + 'messages/thread/' + username, this.httpOptions);
   };
 
   sendMessage(username: string, content: string) {
-    return this.hubConnection?.invoke('SendMessage', { recipientUsername: username, content }).catch(error => console.log(error));
+    return this.hubConnection?.invoke('SendMessage', { recipientUsername: username, content })
+      .then(() => console.log("Message sent successfully"))
+      .catch(error => {
+        console.error("Error sending message:", error);
+
+        this.errorMessageBot = `Hi, you cannot chat with ${username} because you are not liking each other yet.`;
+      });
   };
+
 
   deleteMessage(id: number): Observable<any> {
     return this.http.delete(this.baseURL + 'messages/' + id);

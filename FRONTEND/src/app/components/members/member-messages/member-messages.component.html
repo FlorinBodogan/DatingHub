@@ -1,4 +1,17 @@
 <div class="card">
+    <div class="card-body msg_card_body" #scrollMe style="overflow: scroll;"
+        *ngIf="this.messageService.errorMessageBot">
+        <div class="d-flex justify-content-start mb-4">
+            <div class="img_cont_msg">
+                <img src="./assets/user.png" class="rounded-circle user_img_msg">
+            </div>
+            <div class="msg_cotainer">
+                {{this.messageService.errorMessageBot}}
+                <span class="msg_time">Bot</span>
+            </div>
+        </div>
+    </div>
+
     <div class="card-body msg_card_body" #scrollMe style="overflow: scroll;">
         <div *ngFor="let message of (messageService.messageThread$ | async); let last = last">
             <div *ngIf="message.recipientUsername !== username" class="d-flex justify-content-start mb-4">
