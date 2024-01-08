@@ -23,6 +23,7 @@ namespace BACKEND.Extensions
             services.AddSignalR();
             services.AddSingleton<PresenceTracker>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<EmailService>();
 
             return services;
         }

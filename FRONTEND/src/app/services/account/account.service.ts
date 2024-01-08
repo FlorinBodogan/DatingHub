@@ -4,6 +4,9 @@ import { BehaviorSubject, Observable, map } from 'rxjs';
 import { User } from 'src/app/interfaces/user';
 import { environment } from 'src/environments/environment';
 import { PresenceService } from '../presence/presence.service';
+import { ConfirmEmail } from 'src/app/interfaces/confirmEmail';
+import { ResetPassword } from 'src/app/interfaces/resetPassword';
+import { RegisterUser } from 'src/app/interfaces/registerUser';
 
 @Injectable({
   providedIn: 'root'
@@ -31,14 +34,8 @@ export class AccountService {
     )
   };
 
-  register(model: any) {
-    return this.http.post<User>(this.baseURL + 'account/register', model, this.httpOptions).pipe(
-      map(user => {
-        if (user) {
-          this.setCurrentUser(user);
-        }
-      })
-    )
+  register(model: RegisterUser): Observable<any> {
+    return this.http.post<User>(this.baseURL + 'account/register', model, this.httpOptions);
   };
 
   setCurrentUser(user: User): void {
@@ -58,5 +55,21 @@ export class AccountService {
 
   getDecodedToken(token: string) {
     return JSON.parse(atob(token.split('.')[1]));
+  };
+
+  confirmEmail(model: ConfirmEmail) {
+    return this.http.put(`${this.baseURL}account/confirm-email`, model);
+  };
+
+  resendEmailConfirmationLink(email: string) {
+    return this.http.post(`${this.baseURL}account/resend-email-confirmation-link/${email}`, {});
+  };
+
+  forgotUsernameOrPassword(email: string) {
+    return this.http.post(`${this.baseURL}account/forgot-username-or-password/${email}`, {});
+  };
+
+  resetPassword(model: ResetPassword) {
+    return this.http.put(`${this.baseURL}account/reset-password`, model);
   };
 }

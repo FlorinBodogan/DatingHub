@@ -13,10 +13,15 @@ namespace BACKEND.Extensions
         public static IServiceCollection AddIdentityServices(this IServiceCollection services,
         IConfiguration config)
         {
-        services.AddIdentityCore<AppUser>()
+        services.AddIdentityCore<AppUser>(options => {
+            options.SignIn.RequireConfirmedEmail = true;
+        })
             .AddRoles<AppRole>()
             .AddRoleManager<RoleManager<AppRole>>()
-            .AddEntityFrameworkStores<DataContext>();
+            .AddEntityFrameworkStores<DataContext>()
+            .AddSignInManager<SignInManager<AppUser>>()
+            .AddUserManager<UserManager<AppUser>>()
+            .AddDefaultTokenProviders();
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options => {

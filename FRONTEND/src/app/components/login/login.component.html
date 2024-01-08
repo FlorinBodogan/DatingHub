@@ -1,5 +1,5 @@
 <div class="login-container">
-    <form *ngIf="!(accountService.currentUser$| async)" #loginForm="ngForm" class="form" role="search"
+    <form *ngIf="!(accountService.currentUser$| async) && showSignInForm" #loginForm="ngForm" class="form" role="search"
         (ngSubmit)="login()">
         <h1 class="text-center form-title">Sign In</h1>
         <input name="username" [(ngModel)]="model.username" class="form-control" type="text" placeholder="Username"
@@ -13,4 +13,27 @@
         </div>
         <button mat-raised-button class="btn" color="accent" type="submit">Login</button>
     </form>
+
+    <form *ngIf="!(accountService.currentUser$| async) && showResendEmailForm" #loginForm="ngForm" class="form"
+        role="search" (ngSubmit)="resendConfirmationEmail()">
+        <h1 class="text-center form-title">Resend Email</h1>
+        <input name="username" [(ngModel)]="model.email" class="form-control" type="text" placeholder="dummy@gmail.com"
+            aria-label="Search">
+        <button mat-raised-button class="btn" color="accent" type="submit">Resend</button>
+    </form>
+
+    <form *ngIf="!(accountService.currentUser$| async) && showPasswordChangeForm" #loginForm="ngForm" class="form"
+        role="search" (ngSubmit)="sendEmailUsernamePassword()">
+        <h1 class="text-center form-title">Email</h1>
+        <input name="username" [(ngModel)]="model.email" class="form-control" type="text" placeholder="dummy@gmail.com"
+            aria-label="Search">
+        <button mat-raised-button class="btn" color="accent" type="submit">Send</button>
+    </form>
+
+    <p (click)="togglePasswordForm()" class="p">
+        Forgotten username or password? Click here.
+    </p>
+    <p *ngIf="showResendEmailLink" (click)="toggleEmailForm()" class="p">
+        Not received a confirmation email? Resend it.
+    </p>
 </div>

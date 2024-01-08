@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output, Self } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, FormBuilder, FormControl, FormGroup, NgControl, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { ToastrService } from 'ngx-toastr';
+import { RegisterUser } from 'src/app/interfaces/registerUser';
 import { AccountService } from 'src/app/services/account/account.service';
 
 @Component({
@@ -42,6 +43,7 @@ export class RegisterComponent implements OnInit, ControlValueAccessor {
     this.registerForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15), Validators.pattern(/^[a-z][a-z0-9_-]{2,14}$/)]],
       gender: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
       knownAs: ['', [Validators.required]],
       dateOfBirth: ['', [Validators.required, this.ageValidator]],
       city: ['', [Validators.required]],
@@ -71,20 +73,24 @@ export class RegisterComponent implements OnInit, ControlValueAccessor {
       this.getErrorsMessage();
       return;
     }
+
     const dob = this.GetDateOnly(this.registerForm.controls['dateOfBirth'].value)
-    console.log(dob)
+
     const newUser = {
       ...this.registerForm.value,
       dateOfBirth: this.GetDateOnly(dob)
-    }
+    } as RegisterUser;
 
     this.accountService.register(newUser).subscribe({
       next: () => {
-        this.router.navigateByUrl('/members');
-        this.toastr.success('You successfully registered');
+        this.toastr.success("Account created succesfully. Now you need to confirm the email adress. A link was sent");
       },
-      error: error => console.log(error)
-    })
+      error: (err) => {
+        this.toastr.error("Something unexpected went wrong. Please try again later.")
+        console.log(err)
+      }
+    });
+
   };
 
   private GetDateOnly(dob: string | undefined) {
@@ -108,6 +114,7 @@ export class RegisterComponent implements OnInit, ControlValueAccessor {
   // -------------------- MESSAGES ERROR FUNCTIONS -------------------
   getErrorsMessage(): void {
     this.getErrorsMessageUsername();
+    this.getErrorsMessageEmail();
     this.getErrorsMessageGender();
     this.getErrorsMessageDateOfBirth();
     this.getErrorsMessageKnownAs();
@@ -126,6 +133,14 @@ export class RegisterComponent implements OnInit, ControlValueAccessor {
       return "Username it's too long.";
     } else if (this.registerForm.get('username')?.hasError('pattern')) {
       return "Username must start with a lowercase letter.";
+    } else return '';
+  };
+
+  getErrorsMessageEmail(): string {
+    if (this.registerForm.get('email')?.hasError('required')) {
+      return 'Please enter an email.';
+    } else if (this.registerForm.get('email')?.hasError('email')) {
+      return "This is not a valid email.";
     } else return '';
   };
 

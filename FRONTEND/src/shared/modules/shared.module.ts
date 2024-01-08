@@ -21,7 +21,6 @@ import { MatTableModule } from '@angular/material/table';
 import { TimeagoModule } from 'ngx-timeago';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { NgParticlesModule } from "ng-particles";
 
 @NgModule({
   declarations: [
@@ -55,7 +54,6 @@ import { NgParticlesModule } from "ng-particles";
     TimeagoModule,
     MatDialogModule,
     BsDatepickerModule.forRoot(),
-    NgParticlesModule
   ],
   exports: [
     BrowserAnimationsModule,
@@ -80,7 +78,6 @@ import { NgParticlesModule } from "ng-particles";
     TimeagoModule,
     MatDialogModule,
     BsDatepickerModule,
-    NgParticlesModule
   ]
 })
 export class SharedModule { }

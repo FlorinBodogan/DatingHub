@@ -7,6 +7,10 @@ namespace BACKEND.DTOs
         [Required]
         public string Username { get; set; }
         [Required]
+        [RegularExpression(@"^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$", ErrorMessage = "Invalid email address")]
+        public string Email { get; set; }
+        public string EmailConfirmed { get; set; }
+        [Required]
         public string Gender { get; set; }
         [Required]
         public string KnownAs { get; set; }

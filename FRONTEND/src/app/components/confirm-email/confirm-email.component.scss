@@ -51,40 +51,6 @@ h1 {
     animation: fadeFromBottom 1.5s;
 }
 
-@keyframes fadeFromBottom {
-    from {
-        opacity: 0;
-        transform: translate(0, 600px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translate(0);
-    }
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes fadeFromTop {
-    from {
-        opacity: 0;
-        transform: translate(0, -600px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translate(0);
-    }
-}
-
 //RESPONSIVE
 @media(max-width: 61.875rem) {
     .container-elem {

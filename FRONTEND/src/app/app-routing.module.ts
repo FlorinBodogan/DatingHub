@@ -13,6 +13,8 @@ import { adminGuard } from './services/guards/admin.guard';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { nonAuthGuard } from './services/guards/non-auth.guard';
+import { ConfirmEmailComponent } from './components/confirm-email/confirm-email.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -31,6 +33,8 @@ const routes: Routes = [
   },
   { path: 'register', component: RegisterComponent, canActivate: [nonAuthGuard] },
   { path: 'login', component: LoginComponent, canActivate: [nonAuthGuard] },
+  { path: 'confirm-email', component: ConfirmEmailComponent, canActivate: [nonAuthGuard] },
+  { path: 'account/reset-password', component: ChangePasswordComponent, canActivate: [nonAuthGuard] },
   { path: '**', component: HomeComponent, pathMatch: 'full' },
 ];
 

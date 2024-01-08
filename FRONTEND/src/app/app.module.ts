@@ -24,6 +24,8 @@ import { RouteReuseStrategy } from '@angular/router';
 import { CustomRouteReuseStrategy } from './services/helpers/customRouteReuseStrategy';
 import { DatePickerComponent } from './forms/date-picker/date-picker.component';
 import { LoginComponent } from './components/login/login.component';
+import { ConfirmEmailComponent } from './components/confirm-email/confirm-email.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,8 @@ import { LoginComponent } from './components/login/login.component';
     EditRolesDialogComponent,
     DatePickerComponent,
     LoginComponent,
+    ConfirmEmailComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     SharedModule,

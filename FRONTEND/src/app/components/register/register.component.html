@@ -18,6 +18,11 @@
             <div class="invalid-feedback">{{getErrorsMessageUsername()}}</div>
         </div>
         <div class="mb-3">
+            <input type="text" [class.is-invalid]="checkClassInvalid('email', submitted)" class="form-control"
+                formControlName="email" placeholder="email">
+            <div class="invalid-feedback">{{getErrorsMessageEmail()}}</div>
+        </div>
+        <div class="mb-3">
             <input type="text" [class.is-invalid]="checkClassInvalid('knownAs', submitted)" class="form-control"
                 formControlName="knownAs" placeholder="known as">
             <div class="invalid-feedback">{{getErrorsMessageKnownAs()}}</div>
