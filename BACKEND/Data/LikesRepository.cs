@@ -53,5 +53,40 @@ namespace BACKEND.Data
         {
             return await _context.Users.Include(x => x.LikedUsers).FirstOrDefaultAsync(x => x.Id == userId);
         }
+
+        public async Task<bool> CheckLikeConnection(int userSourceId, int userTargetId)
+        {
+            var reverseLike = await _context.Likes
+                .FirstOrDefaultAsync(ul => ul.SourceUserId == userTargetId && ul.TargetUserId == userSourceId);
+
+            return reverseLike != null;
+        }
+
+        public async Task<bool> CheckLikedEachOther(string userSourceName, string userTargetName)
+        {
+            var likedEachOther = await _context.Likes
+                .AnyAsync(ul =>
+                    (ul.SourceUser.UserName == userSourceName && ul.TargetUser.UserName == userTargetName && ul.LikedEachOther) ||
+                    (ul.SourceUser.UserName == userTargetName && ul.TargetUser.UserName == userSourceName && ul.LikedEachOther)
+                );
+
+            return likedEachOther;
+        }
+
+        public async Task<UserLike> ConfirmUsersLikedEachOther(int userSourceId, int userTargetId)
+        {
+            var like = await _context.Likes
+                .FirstOrDefaultAsync(ul => (ul.SourceUserId == userSourceId && ul.TargetUserId == userTargetId) ||
+                                            (ul.SourceUserId == userTargetId && ul.TargetUserId == userSourceId));
+
+            if (like != null)
+            {
+                like.LikedEachOther = true;
+
+                await _context.SaveChangesAsync();
+            }
+
+            return like;
+        }
     }
 }

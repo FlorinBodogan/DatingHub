@@ -29,18 +29,28 @@ namespace BACKEND.SignalR
         {
             var httpContext = Context.GetHttpContext();
             var otherUser = httpContext.Request.Query["user"];
+            var currentUsername = Context.User.GetUsername();
 
-            var groupName = GetGroupName(Context.User.GetUsername(), otherUser);
-            await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
-            var group = await AddToGroup(groupName);
+            var isLikedEachOther = await _uow.LikesRepository.CheckLikedEachOther(currentUsername, otherUser);
 
-            await Clients.Group(groupName).SendAsync("UpdatedGroup", group);
+            if (isLikedEachOther)
+            {
+                var groupName = GetGroupName(currentUsername, otherUser);
+                await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+                var group = await AddToGroup(groupName);
 
-            var messages = await _uow.MessageRepository.GetMessageThread(Context.User.GetUsername(), otherUser);
+                await Clients.Group(groupName).SendAsync("UpdatedGroup", group);
 
-            if (_uow.HasChanges()) await _uow.Complete();
+                var messages = await _uow.MessageRepository.GetMessageThread(currentUsername, otherUser);
 
-            await Clients.Caller.SendAsync("ReceiveMessageThread", messages);
+                if (_uow.HasChanges()) await _uow.Complete();
+
+                await Clients.Caller.SendAsync("ReceiveMessageThread", messages);
+            }
+            else
+            {
+                await Clients.Caller.SendAsync("NotLikedEachOther", $"You cannot send messages to {otherUser} because you are not liking each other.");
+            }
         }
 
         public override async Task OnDisconnectedAsync(Exception exception)
