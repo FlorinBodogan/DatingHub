@@ -31,26 +31,17 @@ namespace BACKEND.SignalR
             var otherUser = httpContext.Request.Query["user"];
             var currentUsername = Context.User.GetUsername();
 
-            var isLikedEachOther = await _uow.LikesRepository.CheckLikedEachOther(currentUsername, otherUser);
+            var groupName = GetGroupName(currentUsername, otherUser);
+            await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+            var group = await AddToGroup(groupName);
 
-            if (isLikedEachOther)
-            {
-                var groupName = GetGroupName(currentUsername, otherUser);
-                await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
-                var group = await AddToGroup(groupName);
+            await Clients.Group(groupName).SendAsync("UpdatedGroup", group);
 
-                await Clients.Group(groupName).SendAsync("UpdatedGroup", group);
+            var messages = await _uow.MessageRepository.GetMessageThread(currentUsername, otherUser);
 
-                var messages = await _uow.MessageRepository.GetMessageThread(currentUsername, otherUser);
+            if (_uow.HasChanges()) await _uow.Complete();
 
-                if (_uow.HasChanges()) await _uow.Complete();
-
-                await Clients.Caller.SendAsync("ReceiveMessageThread", messages);
-            }
-            else
-            {
-                await Clients.Caller.SendAsync("NotLikedEachOther", $"You cannot send messages to {otherUser} because you are not liking each other.");
-            }
+            await Clients.Caller.SendAsync("ReceiveMessageThread", messages);
         }
 
         public override async Task OnDisconnectedAsync(Exception exception)
@@ -62,15 +53,19 @@ namespace BACKEND.SignalR
 
         public async Task SendMessage(CreateMessageDto createMessageDto)
         {
-             var username = Context.User.GetUsername();
+            var username = Context.User.GetUsername();
 
-            if (username == createMessageDto.RecipientUsername.ToLower()) 
+            if (username == createMessageDto.RecipientUsername.ToLower())
                 throw new HubException("You cannot send messages to yourself");
 
             var sender = await _uow.UserRepository.GetUserByUsernameAsync(username);
             var recipient = await _uow.UserRepository.GetUserByUsernameAsync(createMessageDto.RecipientUsername);
 
             if (recipient == null) throw new HubException("Not found user");
+
+            var isLikedEachOther = await _uow.LikesRepository.CheckLikedEachOther(sender.UserName, recipient.UserName);
+
+            if (!isLikedEachOther) throw new HubException("You cannot chat with this user yet.");
 
             var message = new Message
             {
@@ -94,7 +89,8 @@ namespace BACKEND.SignalR
                 var connections = await PresenceTracker.GetConnectionsForUser(recipient.UserName);
                 if (connections != null)
                 {
-                    await _presenceHub.Clients.Clients(connections).SendAsync("NewMessageReceived", new {
+                    await _presenceHub.Clients.Clients(connections).SendAsync("NewMessageReceived", new
+                    {
                         username = sender.UserName,
                         knownAs = sender.KnownAs
                     });
@@ -103,7 +99,7 @@ namespace BACKEND.SignalR
 
             _uow.MessageRepository.AddMessage(message);
 
-            if (await _uow.Complete()) 
+            if (await _uow.Complete())
             {
                 await Clients.Group(groupName).SendAsync("NewMessage", _mapper.Map<MessageDto>(message));
             }
