@@ -144,3 +144,9 @@
         </div>
     </mat-tab>
 </mat-tab-group>
+
+<div class="paginator-bar">
+    <mat-paginator #paginator (page)="changePagePaginator($event)" [length]="totalDataLength" [pageSize]="pageSize"
+        [pageIndex]="pageNumber - 1" [pageSizeOptions]="[5, 10, 20, 50, 100]" showFirstLastButtons>
+    </mat-paginator>
+</div>

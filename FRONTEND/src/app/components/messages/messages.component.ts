@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Message } from 'src/app/interfaces/message';
 import { Pagination } from 'src/app/interfaces/pagination';
@@ -10,11 +11,11 @@ import { MessageService } from 'src/app/services/messages/message.service';
   styleUrls: ['./messages.component.scss']
 })
 export class MessagesComponent implements OnInit {
-  pagination?: Pagination;
   container = 'Unread';
   pageNumber = 1;
   pageSize: number = 5;
-  private currentTabIndex = 0;
+  currentTabIndex = 0;
+  totalDataLength = 0;
 
   //tables
   dataSource = new MatTableDataSource<Message[]>([]);
@@ -29,13 +30,17 @@ export class MessagesComponent implements OnInit {
   };
 
   loadMessages(): void {
-    this.messageService.getMessages(this.pageNumber, 5, this.container).subscribe({
+    this.messageService.getMessages(this.pageNumber, this.pageSize, this.container).subscribe({
       next: response => {
-        this.pageSize = response.pagination;
         this.dataSource.data = response.result;
+        this.totalDataLength = response.totalLength;
+      },
+      error: error => {
+        console.error("Error:", error);
       }
-    })
-  };
+    });
+  }
+
 
   deleteMessage(id: number): void {
     this.messageService.deleteMessage(id).subscribe({
@@ -48,15 +53,29 @@ export class MessagesComponent implements OnInit {
     if (this.currentTabIndex === 0) {
       this.dataSource.data = [];
       this.container = 'Unread';
+      this.resetVariables();
       this.loadMessages();
     } else if (this.currentTabIndex === 1) {
       this.dataSource.data = [];
       this.container = 'Inbox';
+      this.resetVariables();
       this.loadMessages();
     } else if (this.currentTabIndex === 2) {
       this.dataSource.data = [];
       this.container = 'Outbox';
+      this.resetVariables();
       this.loadMessages();
     }
+  };
+
+  resetVariables(): void {
+    this.pageNumber = 1;
+    this.pageSize = 5;
+  }
+
+  changePagePaginator(event: PageEvent): void {
+    this.pageNumber = event.pageIndex + 1;
+    this.pageSize = event.pageSize;
+    this.loadMessages();
   };
 }
