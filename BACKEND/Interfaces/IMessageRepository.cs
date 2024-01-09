@@ -17,5 +17,8 @@ namespace BACKEND.Interfaces
         void AddGroup(Group group);
         Task<Group> GetMessageGroup(string groupName);
         Task<Group> GetGroupForConnection(string connectionId);
+        Task<int> GetNumbersOfMessagesLastWeek();
+        Task<int> GetNumbersOfMessagesLastMonth();
+        Task<int> GetNumbersOfMessagesLastYear();
     }
 }

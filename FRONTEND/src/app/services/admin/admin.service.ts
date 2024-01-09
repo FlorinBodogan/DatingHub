@@ -54,4 +54,36 @@ export class AdminService {
     const options = { body: model };
     return this.http.delete(url, options);
   };
+
+  getUsers(): Observable<any> {
+    return this.http.get(this.baseURL + 'admin/allUsers', this.httpOptions);
+  };
+  getUsersUncorfirmed(): Observable<any> {
+    return this.http.get(this.baseURL + 'admin/users-uncorfimed', this.httpOptions);
+  };
+  getUsersBanned(): Observable<any> {
+    return this.http.get(this.baseURL + 'admin/users-banned', this.httpOptions);
+  };
+
+  getNumberOfMatchesLastWeek(): Observable<any> {
+    return this.http.get(this.baseURL + 'admin/matches-last-week', this.httpOptions);
+  };
+
+  getNumberOfMatchesLastMonth(): Observable<any> {
+    return this.http.get(this.baseURL + 'admin/matches-last-month', this.httpOptions);
+  };
+
+  getNumberOfMatchesLastYear(): Observable<any> {
+    return this.http.get(this.baseURL + 'admin/matches-last-year', this.httpOptions);
+  };
+
+  getNumberOfMessagesLastWeek(): Observable<any> {
+    return this.http.get(this.baseURL + 'admin/messages-last-week', this.httpOptions);
+  };
+  getNumberOfMessagesLastMonth(): Observable<any> {
+    return this.http.get(this.baseURL + 'admin/messages-last-month', this.httpOptions);
+  };
+  getNumberOfMessagesLastYear(): Observable<any> {
+    return this.http.get(this.baseURL + 'admin/messages-last-year', this.httpOptions);
+  };
 };

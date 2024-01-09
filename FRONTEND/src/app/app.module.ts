@@ -25,8 +25,8 @@ import { DatePickerComponent } from './forms/date-picker/date-picker.component';
 import { LoginComponent } from './components/login/login.component';
 import { ConfirmEmailComponent } from './components/confirm-email/confirm-email.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
-import { StatisticsComponent } from './components/admin/statistics/statistics.component';
 import { EditUserComponent } from './components/admin/dialogs/edit-user/edit-user.component';
+import { StatisticsComponent } from './components/admin/statistics/statistics.component';
 
 @NgModule({
   declarations: [
@@ -47,8 +47,8 @@ import { EditUserComponent } from './components/admin/dialogs/edit-user/edit-use
     LoginComponent,
     ConfirmEmailComponent,
     ChangePasswordComponent,
-    StatisticsComponent,
     EditUserComponent,
+    StatisticsComponent,
   ],
   imports: [
     SharedModule,

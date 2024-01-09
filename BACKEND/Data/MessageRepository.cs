@@ -111,5 +111,37 @@ namespace BACKEND.Data
                 .FirstOrDefaultAsync(x => x.Name == groupName);
         }
 
+        public async Task<int> GetNumbersOfMessagesLastWeek()
+        {
+            DateTime lastWeekStartDate = DateTime.UtcNow.AddDays(-7);
+
+            var matchesCount = await context.Messages
+                .Where(m => m.MessageSent >= lastWeekStartDate)
+                .CountAsync();
+
+            return matchesCount;
+        }
+
+        public async Task<int> GetNumbersOfMessagesLastMonth()
+        {
+            DateTime lastWeekStartDate = DateTime.UtcNow.AddDays(-30);
+
+            var matchesCount = await context.Messages
+                .Where(m => m.MessageSent >= lastWeekStartDate)
+                .CountAsync();
+
+            return matchesCount;
+        }
+
+        public async Task<int> GetNumbersOfMessagesLastYear()
+        {
+            DateTime lastWeekStartDate = DateTime.UtcNow.AddDays(-365);
+
+            var matchesCount = await context.Messages
+                .Where(m => m.MessageSent >= lastWeekStartDate)
+                .CountAsync();
+
+            return matchesCount;
+        }
     }
 }

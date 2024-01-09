@@ -94,11 +94,45 @@ namespace BACKEND.Data
             if (like != null)
             {
                 like.LikedEachOther = true;
+                like.LikeDate = DateTime.UtcNow;
 
                 await _context.SaveChangesAsync();
             }
 
             return like;
+        }
+
+        public async Task<int> GetNumbersOfMatchesLastWeek()
+        {
+            DateTime lastWeekStartDate = DateTime.UtcNow.AddDays(-7);
+
+            var matchesCount = await _context.Likes
+                .Where(l => l.LikedEachOther && l.LikeDate >= lastWeekStartDate)
+                .CountAsync();
+
+            return matchesCount;
+        }
+
+        public async Task<int> GetNumbersOfMatchesLastMonth()
+        {
+            DateTime lastWeekStartDate = DateTime.UtcNow.AddDays(-30);
+
+            var matchesCount = await _context.Likes
+                .Where(l => l.LikedEachOther && l.LikeDate >= lastWeekStartDate)
+                .CountAsync();
+
+            return matchesCount;
+        }
+
+        public async Task<int> GetNumbersOfMatchesLastYear()
+        {
+            DateTime lastWeekStartDate = DateTime.UtcNow.AddDays(-365);
+
+            var matchesCount = await _context.Likes
+                .Where(l => l.LikedEachOther && l.LikeDate >= lastWeekStartDate)
+                .CountAsync();
+
+            return matchesCount;
         }
     }
 }

@@ -14,5 +14,9 @@ namespace BACKEND.Interfaces
         Task<bool> CheckLikedEachOther(string sourceUser, string targetUser);
 
         Task<UserLike> ConfirmUsersLikedEachOther(int sourceUserId, int targetUserId);
+
+        Task<int> GetNumbersOfMatchesLastWeek();
+        Task<int> GetNumbersOfMatchesLastMonth();
+        Task<int> GetNumbersOfMatchesLastYear();
     }
 }

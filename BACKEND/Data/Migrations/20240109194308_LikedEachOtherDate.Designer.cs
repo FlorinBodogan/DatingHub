@@ -3,6 +3,7 @@ using System;
 using BACKEND.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BACKEND.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240109194308_LikedEachOtherDate")]
+    partial class LikedEachOtherDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -173,11 +176,11 @@ namespace BACKEND.Data.Migrations
                     b.Property<int>("TargetUserId")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("LikeDate")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<bool>("LikedEachOther")
                         .HasColumnType("boolean");
+
+                    b.Property<DateTime>("LikedEachOtherDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("SourceUserId", "TargetUserId");
 

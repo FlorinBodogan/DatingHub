@@ -220,6 +220,78 @@ namespace BACKEND.Controllers
             return BadRequest(new { message = "Problem deleting photo" });
         }
 
+        //STATISTICS
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpGet("users-banned")]
+        public async Task<int> GetNumberOfUsersBanned()
+        {
+            var bannedUsers = await _userManager.Users.Where(u => u.LockoutEnd != null && u.LockoutEnd > DateTimeOffset.UtcNow).ToListAsync();
+            return bannedUsers.Count;
+        }
+
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpGet("users-uncorfimed")]
+        public async Task<int> GetNumberOfUsersUncorfimed()
+        {
+            var uncorfimedUsers = await _userManager.Users.Where(u => u.EmailConfirmed != true).ToListAsync();
+            return uncorfimedUsers.Count;
+        }
+
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpGet("allUsers")]
+        public async Task<int> GetNumberOfUsers()
+        {
+            var users = await _userManager.Users.ToListAsync();
+            return users.Count;
+        }
+
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpGet("matches-last-week")]
+        public async Task<int> GetNumberOfMatchesLastWeek()
+        {
+            var users = await _uow.LikesRepository.GetNumbersOfMatchesLastWeek();
+            return users;
+        }
+
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpGet("matches-last-month")]
+        public async Task<int> GetNumberOfMatchesLastMonth()
+        {
+            var users = await _uow.LikesRepository.GetNumbersOfMatchesLastMonth();
+            return users;
+        }
+
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpGet("matches-last-year")]
+        public async Task<int> GetNumberOfMatchesLastYear()
+        {
+            var users = await _uow.LikesRepository.GetNumbersOfMatchesLastYear();
+            return users;
+        }
+
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpGet("messages-last-year")]
+        public async Task<int> GetNumberOfMessagesLastYear()
+        {
+            var users = await _uow.MessageRepository.GetNumbersOfMessagesLastYear();
+            return users;
+        }
+
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpGet("messages-last-month")]
+        public async Task<int> GetNumberOfMessagesLastMonth()
+        {
+            var users = await _uow.MessageRepository.GetNumbersOfMessagesLastMonth();
+            return users;
+        }
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpGet("messages-last-week")]
+        public async Task<int> GetNumberOfMessagesLastWeek()
+        {
+            var users = await _uow.MessageRepository.GetNumbersOfMessagesLastWeek();
+            return users;
+        }
+
         //UTILS
         private bool IsAdminUserName(string username)
         {
