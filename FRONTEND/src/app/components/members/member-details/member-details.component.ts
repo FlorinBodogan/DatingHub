@@ -90,11 +90,11 @@ export class MemberDetailsComponent implements OnInit {
 
   selectedMessageTab(): void {
     if (this.selectedTab === 'Messages') {
-      this.selectedTabIndex = 3;
+      this.selectedTabIndex = 2;
     }
   };
 
   switchToMessageTab(): void {
-    this.selectedTabIndex = 3;
+    this.selectedTabIndex = 2;
   }
 }

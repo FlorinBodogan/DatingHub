@@ -169,9 +169,17 @@
     padding: 1rem;
     color: #dcdcdc;
 
-    p {
-      font-size: 1.8rem;
-      line-height: 2rem;
+    .profile-section {
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      color: #eee;
+    }
+
+    .profile-info {
+      color: #999;
+      line-height: 1.6;
     }
   }
 }

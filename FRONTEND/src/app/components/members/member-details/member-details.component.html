@@ -46,22 +46,30 @@
 
         <mat-tab label="Description" aria-label="primary" class="tab">
             <div class="tab1--wrapper">
-                <h2>Looking For:</h2>
-                <p>{{member.lookingFor}}</p>
-                <h2>About Me:</h2>
-                <p>{{member.introduction}}</p>
+                <div class="profile-section">
+                    <h2>Looking For:</h2>
+                    <p class="profile-info">{{member.lookingFor}}</p>
+                </div>
+
+                <div class="profile-section">
+                    <h2>About Me:</h2>
+                    <p class="profile-info">{{member.introduction}}</p>
+                </div>
+
+                <div class="profile-section">
+                    <h2>Interests:</h2>
+                    <p class="profile-info">{{member.interests}}</p>
+                </div>
             </div>
         </mat-tab>
-        <mat-tab label="Interests" class="tab">
-            <p>{{member.interests}}</p>
-        </mat-tab>
+
         <mat-tab label="Photos" #photoTab class="tab">
             <gallery *ngIf="photoTab.isActive" [items]="images"></gallery>
         </mat-tab>
+
         <mat-tab label="Messages" class="tab">
-            <app-member-messages *ngIf="selectedTabIndex === 3" [user]="user"
+            <app-member-messages *ngIf="selectedTabIndex === 2" [user]="user"
                 [username]="member.userName"></app-member-messages>
         </mat-tab>
-
     </mat-tab-group>
 </div>
