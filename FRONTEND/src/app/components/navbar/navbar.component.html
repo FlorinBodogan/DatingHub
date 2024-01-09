@@ -1,36 +1,40 @@
 <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/" (click)="closeNavbar()">
+    <a class="navbar-brand" routerLink="/" (click)="isMenuCollapsed = true">
       <div class="brand-name">
         <span>Dating</span>
         <span class="brand-name-hub">hub</span>
       </div>
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
+    <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbar">
+    <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse" id="navbar">
       <ul class="navbar-nav me-auto" *ngIf="accountService.currentUser$| async">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/members" routerLinkActive="active" (click)="closeNavbar()">Members</a>
+          <a class="nav-link" routerLink="/members" routerLinkActive="active"
+            (click)="isMenuCollapsed = true">Members</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/lists" routerLinkActive="active" (click)="closeNavbar()">Matches</a>
+          <a class="nav-link" routerLink="/lists" routerLinkActive="active" (click)="isMenuCollapsed = true">Matches</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/messages" routerLinkActive="active" (click)="closeNavbar()">Messages</a>
+          <a class="nav-link" routerLink="/messages" routerLinkActive="active"
+            (click)="isMenuCollapsed = true">Messages</a>
         </li>
         <li class="nav-item" *appHasRole="['Admin', 'Moderator']">
-          <a class="nav-link" routerLink="/admin" routerLinkActive="active" (click)="closeNavbar()">Dashboard</a>
+          <a class="nav-link" routerLink="/admin" routerLinkActive="active"
+            (click)="isMenuCollapsed = true">Dashboard</a>
         </li>
       </ul>
       <ul class="navbar-nav me-auto" *ngIf="!(accountService.currentUser$ | async)">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/register" routerLinkActive="active" (click)="closeNavbar()">Register</a>
+          <a class="nav-link" routerLink="/register" routerLinkActive="active"
+            (click)="isMenuCollapsed = true">Register</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/login" routerLinkActive="active" (click)="closeNavbar()">Login</a>
+          <a class="nav-link" routerLink="/login" routerLinkActive="active" (click)="isMenuCollapsed = true">Login</a>
         </li>
       </ul>
 

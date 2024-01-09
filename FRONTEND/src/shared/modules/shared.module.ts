@@ -21,6 +21,7 @@ import { MatTableModule } from '@angular/material/table';
 import { TimeagoModule } from 'ngx-timeago';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     TimeagoModule,
     MatDialogModule,
     BsDatepickerModule.forRoot(),
+    NgbCollapseModule
   ],
   exports: [
     BrowserAnimationsModule,
@@ -78,6 +80,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     TimeagoModule,
     MatDialogModule,
     BsDatepickerModule,
+    NgbCollapseModule
   ]
 })
 export class SharedModule { }
