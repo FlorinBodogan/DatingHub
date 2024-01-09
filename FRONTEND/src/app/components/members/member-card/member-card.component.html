@@ -24,7 +24,7 @@
         Message
     </button>
 
-    <button class="button-like" (click)="addLike(member)">
+    <button *ngIf="!ellementOffOnLists" class="button-like" (click)="addLike(member)">
         <p class="button-like-text gradient-text">Like</p>
     </button>
 </div>
