@@ -7,6 +7,22 @@
         </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="knownAs">
+        <mat-header-cell *matHeaderCellDef [style.background-color]="backgroundColorHeader"> Known As
+        </mat-header-cell>
+        <mat-cell *matCellDef="let user" [style.background-color]="backgroundColorRow">
+            {{user.knownAs}}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef [style.background-color]="backgroundColorHeader"> Email
+        </mat-header-cell>
+        <mat-cell *matCellDef="let user" [style.background-color]="backgroundColorRow">
+            {{user.email}}
+        </mat-cell>
+    </ng-container>
+
     <ng-container matColumnDef="roles">
         <mat-header-cell *matHeaderCellDef [style.background-color]="backgroundColorHeader"> Roles
         </mat-header-cell>
@@ -18,7 +34,9 @@
     <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef [style.background-color]="backgroundColorHeader"></mat-header-cell>
         <mat-cell *matCellDef="let user" [style.background-color]="backgroundColorRow">
-            <button mat-raised-button color="accent" (click)="openDialog(user)">Edit</button>
+            <button mat-raised-button color="primary" (click)="openDialog(user)">Edit</button>
+            <button mat-raised-button color="accent" (click)="openDialog(user)">Ban</button>
+            <button mat-raised-button color="warn" (click)="openDialog(user)">Delete</button>
         </mat-cell>
     </ng-container>
 

@@ -3,6 +3,17 @@
 
     .mat-column-name {
         display: flex;
+        flex: 0 0 15%;
+    }
+
+    .mat-column-knownAs {
+        display: flex;
+        flex: 0 0 15%;
+    }
+
+    .mat-column-email {
+        display: flex;
+        flex: 0 0 25%;
     }
 
     .mat-column-roles {
@@ -11,7 +22,8 @@
 
     .mat-column-actions {
         display: flex;
-        flex: 0 0 10%;
+        gap: 1rem;
+        flex-grow: 1;
     }
 }
 
@@ -24,13 +36,32 @@
     }
 }
 
-@media(max-width: 375px) {
+@media(max-width: 1100px) {
     .table {
-        width: 120%;
+        width: 125%;
+    }
+}
 
-        .mat-column-actions {
-            display: flex;
-            flex: 0 0 25%;
-        }
+@media(max-width: 800px) {
+    .table {
+        width: 150%;
+    }
+}
+
+@media(max-width: 500px) {
+    .table {
+        width: 250%;
+    }
+}
+
+@media(max-width: 420px) {
+    .table {
+        width: 300%;
+    }
+}
+
+@media(max-width: 355px) {
+    .table {
+        width: 400%;
     }
 }

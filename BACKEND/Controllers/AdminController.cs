@@ -21,20 +21,22 @@ namespace BACKEND.Controllers
         {
             var users = await _userManager.Users
                 .OrderBy(u => u.UserName)
-                .Select(u => new 
+                .Select(u => new
                 {
                     u.Id,
                     UserName = u.UserName,
+                    Email = u.Email,
+                    KnownAs = u.KnownAs,
                     Roles = u.UserRoles.Select(r => r.Role.Name).ToList()
                 })
                 .ToListAsync();
 
-            return Ok(users);    
+            return Ok(users);
         }
 
         [Authorize(Policy = "RequireAdminRole")]
         [HttpPost("edit-roles/{username}")]
-        public async Task<ActionResult> EditRoles(string username, [FromQuery]string roles)
+        public async Task<ActionResult> EditRoles(string username, [FromQuery] string roles)
         {
             if (string.IsNullOrEmpty(roles)) return BadRequest("You must select at least one role");
 

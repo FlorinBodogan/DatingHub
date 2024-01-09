@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { User } from 'src/app/interfaces/user';
 import { AdminService } from 'src/app/services/admin/admin.service';
-import { EditRolesDialogComponent } from '../edit-roles-dialog/edit-roles-dialog.component';
+import { EditRolesDialogComponent } from '../dialogs/edit-roles-dialog/edit-roles-dialog.component';
 
 @Component({
   selector: 'app-user-management',
@@ -13,7 +13,7 @@ import { EditRolesDialogComponent } from '../edit-roles-dialog/edit-roles-dialog
 export class UserManagementComponent implements OnInit {
   //tables
   dataSource = new MatTableDataSource<User>([]);
-  displayedColumns: string[] = ['name', 'roles', 'actions'];
+  displayedColumns: string[] = ['name', 'knownAs', 'email', 'roles', 'actions'];
   backgroundColorHeader = '#3333339c';
   backgroundColorRow = '#222';
 

@@ -18,14 +18,14 @@ import { PhotoEditorComponent } from './components/members/photo-editor/photo-ed
 import { AdminPanelComponent } from './components/admin/admin-panel/admin-panel.component';
 import { HasRoleDirective } from './directives/has-role.directive';
 import { UserManagementComponent } from './components/admin/user-management/user-management.component';
-import { PhotoManagementComponent } from './components/admin/photo-management/photo-management.component';
-import { EditRolesDialogComponent } from './components/admin/edit-roles-dialog/edit-roles-dialog.component';
+import { EditRolesDialogComponent } from './components/admin/dialogs/edit-roles-dialog/edit-roles-dialog.component';
 import { RouteReuseStrategy } from '@angular/router';
 import { CustomRouteReuseStrategy } from './services/helpers/customRouteReuseStrategy';
 import { DatePickerComponent } from './forms/date-picker/date-picker.component';
 import { LoginComponent } from './components/login/login.component';
 import { ConfirmEmailComponent } from './components/confirm-email/confirm-email.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { StatisticsComponent } from './components/admin/statistics/statistics.component';
 
 @NgModule({
   declarations: [
@@ -41,12 +41,12 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
     PhotoEditorComponent,
     AdminPanelComponent,
     UserManagementComponent,
-    PhotoManagementComponent,
     EditRolesDialogComponent,
     DatePickerComponent,
     LoginComponent,
     ConfirmEmailComponent,
     ChangePasswordComponent,
+    StatisticsComponent,
   ],
   imports: [
     SharedModule,

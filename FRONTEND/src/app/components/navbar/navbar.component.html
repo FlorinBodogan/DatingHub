@@ -17,7 +17,7 @@
           <a class="nav-link" routerLink="/messages" routerLinkActive="active" (click)="closeNavbar()">Messages</a>
         </li>
         <li class="nav-item" *appHasRole="['Admin', 'Moderator']">
-          <a class="nav-link" routerLink="/admin" routerLinkActive="active" (click)="closeNavbar()">Admin</a>
+          <a class="nav-link" routerLink="/admin" routerLinkActive="active" (click)="closeNavbar()">Dashboard</a>
         </li>
       </ul>
       <ul class="navbar-nav me-auto" *ngIf="!(accountService.currentUser$ | async)">
