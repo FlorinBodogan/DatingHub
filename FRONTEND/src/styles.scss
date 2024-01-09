@@ -50,24 +50,3 @@ body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
-
-.btn--login--logout {
-    border-radius: 5px;
-    padding: 0.4rem 1.3rem;
-    align-self: end;
-    display: inline-block;
-    font-weight: 400;
-    font-size: 15px;
-    text-transform: uppercase;
-    cursor: pointer;
-    border: 1px solid #fff;
-    color: #fff;
-    background-color: inherit;
-    transition: all 0.5s;
-}
-
-.btn--login--logout:hover {
-    color: #b71c1cdb;
-    border: 1px solid #b71c1cdb;
-    background-color: transparent;
-}

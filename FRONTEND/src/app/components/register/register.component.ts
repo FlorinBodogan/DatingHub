@@ -132,7 +132,7 @@ export class RegisterComponent implements OnInit, ControlValueAccessor {
     } else if (this.registerForm.get('username')?.hasError('maxlength')) {
       return "Username it's too long.";
     } else if (this.registerForm.get('username')?.hasError('pattern')) {
-      return "Username must start with a lowercase letter.";
+      return "Username must contain only lowercase letters.";
     } else return '';
   };
 

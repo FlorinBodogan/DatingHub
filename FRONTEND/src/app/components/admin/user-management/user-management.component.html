@@ -34,9 +34,35 @@
     <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef [style.background-color]="backgroundColorHeader"></mat-header-cell>
         <mat-cell *matCellDef="let user" [style.background-color]="backgroundColorRow">
-            <button mat-raised-button color="primary" (click)="openDialog(user)">Edit</button>
-            <button mat-raised-button color="accent" (click)="openDialog(user)">Ban</button>
-            <button mat-raised-button color="warn" (click)="openDialog(user)">Delete</button>
+            <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">Options</button>
+
+            <mat-menu #menu="matMenu" class="user-menu">
+                <button mat-menu-item routerLink="/members/{{user.userName}}">
+                    <mat-icon aria-hidden="false" class="mat-menu-item">person</mat-icon>
+                    <span class="mat-menu-item">View</span>
+                </button>
+                <button mat-menu-item (click)="openDialogRoles(user)">
+                    <mat-icon aria-hidden="false" class="mat-menu-item">edit</mat-icon>
+                    <span class="mat-menu-item">Roles</span>
+                </button>
+                <button mat-menu-item (click)="openDialogUsers(user)">
+                    <mat-icon aria-hidden="false" class="mat-menu-item">edit</mat-icon>
+                    <span class="mat-menu-item">User</span>
+                </button>
+            </mat-menu>
+
+            <button mat-raised-button color="accent" [matMenuTriggerFor]="menu2">More options</button>
+            <mat-menu #menu2="matMenu" class="user-menu">
+                <button mat-menu-item (click)="lockMember(user.id, user.userName)">
+                    <mat-icon aria-hidden="false" class="mat-menu-item">enhanced_encryption</mat-icon>
+                    <span class="mat-menu-item">Ban</span>
+                </button>
+                <button mat-menu-item (click)="unlockMember(user.id, user.userName)">
+                    <mat-icon aria-hidden="false" class="mat-menu-item">no_encryption</mat-icon>
+                    <span class="mat-menu-item">Unban</span>
+                </button>
+            </mat-menu>
+            <button mat-raised-button color="warn" (click)="deleteMember(user.id, user.userName)">Delete</button>
         </mat-cell>
     </ng-container>
 

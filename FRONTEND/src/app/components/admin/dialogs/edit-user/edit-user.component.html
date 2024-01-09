@@ -1,0 +1,55 @@
+<mat-tab-group class="tabs-container" backgroundColor="accent">
+    <mat-tab label="Info" aria-label="primary" class="mat-tab">
+        <div class="user-container">
+            <form #editForm="ngForm" id="editForm" (ngSubmit)="updateUserInfo()" *ngIf="member">
+                <h4 class="mt-2">Name:</h4>
+                <textarea [(ngModel)]="member.userName" name="userName" class="form-control" cols="30" rows="1">
+                </textarea>
+                <h4 class="mt-2">Email:</h4>
+                <textarea [(ngModel)]="member.email" name="email" class="form-control" cols="30" rows="1">
+                </textarea>
+                <h4 class="mt-2">Known As:</h4>
+                <textarea [(ngModel)]="member.knownAs" name="knownAs" class="form-control" cols="30" rows="1">
+                </textarea>
+            </form>
+            <div class="btn-wrapper">
+                <button mat-raised-button type="submit" form="editForm" color="accent" style="font-size: 1.2rem;">Save
+                    Changes
+                </button>
+            </div>
+        </div>
+    </mat-tab>
+
+    <mat-tab label="About" aria-label="primary" class="mat-tab">
+        <div class="user-container">
+            <form #editForm="ngForm" id="editForm" (ngSubmit)="updateUserDetails()" *ngIf="member">
+                <h4 class="mt-2">Description:</h4>
+                <textarea [(ngModel)]="member.introduction" name="introduction" class="form-control" cols="30" rows="6">
+                </textarea>
+                <h4 class="mt-2">Looking for:</h4>
+                <textarea [(ngModel)]="member.lookingFor" name="lookingFor" class="form-control" cols="30"
+                    rows="6"></textarea>
+                <h4 class="mt-2">Interests:</h4>
+                <textarea [(ngModel)]="member.interests" name="interests" class="form-control" cols="30"
+                    rows="6"></textarea>
+                <h4 class="mt-2">Location:</h4>
+                <div class="d-flex flex-row align-items-center">
+                    <strong><label for="city">City: </label></strong>
+                    <input type="text" [(ngModel)]="member.city" name="city" class="form-control mx-2">
+                    <strong><label for="country">Country: </label></strong>
+                    <input type="text" [(ngModel)]="member.country" name="country" class="form-control mx-2">
+                </div>
+            </form>
+
+            <div class="btn-wrapper">
+                <button mat-raised-button type="submit" form="editForm" color="accent" style="font-size: 1.2rem;">Save
+                    Changes
+                </button>
+            </div>
+        </div>
+    </mat-tab>
+
+    <mat-tab label="Photos" aria-label="primary" class="mat-tab">
+        <app-photo-editor [showUploader]="false" [member]="member"></app-photo-editor>
+    </mat-tab>
+</mat-tab-group>

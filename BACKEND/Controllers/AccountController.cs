@@ -73,9 +73,14 @@ namespace BACKEND.Controllers
 
             if (user == null) return Unauthorized("Invalid username");
 
-            // if (user.EmailConfirmed == false) return Unauthorized("Email is not confirmed");    
+            // if (user.EmailConfirmed == false) return Unauthorized("Email is not confirmed");  
 
             var result = await _userManager.CheckPasswordAsync(user, loginDto.Password);
+
+            if (await _userManager.IsLockedOutAsync(user))
+            {
+                return Unauthorized("Your account has been banned.");
+            }
 
             if (!result) return Unauthorized("Invalid password");
 

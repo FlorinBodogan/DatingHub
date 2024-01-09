@@ -5,10 +5,14 @@
             <img src="{{photo.url}}" alt="photo of user" class="user-photo">
             <div class="photo-gallery-btns-wrapper">
                 <button mat-mini-fab color="primary" aria-label="main-photo" [disabled]="photo.isMain"
-                    (click)="setMainPhoto(photo)">
+                    *ngIf="showUploader" (click)="setMainPhoto(photo)">
                     <mat-icon>favorite</mat-icon>
                 </button>
-                <button mat-mini-fab color="warn" aria-label="delete-photo" (click)="deletePhoto(photo.id)">
+                <button mat-mini-fab color="warn" *ngIf="showUploader" aria-label="delete-photo"
+                    (click)="deletePhoto(photo.id)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                <button mat-mini-fab color="warn" aria-label="delete-photo" (click)="deletePhotoAdmin(photo.id)">
                     <mat-icon>delete</mat-icon>
                 </button>
             </div>
@@ -16,7 +20,7 @@
     </div>
 
     <!-- PHOTO EDITOR -->
-    <div class="photo-editor-container">
+    <div class="photo-editor-container" *ngIf="showUploader">
         <div class="photo-editor-container-wrapper">
             <p class="add-photo-tag">Add photos</p>
             <div class="file-over-wrapper">
