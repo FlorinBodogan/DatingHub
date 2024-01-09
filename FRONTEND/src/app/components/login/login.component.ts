@@ -10,7 +10,10 @@ import { AccountService } from 'src/app/services/account/account.service';
 })
 export class LoginComponent {
   model: any = {}
+
+  isDirty = false;
   showPassword = false;
+
   showPasswordChangeForm = false;
   showSignInForm = true;
   showResendEmailLink = false;
@@ -60,7 +63,11 @@ export class LoginComponent {
     this.showSignInForm = false;
   };
 
-  togglePasswordVisibility() {
+  togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
+  };
+
+  onPasswordInput(): void {
+    this.isDirty = true;
   };
 }

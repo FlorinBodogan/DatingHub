@@ -1,6 +1,13 @@
 .navbar {
     min-height: 56px;
-    background: linear-gradient(to left, #3d091e8a, #eb196d66);
+    background: linear-gradient(to right, rgba(61, 9, 30, 0), #5c0433ca, rgba(61, 9, 30, 0));
+
+    .brand-name {
+        .brand-name-hub {
+            background-color: #880E4F;
+            padding: 3px;
+        }
+    }
 }
 
 .user-photo {

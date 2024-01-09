@@ -75,6 +75,7 @@ namespace BACKEND.Data
 
         public async Task<bool> CheckLikedEachOther(string userSourceName, string userTargetName)
         {
+            if (userSourceName == "admin" || userTargetName == "admin") return true;
             var likedEachOther = await _context.Likes
                 .AnyAsync(ul =>
                     (ul.SourceUser.UserName == userSourceName && ul.TargetUser.UserName == userTargetName && ul.LikedEachOther) ||

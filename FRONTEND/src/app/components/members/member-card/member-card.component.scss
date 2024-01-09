@@ -1,6 +1,6 @@
 .card {
   font-family: 'Roboto Slab', sans-serif;
-  background-color: #222;
+  background-color: #181818;
   height: 37rem;
   border-radius: 5px;
   display: flex;
@@ -187,30 +187,7 @@
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
-  animation: changeColor 7s linear infinite;
-}
-
-@keyframes changeColor {
-
-  0%,
-  10% {
-    color: #ff0000;
-  }
-
-  10%,
-  20% {
-    color: #fffb00;
-  }
-
-  20%,
-  30% {
-    color: #ff7300;
-  }
-
-  90%,
-  100% {
-    color: #00ffbf;
-  }
+  color: rgb(232, 232, 232);
 }
 
 .button-like {
@@ -219,7 +196,6 @@
   border: none;
   outline: none;
   color: rgb(255, 255, 255);
-  background: #000;
   cursor: pointer;
   position: relative;
   z-index: 0;
@@ -232,15 +208,15 @@
 .button-like:before {
   content: "";
   background: linear-gradient(45deg,
-      #ff0000,
-      #ff7300,
-      #fffb00,
-      #48ff00,
-      #00ffd5,
-      #002bff,
-      #7a00ff,
-      #ff00c8,
-      #ff0000);
+      #880000,
+      #3f012a,
+      #3f0082,
+      #820066,
+      #890000,
+      #001789,
+      #410086,
+      #800064,
+      #940000);
   position: absolute;
   top: -2px;
   left: -2px;
@@ -275,7 +251,6 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  background: #222;
   left: 0;
   top: 0;
   border-radius: 10px;

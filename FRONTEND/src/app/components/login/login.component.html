@@ -5,9 +5,9 @@
         <input name="username" [(ngModel)]="model.username" class="form-control" type="text" placeholder="Username"
             aria-label="Search">
         <div class="password-input">
-            <input name="password" [(ngModel)]="model.password" class="form-control"
+            <input name="password" (input)="onPasswordInput()" [(ngModel)]="model.password" class="form-control"
                 [type]="showPassword ? 'text' : 'password'" placeholder="Password" aria-label="Password">
-            <button type="button" (click)="togglePasswordVisibility()">
+            <button *ngIf="isDirty" type="button" (click)="togglePasswordVisibility()">
                 <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
             </button>
         </div>
