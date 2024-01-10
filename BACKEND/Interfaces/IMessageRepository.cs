@@ -20,5 +20,7 @@ namespace BACKEND.Interfaces
         Task<int> GetNumbersOfMessagesLastWeek();
         Task<int> GetNumbersOfMessagesLastMonth();
         Task<int> GetNumbersOfMessagesLastYear();
+
+        Task<int> DeleteUserMessages(int userId);
     }
 }

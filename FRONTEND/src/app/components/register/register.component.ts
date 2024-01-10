@@ -84,6 +84,7 @@ export class RegisterComponent implements OnInit, ControlValueAccessor {
     this.accountService.register(newUser).subscribe({
       next: () => {
         this.toastr.success("Account created succesfully.");
+        this.router.navigateByUrl('/login');
       },
       error: (err) => {
         this.toastr.error("Something unexpected went wrong. Please try again later.")

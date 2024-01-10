@@ -1,6 +1,7 @@
 using AutoMapper;
 using BACKEND.DTOs;
 using BACKEND.entities;
+using BACKEND.Extensions;
 using BACKEND.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -100,19 +101,28 @@ namespace BACKEND.Controllers
             var user = await _userManager.FindByNameAsync(actionsUserDto.UserName);
             if (user == null) return NotFound();
 
-            if (IsAdminUserName(actionsUserDto.UserName))
+            if (user.LockoutEnd != null && user.LockoutEnd > DateTime.Now)
             {
-                return BadRequest("You cannot unban admin");
+                await _userManager.SetLockoutEndDateAsync(user, null);
+                return NoContent();
             }
-
-            await _userManager.SetLockoutEndDateAsync(user, null);
-            return NoContent();
+            else
+            {
+                return BadRequest("User is not locked.");
+            }
         }
 
         [Authorize(Policy = "RequireAdminRole")]
         [HttpDelete("delete-member/{id}")]
         public async Task<IActionResult> DeleteMember([FromBody] ActionsUserDto deleteUserDto)
         {
+            var username = User.GetUsername();
+
+            if (username != "admin")
+            {
+                return BadRequest("Only administrator can delete members.");
+            }
+
             var user = await _userManager.FindByNameAsync(deleteUserDto.UserName);
             if (user == null) return NotFound();
 
@@ -120,6 +130,8 @@ namespace BACKEND.Controllers
             {
                 return BadRequest("You cannot delete admin");
             }
+
+            await _uow.MessageRepository.DeleteUserMessages(user.Id);
 
             await _userManager.DeleteAsync(user);
             return NoContent();
@@ -140,12 +152,12 @@ namespace BACKEND.Controllers
 
             if (!userUpdateDto.UserName.All(char.IsLetterOrDigit) && !userUpdateDto.UserName.All(char.IsLower))
             {
-                return BadRequest(new { message = "Username must consist of lowercase letters and digits." });
+                return BadRequest("Username must consist of lowercase letters and digits.");
             }
 
-            if (await UserExists(userUpdateDto.UserName, username)) return BadRequest(new { message = "Username is taken." });
+            if (await UserExists(userUpdateDto.UserName, username)) return BadRequest("Username is taken.");
 
-            if (await EmailExists(userUpdateDto.Email)) return BadRequest(new { message = "Email is taken." });
+            if (await EmailExists(userUpdateDto.Email)) return BadRequest("Email is taken.");
 
             user.UserName = userUpdateDto.UserName;
             user.KnownAs = userUpdateDto.KnownAs;
@@ -200,8 +212,14 @@ namespace BACKEND.Controllers
         [HttpDelete("delete-photo/{photoId}")]
         public async Task<ActionResult> DeletePhoto([FromBody] DeletePhotoAdminDto deletePhotoAdminDto)
         {
-            Console.WriteLine(deletePhotoAdminDto.PhotoId + "---------- " + deletePhotoAdminDto.Username);
+
+
             var user = await _uow.UserRepository.GetUserByUsernameAsync(deletePhotoAdminDto.Username);
+
+            if (IsAdminUserName(deletePhotoAdminDto.Username))
+            {
+                return BadRequest(new { message = "You can't delete admin's photos." });
+            }
 
             var photo = user.Photos.FirstOrDefault(x => x.Id == deletePhotoAdminDto.PhotoId);
 

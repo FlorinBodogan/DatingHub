@@ -43,8 +43,8 @@ export class UserManagementComponent implements OnInit {
         this.toastr.success("User banned succesfully!")
         this.getUsersWithRoles();
       },
-      error: () => {
-        this.toastr.error("User it's already banned.")
+      error: (error) => {
+        this.toastr.error(error.error);
       }
     })
   };
@@ -59,8 +59,8 @@ export class UserManagementComponent implements OnInit {
         this.toastr.success("User unbanned succesfully!")
         this.getUsersWithRoles();
       },
-      error: () => {
-        this.toastr.error("User it's not banned.")
+      error: (error) => {
+        this.toastr.error(error.error)
       }
     })
   };

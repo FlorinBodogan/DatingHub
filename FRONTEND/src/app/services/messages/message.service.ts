@@ -86,7 +86,7 @@ export class MessageService {
     this.errorMessageBot = '';
     let params = getPaginationHeaders(pageNumber, pageSize);
     params = params.append('Container', container);
-    return getPaginatedResult<Message[]>(this.baseURL + 'messages', params, this.http);
+    return getPaginatedResult<Message[]>(this.baseURL + 'messages', params, this.http)
   };
 
   getMessageThread(username: string): Observable<any> {
@@ -96,10 +96,8 @@ export class MessageService {
 
   sendMessage(username: string, content: string) {
     return this.hubConnection?.invoke('SendMessage', { recipientUsername: username, content })
-      .then(() => console.log("Message sent successfully"))
+      .then(() => this.errorMessageBot = '')
       .catch(error => {
-        console.error("Error sending message:", error);
-
         this.errorMessageBot = `Hi, you cannot chat with ${username} because you are not liking each other yet.`;
       });
   };

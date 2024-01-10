@@ -1,6 +1,6 @@
 <div class="login-container">
-    <form *ngIf="!(accountService.currentUser$| async) && showSignInForm" #loginForm="ngForm" class="form" role="search"
-        (ngSubmit)="login()">
+    <form *ngIf="!(accountService.currentUser$| async) && showSignInForm" #loginForm="ngForm" class="form"
+        autocomplete="off" role="search" (ngSubmit)="login()">
         <h1 class="text-center form-title">Sign In</h1>
         <input name="username" [(ngModel)]="model.username" class="form-control" type="text" placeholder="Username"
             aria-label="Search">

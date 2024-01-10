@@ -143,5 +143,15 @@ namespace BACKEND.Data
 
             return matchesCount;
         }
+
+        public async Task<int> DeleteUserMessages(int userId)
+        {
+            var userMessages = context.Messages
+                .Where(m => m.SenderId == userId || m.RecipientId == userId);
+
+            context.Messages.RemoveRange(userMessages);
+
+            return await context.SaveChangesAsync();
+        }
     }
 }

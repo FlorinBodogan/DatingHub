@@ -12,7 +12,8 @@
                     (click)="deletePhoto(photo.id)">
                     <mat-icon>delete</mat-icon>
                 </button>
-                <button mat-mini-fab color="warn" aria-label="delete-photo" (click)="deletePhotoAdmin(photo.id)">
+                <button mat-mini-fab color="warn" *ngIf="!showUploader" aria-label="delete-photo"
+                    (click)="deletePhotoAdmin(photo.id)">
                     <mat-icon>delete</mat-icon>
                 </button>
             </div>

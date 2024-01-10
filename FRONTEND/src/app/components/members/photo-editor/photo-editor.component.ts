@@ -61,8 +61,6 @@ export class PhotoEditorComponent implements OnInit {
       username: this.member?.userName
     } as DeletePhoto;
 
-    console.log(model)
-
     this.adminService.deletePhoto(photoId, model).subscribe({
       next: () => {
         if (this.member) {

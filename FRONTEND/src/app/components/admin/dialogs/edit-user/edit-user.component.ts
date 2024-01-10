@@ -51,7 +51,7 @@ export class EditUserComponent implements OnInit {
           this.dialogRef.close('success')
       },
       error: (err: HttpErrorResponse) => {
-        this.toastr.error(err.error.message, 'Error');
+        this.toastr.error(err.error);
       }
     });
   };
@@ -73,7 +73,7 @@ export class EditUserComponent implements OnInit {
           this.dialogRef.close('success')
       },
       error: (err: HttpErrorResponse) => {
-        this.toastr.error(err.error.message);
+        this.toastr.error(err.error);
       }
     });
   };
