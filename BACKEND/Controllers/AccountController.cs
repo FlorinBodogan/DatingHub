@@ -51,19 +51,21 @@ namespace BACKEND.Controllers
 
             if (!roleResult.Succeeded) return BadRequest(result.Errors);
 
-            try
-            {
-                if (await SendConfirmEmailAsync(user))
-                {
-                    return Ok(new JsonResult(new { title = "Account Created", message = "Your account has been created, please confirm your email address." }));
-                }
+            return Ok(new { message = "Your account has been created" });
 
-                return BadRequest("Failed to send email. Please contact admin.");
-            }
-            catch (Exception)
-            {
-                return BadRequest("Failed to send email. Please contact admin.");
-            }
+            // try
+            // {
+            //     if (await SendConfirmEmailAsync(user))
+            //     {
+            //         return Ok(new JsonResult(new { title = "Account Created", message = "Your account has been created, please confirm your email address." }));
+            //     }
+
+            //     return BadRequest("Failed to send email. Please contact admin.");
+            // }
+            // catch (Exception)
+            // {
+            //     return BadRequest("Failed to send email. Please contact admin.");
+            // }
         }
 
         [HttpPost("login")] //POST: api/account/login

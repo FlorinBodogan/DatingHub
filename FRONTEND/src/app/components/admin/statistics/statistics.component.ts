@@ -100,6 +100,7 @@ export class StatisticsComponent implements OnInit {
       },
       options: {
         aspectRatio: 2.2,
+        maintainAspectRatio: false,
         plugins: {
           legend: {
             labels: {
