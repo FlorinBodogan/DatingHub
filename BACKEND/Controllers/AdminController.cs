@@ -240,27 +240,45 @@ namespace BACKEND.Controllers
 
         //STATISTICS
         [Authorize(Policy = "RequireAdminRole")]
-        [HttpGet("users-banned")]
-        public async Task<int> GetNumberOfUsersBanned()
+        [HttpGet("allUsers365days")]
+        public async Task<int> GetNumberOfUsers365()
         {
-            var bannedUsers = await _userManager.Users.Where(u => u.LockoutEnd != null && u.LockoutEnd > DateTimeOffset.UtcNow).ToListAsync();
-            return bannedUsers.Count;
+            var currentDate = DateTime.UtcNow;
+            var startDate = currentDate.AddDays(-30);
+
+            var recentUsers = await _userManager.Users
+                .Where(user => user.Created >= startDate && user.Created <= currentDate)
+                .ToListAsync();
+
+            return recentUsers.Count;
         }
 
         [Authorize(Policy = "RequireAdminRole")]
-        [HttpGet("users-uncorfimed")]
-        public async Task<int> GetNumberOfUsersUncorfimed()
+        [HttpGet("allUsers30days")]
+        public async Task<int> GetNumberOfUsers30()
         {
-            var uncorfimedUsers = await _userManager.Users.Where(u => u.EmailConfirmed != true).ToListAsync();
-            return uncorfimedUsers.Count;
+            var currentDate = DateTime.UtcNow;
+            var startDate = currentDate.AddDays(-30);
+
+            var recentUsers = await _userManager.Users
+                .Where(user => user.Created >= startDate && user.Created <= currentDate)
+                .ToListAsync();
+
+            return recentUsers.Count;
         }
 
         [Authorize(Policy = "RequireAdminRole")]
-        [HttpGet("allUsers")]
-        public async Task<int> GetNumberOfUsers()
+        [HttpGet("allUsers7days")]
+        public async Task<int> GetNumberOfUsers7days()
         {
-            var users = await _userManager.Users.ToListAsync();
-            return users.Count;
+            var currentDate = DateTime.UtcNow;
+            var startDate = currentDate.AddDays(-7);
+
+            var recentUsers = await _userManager.Users
+                .Where(user => user.Created >= startDate && user.Created <= currentDate)
+                .ToListAsync();
+
+            return recentUsers.Count;
         }
 
         [Authorize(Policy = "RequireAdminRole")]

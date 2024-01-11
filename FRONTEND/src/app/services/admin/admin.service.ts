@@ -55,14 +55,14 @@ export class AdminService {
     return this.http.delete(url, options);
   };
 
-  getUsers(): Observable<any> {
-    return this.http.get(this.baseURL + 'admin/allUsers', this.httpOptions);
+  getUsers7days(): Observable<any> {
+    return this.http.get(this.baseURL + 'admin/allUsers7days', this.httpOptions);
   };
-  getUsersUncorfirmed(): Observable<any> {
-    return this.http.get(this.baseURL + 'admin/users-uncorfimed', this.httpOptions);
+  getUsers30days(): Observable<any> {
+    return this.http.get(this.baseURL + 'admin/allUsers30days', this.httpOptions);
   };
-  getUsersBanned(): Observable<any> {
-    return this.http.get(this.baseURL + 'admin/users-banned', this.httpOptions);
+  getUsers365days(): Observable<any> {
+    return this.http.get(this.baseURL + 'admin/allUsers365days', this.httpOptions);
   };
 
   getNumberOfMatchesLastWeek(): Observable<any> {

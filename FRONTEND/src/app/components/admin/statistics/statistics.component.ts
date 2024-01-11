@@ -10,17 +10,12 @@ Chart.register(...registerables);
   styleUrl: './statistics.component.scss'
 })
 export class StatisticsComponent implements OnInit {
-  public chartUsers: any;
-  public chartMatches: any;
-  public chartMessages: any;
+  public chart: any;
+  canvas!: any;
 
-  canvasUsers!: any;
-  canvasMatches!: any;
-  canvasMessages!: any;
-
-  allUsers = 0;
-  allUsersUncorfirmed = 0;
-  allUsersBanned = 0;
+  users: number[] = [];
+  matches: number[] = [];
+  messages: number[] = [];
 
   constructor(private adminService: AdminService) { }
 
@@ -29,27 +24,19 @@ export class StatisticsComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.canvasUsers = document.getElementById('chartUsers');
-    this.canvasMatches = document.getElementById('chartMatches');
-    this.canvasMessages = document.getElementById('chartMessages');
-
-    this.createChartUsers();
-    this.createChartMatches();
-    this.createChartMessasges();
+    this.canvas = document.getElementById('chart');
+    this.createChart();
   }
 
   onTabChange(event: MatTabChangeEvent): void {
     this.triggerFunctions();
-
-    this.createChartUsers();
-    this.createChartMatches();
-    this.createChartMessasges();
+    this.createChart();
   }
 
   triggerFunctions(): void {
-    this.getUsers();
-    this.getUsersUnconfirmed();
-    this.getUsersBanned();
+    this.getUsers7days();
+    this.getUsers30days();
+    this.getUsers365days();
     this.getMatchesLastWeek();
     this.getMatchesLastMonth();
     this.getMatchesLastYear();
@@ -58,26 +45,26 @@ export class StatisticsComponent implements OnInit {
     this.getMessagesLastYear();
   }
 
-  createChartUsers() {
-    this.chartUsers = new Chart(this.canvasUsers, {
+  createChart() {
+    this.chart = new Chart(this.canvas, {
       type: 'bar',
       data: {
-        labels: ["Users"],
+        labels: ["Last 7 days", "Last month", "Last year"],
         datasets: [
           {
             label: 'Users',
-            data: [],
-            backgroundColor: 'rgba(75, 192, 192, 0.7)',
+            data: this.users,
+            backgroundColor: 'rgba(50, 40, 192, 0.8)',
           },
           {
-            label: 'Uncorfirmed Users',
-            data: [],
-            backgroundColor: 'rgba(255, 99, 132, 0.7)',
+            label: 'Matches',
+            data: this.matches,
+            backgroundColor: 'rgba(255, 70, 132, 0.8)',
           },
           {
-            label: 'Banned Users',
-            data: [],
-            backgroundColor: 'rgba(255, 205, 86, 0.7)',
+            label: 'Messages',
+            data: this.messages,
+            backgroundColor: 'rgba(255, 205, 86, 0.8)',
           },
         ],
       },
@@ -92,7 +79,7 @@ export class StatisticsComponent implements OnInit {
           },
           title: {
             display: true,
-            text: 'Users',
+            text: 'Statistics',
             color: 'white'
           }
         }
@@ -100,110 +87,29 @@ export class StatisticsComponent implements OnInit {
     });
   }
 
-  createChartMatches() {
-    this.chartMatches = new Chart(this.canvasMatches, {
-      type: 'bar',
-      data: {
-        labels: ["Matches"],
-        datasets: [
-          {
-            label: 'Matches last week',
-            data: [],
-            backgroundColor: 'rgba(54, 162, 235, 0.7)',
-          },
-          {
-            label: 'Matches last month',
-            data: [],
-            backgroundColor: 'rgba(153, 102, 255, 0.7)',
-          },
-          {
-            label: 'Matches last year',
-            data: [],
-            backgroundColor: 'rgba(255, 159, 64, 0.7)',
-          },
-        ],
-      },
-      options: {
-        aspectRatio: 2.2,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            labels: {
-              color: '#ddd'
-            }
-          },
-          title: {
-            display: true,
-            text: 'Matches',
-            color: 'white'
-          }
-        }
-      }
-    });
-  }
-
-  createChartMessasges() {
-    this.chartMessages = new Chart(this.canvasMessages, {
-      type: 'bar',
-      data: {
-        labels: ["Messages"],
-        datasets: [
-          {
-            label: 'Messages last week',
-            data: [],
-            backgroundColor: 'rgba(255, 69, 0, 0.7)',
-          },
-          {
-            label: 'Messages last month',
-            data: [],
-            backgroundColor: 'rgba(0, 128, 0, 0.7)',
-          },
-          {
-            label: 'Messages last year',
-            data: [],
-            backgroundColor: 'rgba(128, 0, 128, 0.7)',
-          },
-        ],
-      },
-      options: {
-        aspectRatio: 2.2,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            labels: {
-              color: '#ddd'
-            }
-          },
-          title: {
-            display: true,
-            text: 'Messages',
-            color: 'white'
-          }
-        }
-      }
-    });
-  }
-
-  getUsers(): void {
-    this.adminService.getUsers().subscribe({
-      next: (response) => {
-        this.pushOrUpdateDataset(this.chartUsers, 0, 'Users', response, 'rgba(75, 192, 192, 0.7)');
+  getUsers7days(): void {
+    this.adminService.getUsers7days().subscribe({
+      next: (response: number) => {
+        this.users[0] = response
+        this.chart.update();
       }
     });
   };
 
-  getUsersUnconfirmed(): void {
-    this.adminService.getUsersUncorfirmed().subscribe({
+  getUsers30days(): void {
+    this.adminService.getUsers30days().subscribe({
       next: (response) => {
-        this.pushOrUpdateDataset(this.chartUsers, 1, 'Uncorfirmed Users', response, 'rgba(255, 99, 132, 0.7)');
+        this.users.push(response)
+        this.chart.update();
       }
     });
   };
 
-  getUsersBanned(): void {
-    this.adminService.getUsersBanned().subscribe({
+  getUsers365days(): void {
+    this.adminService.getUsers365days().subscribe({
       next: (response) => {
-        this.pushOrUpdateDataset(this.chartUsers, 2, 'Banned Users', response, 'rgba(255, 205, 86, 0.7)');
+        this.users.push(response)
+        this.chart.update();
       }
     });
   };
@@ -211,7 +117,8 @@ export class StatisticsComponent implements OnInit {
   getMatchesLastWeek(): void {
     this.adminService.getNumberOfMatchesLastWeek().subscribe({
       next: response => {
-        this.pushOrUpdateDataset(this.chartMatches, 0, 'Matches last week', response, 'rgba(54, 162, 235, 0.7)')
+        this.matches.push(response)
+        this.chart.update();
       }
     })
   };
@@ -219,7 +126,8 @@ export class StatisticsComponent implements OnInit {
   getMatchesLastMonth(): void {
     this.adminService.getNumberOfMatchesLastMonth().subscribe({
       next: response => {
-        this.pushOrUpdateDataset(this.chartMatches, 1, 'Matches last month', response, 'rgba(153, 102, 255, 0.7)')
+        this.matches.push(response)
+        this.chart.update();
       }
     })
   };
@@ -227,7 +135,8 @@ export class StatisticsComponent implements OnInit {
   getMatchesLastYear(): void {
     this.adminService.getNumberOfMatchesLastYear().subscribe({
       next: response => {
-        this.pushOrUpdateDataset(this.chartMatches, 2, 'Matches last year', response, 'rgba(255, 159, 64, 0.7)')
+        this.matches.push(response)
+        this.chart.update();
       }
     })
   };
@@ -235,7 +144,8 @@ export class StatisticsComponent implements OnInit {
   getMessagesLastWeek(): void {
     this.adminService.getNumberOfMessagesLastWeek().subscribe({
       next: response => {
-        this.pushOrUpdateDataset(this.chartMessages, 0, 'Messages last week', response, 'rgba(255, 69, 0, 0.7)')
+        this.messages.push(response)
+        this.chart.update();
       }
     })
   };
@@ -243,7 +153,8 @@ export class StatisticsComponent implements OnInit {
   getMessagesLastMonth(): void {
     this.adminService.getNumberOfMessagesLastYear().subscribe({
       next: response => {
-        this.pushOrUpdateDataset(this.chartMessages, 1, 'Messages last month', response, 'rgba(0, 128, 0, 0.7)')
+        this.messages.push(response)
+        this.chart.update();
       }
     })
   };
@@ -251,24 +162,9 @@ export class StatisticsComponent implements OnInit {
   getMessagesLastYear(): void {
     this.adminService.getNumberOfMessagesLastYear().subscribe({
       next: response => {
-        this.pushOrUpdateDataset(this.chartMessages, 2, 'Messages last year', response, 'rgba(128, 0, 128, 0.7)')
+        this.messages.push(response)
+        this.chart.update();
       }
     })
-  };
-
-  pushOrUpdateDataset(chart: any, index: number, label: string, data: any, backgroundColor: string) {
-    const newDataItem = {
-      label: label,
-      data: [data],
-      backgroundColor: [backgroundColor],
-    };
-
-    if (!chart.data.datasets[index]) {
-      chart.data.datasets.push(newDataItem);
-    } else {
-      chart.data.datasets[index] = newDataItem;
-    }
-
-    chart.update();
   };
 }
