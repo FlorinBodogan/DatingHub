@@ -27,6 +27,7 @@ import { ConfirmEmailComponent } from './components/confirm-email/confirm-email.
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { EditUserComponent } from './components/admin/dialogs/edit-user/edit-user.component';
 import { StatisticsComponent } from './components/admin/statistics/statistics.component';
+import { ConfirmDialogComponent } from './components/admin/dialogs/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { StatisticsComponent } from './components/admin/statistics/statistics.co
     ChangePasswordComponent,
     EditUserComponent,
     StatisticsComponent,
+    ConfirmDialogComponent,
   ],
   imports: [
     SharedModule,

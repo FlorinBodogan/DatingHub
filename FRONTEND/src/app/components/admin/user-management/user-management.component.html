@@ -62,7 +62,7 @@
                     <span class="mat-menu-item">Unban</span>
                 </button>
             </mat-menu>
-            <button mat-raised-button color="warn" (click)="deleteMember(user.id, user.userName)">Delete</button>
+            <button mat-raised-button color="warn" (click)="openConfirmDialog(user.id, user.userName)">Delete</button>
         </mat-cell>
     </ng-container>
 

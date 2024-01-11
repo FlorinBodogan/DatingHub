@@ -41,7 +41,7 @@
     </div>
     <form class="card-footer" #messageForm="ngForm" (ngSubmit)="sendMessage()">
         <div class="input-group">
-            <textarea name="messageContent" [(ngModel)]="messageContent" required class="form-control type_msg"
+            <textarea rows="2" name="messageContent" [(ngModel)]="messageContent" required class="form-control type_msg"
                 placeholder="Type your message...">
             </textarea>
             <button class="send-button" [disabled]="!messageForm.valid || loading" mat-raised-button color="accent">

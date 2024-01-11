@@ -1,0 +1,8 @@
+<div class="container">
+    <p>You really want to delete <strong>{{data.member.userName}}</strong>? This action can't be undone.</p>
+    <div class="buttons-container">
+        <button mat-raised-button color="accent" (click)="deleteMember(data.member.userId, data.member.userName)">
+            Confirm
+        </button>
+    </div>
+</div>

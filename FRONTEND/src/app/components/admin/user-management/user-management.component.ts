@@ -6,6 +6,7 @@ import { AdminService } from 'src/app/services/admin/admin.service';
 import { EditRolesDialogComponent } from '../dialogs/edit-roles-dialog/edit-roles-dialog.component';
 import { EditUserComponent } from '../dialogs/edit-user/edit-user.component';
 import { ToastrService } from 'ngx-toastr';
+import { ConfirmDialogComponent } from '../dialogs/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-user-management',
@@ -65,18 +66,7 @@ export class UserManagementComponent implements OnInit {
     })
   };
 
-  deleteMember(userId: number, username: string): void {
-    const userName = {
-      username: username
-    } as {};
 
-    this.adminService.deleteUser(userId, userName).subscribe({
-      next: () => {
-        this.toastr.success("User deleted succesfully!")
-        this.getUsersWithRoles();
-      }
-    })
-  };
 
   openDialogRoles(user: any) {
     const dialogRef = this.dialog.open(EditRolesDialogComponent, {
@@ -100,6 +90,23 @@ export class UserManagementComponent implements OnInit {
       data: {
         member: {
           userName: user.userName,
+        }
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'success') {
+        this.getUsersWithRoles();
+      }
+    });
+  };
+
+  openConfirmDialog(userId: number, username: string) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        member: {
+          userName: username,
+          userId: userId
         }
       }
     });
