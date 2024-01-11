@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Chart, registerables } from 'chart.js';
+import { MatchesCount } from 'src/app/interfaces/statistics/matchesCount';
+import { MessagesCount } from 'src/app/interfaces/statistics/messagesCount';
+import { UsersCount } from 'src/app/interfaces/statistics/usersCount';
 import { AdminService } from 'src/app/services/admin/admin.service';
 Chart.register(...registerables);
 
@@ -10,12 +13,30 @@ Chart.register(...registerables);
   styleUrl: './statistics.component.scss'
 })
 export class StatisticsComponent implements OnInit {
-  public chart: any;
-  canvas!: any;
+  chartUsers: any;
+  chartMatches: any;
+  chartMessages: any;
 
-  users: number[] = [];
+  users?: number[] = [];
   matches: number[] = [];
-  messages: number[] = [];
+  messages?: number[] = [];
+
+  randomColors1 = Array.from({ length: 6 }, () =>
+    `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(
+      Math.random() * 256
+    )}, ${Math.floor(Math.random() * 256)}, 0.8)`
+  );
+  randomColors2 = Array.from({ length: 6 }, () =>
+    `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(
+      Math.random() * 256
+    )}, ${Math.floor(Math.random() * 256)}, 0.8)`
+  );
+  randomColors3 = Array.from({ length: 6 }, () =>
+    `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(
+      Math.random() * 256
+    )}, ${Math.floor(Math.random() * 256)}, 0.8)`
+  );
+
 
   constructor(private adminService: AdminService) { }
 
@@ -24,52 +45,136 @@ export class StatisticsComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.canvas = document.getElementById('chart');
-    this.createChart();
-  }
-
-  onTabChange(event: MatTabChangeEvent): void {
-    this.triggerFunctions();
-    this.createChart();
+    this.createChartUsers();
+    this.createChartMatches();
+    this.createChartMessages();
   }
 
   triggerFunctions(): void {
-    this.getUsers7days();
-    this.getUsers30days();
-    this.getUsers365days();
-    this.getMatchesLastWeek();
-    this.getMatchesLastMonth();
-    this.getMatchesLastYear();
-    this.getMessagesLastWeek();
-    this.getMessagesLastMonth();
-    this.getMessagesLastYear();
+    this.getUsersCount();
+    this.getMessagesCount();
+    this.getMatchesCount();
   }
 
-  createChart() {
-    this.chart = new Chart(this.canvas, {
+  createChartUsers() {
+    this.chartUsers = new Chart('chartUsers', {
       type: 'bar',
       data: {
-        labels: ["Last 7 days", "Last month", "Last year"],
+        labels: ["Last day", "Last 7 days", "Last month", "Last 3 months", "Last 6 months", "Last year"],
         datasets: [
           {
-            label: 'Users',
+            label: 'Users Registered',
             data: this.users,
-            backgroundColor: 'rgba(50, 40, 192, 0.8)',
-          },
-          {
-            label: 'Matches',
-            data: this.matches,
-            backgroundColor: 'rgba(255, 70, 132, 0.8)',
-          },
-          {
-            label: 'Messages',
-            data: this.messages,
-            backgroundColor: 'rgba(255, 205, 86, 0.8)',
+            backgroundColor: this.randomColors1,
           },
         ],
       },
       options: {
         aspectRatio: 2.2,
+        maintainAspectRatio: false,
+        scales: {
+          x: {
+            beginAtZero: true,
+            ticks: {
+              color: '#ddd'
+            }
+          },
+          y: {
+            beginAtZero: true,
+            ticks: {
+              color: '#ddd',
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            labels: {
+              color: '#ddd'
+            }
+          },
+          title: {
+            display: true,
+            text: 'DatingHub Users',
+            color: 'white'
+          }
+        }
+      }
+    });
+  }
+  createChartMatches() {
+    this.chartMatches = new Chart('chartMatches', {
+      type: 'bar',
+      data: {
+        labels: ["Last day", "Last 7 days", "Last month", "Last 3 months", "Last 6 months", "Last year"],
+        datasets: [
+          {
+            label: 'Matches',
+            data: this.matches,
+            backgroundColor: this.randomColors2,
+          }
+        ],
+      },
+      options: {
+        aspectRatio: 2.2,
+        maintainAspectRatio: false,
+        scales: {
+          x: {
+            beginAtZero: true,
+            ticks: {
+              color: '#ddd'
+            }
+          },
+          y: {
+            beginAtZero: true,
+            ticks: {
+              color: '#ddd',
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            labels: {
+              color: '#ddd'
+            }
+          },
+          title: {
+            display: true,
+            text: 'DatingHub Matches',
+            color: 'white'
+          }
+        }
+      }
+    });
+  }
+  createChartMessages() {
+    this.chartMessages = new Chart('chartMessages', {
+      type: 'bar',
+      data: {
+        labels: ["Last day", "Last 7 days", "Last month", "Last 3 months", "Last 6 months", "Last year"],
+        datasets: [
+          {
+            label: 'Messages',
+            data: this.messages,
+            backgroundColor: this.randomColors3,
+          }
+        ],
+      },
+      options: {
+        aspectRatio: 2.2,
+        scales: {
+          x: {
+            beginAtZero: true,
+            ticks: {
+              color: '#ddd'
+            }
+          },
+          y: {
+            beginAtZero: true,
+            ticks: {
+              color: '#ddd',
+            }
+          }
+        },
         maintainAspectRatio: false,
         plugins: {
           legend: {
@@ -79,7 +184,7 @@ export class StatisticsComponent implements OnInit {
           },
           title: {
             display: true,
-            text: 'Statistics',
+            text: 'DatingHub Messages',
             color: 'white'
           }
         }
@@ -87,84 +192,36 @@ export class StatisticsComponent implements OnInit {
     });
   }
 
-  getUsers7days(): void {
-    this.adminService.getUsers7days().subscribe({
-      next: (response: number) => {
-        this.users[0] = response
-        this.chart.update();
+  getUsersCount(): void {
+    this.adminService.getUsersCount().subscribe({
+      next: (response: UsersCount) => {
+        const responseArray: number[] = Object.values(response);
+        this.users = responseArray;
+        this.chartUsers.data.datasets[0].data = this.users;
+        this.chartUsers.update();
       }
     });
   };
 
-  getUsers30days(): void {
-    this.adminService.getUsers30days().subscribe({
-      next: (response) => {
-        this.users.push(response)
-        this.chart.update();
+  getMatchesCount(): void {
+    this.adminService.getMatchesCount().subscribe({
+      next: (response: MatchesCount) => {
+        const responseArray: number[] = Object.values(response);
+        this.matches = responseArray;
+        this.chartMatches.data.datasets[0].data = this.matches;
+        this.chartMatches.update();
       }
     });
   };
 
-  getUsers365days(): void {
-    this.adminService.getUsers365days().subscribe({
-      next: (response) => {
-        this.users.push(response)
-        this.chart.update();
+  getMessagesCount(): void {
+    this.adminService.getMessagesCount().subscribe({
+      next: (response: MessagesCount) => {
+        const responseArray: number[] = Object.values(response);
+        this.messages = responseArray;
+        this.chartMessages.data.datasets[0].data = this.messages;
+        this.chartMessages.update();
       }
     });
-  };
-
-  getMatchesLastWeek(): void {
-    this.adminService.getNumberOfMatchesLastWeek().subscribe({
-      next: response => {
-        this.matches.push(response)
-        this.chart.update();
-      }
-    })
-  };
-
-  getMatchesLastMonth(): void {
-    this.adminService.getNumberOfMatchesLastMonth().subscribe({
-      next: response => {
-        this.matches.push(response)
-        this.chart.update();
-      }
-    })
-  };
-
-  getMatchesLastYear(): void {
-    this.adminService.getNumberOfMatchesLastYear().subscribe({
-      next: response => {
-        this.matches.push(response)
-        this.chart.update();
-      }
-    })
-  };
-
-  getMessagesLastWeek(): void {
-    this.adminService.getNumberOfMessagesLastWeek().subscribe({
-      next: response => {
-        this.messages.push(response)
-        this.chart.update();
-      }
-    })
-  };
-
-  getMessagesLastMonth(): void {
-    this.adminService.getNumberOfMessagesLastYear().subscribe({
-      next: response => {
-        this.messages.push(response)
-        this.chart.update();
-      }
-    })
-  };
-
-  getMessagesLastYear(): void {
-    this.adminService.getNumberOfMessagesLastYear().subscribe({
-      next: response => {
-        this.messages.push(response)
-        this.chart.update();
-      }
-    })
   };
 }

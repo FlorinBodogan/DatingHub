@@ -102,37 +102,37 @@ namespace BACKEND.Data
             return like;
         }
 
-        public async Task<int> GetNumbersOfMatchesLastWeek()
+        public async Task<int> GetMatchesCountForPeriod(int numberOfDays)
         {
-            DateTime lastWeekStartDate = DateTime.UtcNow.AddDays(-7);
+            DateTime startDate = DateTime.UtcNow.AddDays(-numberOfDays);
 
             var matchesCount = await _context.Likes
-                .Where(l => l.LikedEachOther && l.LikeDate >= lastWeekStartDate)
+                .Where(l => l.LikedEachOther && l.LikeDate >= startDate)
                 .CountAsync();
 
             return matchesCount;
         }
 
-        public async Task<int> GetNumbersOfMatchesLastMonth()
+        public async Task<MatchesCountDto> GetNumbersOfMatches()
         {
-            DateTime lastWeekStartDate = DateTime.UtcNow.AddDays(-30);
+            DateTime currentDate = DateTime.UtcNow;
 
-            var matchesCount = await _context.Likes
-                .Where(l => l.LikedEachOther && l.LikeDate >= lastWeekStartDate)
-                .CountAsync();
+            var matchesLastDay = await GetMatchesCountForPeriod(1);
+            var matchesLastWeek = await GetMatchesCountForPeriod(7);
+            var matchesLastMonth = await GetMatchesCountForPeriod(30);
+            var matchesLast3Months = await GetMatchesCountForPeriod(90);
+            var matchesLast6Months = await GetMatchesCountForPeriod(180);
+            var matchesLastYear = await GetMatchesCountForPeriod(365);
 
-            return matchesCount;
-        }
-
-        public async Task<int> GetNumbersOfMatchesLastYear()
-        {
-            DateTime lastWeekStartDate = DateTime.UtcNow.AddDays(-365);
-
-            var matchesCount = await _context.Likes
-                .Where(l => l.LikedEachOther && l.LikeDate >= lastWeekStartDate)
-                .CountAsync();
-
-            return matchesCount;
+            return new MatchesCountDto
+            {
+                MatchesLastDay = matchesLastDay,
+                MatchesLastWeek = matchesLastWeek,
+                MatchesLastMonth = matchesLastMonth,
+                MatchesLast3Months = matchesLast3Months,
+                MatchesLast6Months = matchesLast6Months,
+                MatchesLastYear = matchesLastYear
+            };
         }
     }
 }

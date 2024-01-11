@@ -111,9 +111,9 @@ namespace BACKEND.Data
                 .FirstOrDefaultAsync(x => x.Name == groupName);
         }
 
-        public async Task<int> GetNumbersOfMessagesLastWeek()
+        public async Task<int> GetMessagesCountForPeriod(int numberOfDays)
         {
-            DateTime lastWeekStartDate = DateTime.UtcNow.AddDays(-7);
+            DateTime lastWeekStartDate = DateTime.UtcNow.AddDays(-numberOfDays);
 
             var matchesCount = await context.Messages
                 .Where(m => m.MessageSent >= lastWeekStartDate)
@@ -122,26 +122,26 @@ namespace BACKEND.Data
             return matchesCount;
         }
 
-        public async Task<int> GetNumbersOfMessagesLastMonth()
+        public async Task<MessagesCountDto> GetNumbersOfMessages()
         {
-            DateTime lastWeekStartDate = DateTime.UtcNow.AddDays(-30);
+            DateTime currentDate = DateTime.UtcNow;
 
-            var matchesCount = await context.Messages
-                .Where(m => m.MessageSent >= lastWeekStartDate)
-                .CountAsync();
+            var messagesLastDay = await GetMessagesCountForPeriod(1);
+            var messagesLastWeek = await GetMessagesCountForPeriod(7);
+            var messagesLastMonth = await GetMessagesCountForPeriod(30);
+            var messagesLast3Months = await GetMessagesCountForPeriod(90);
+            var messagesLast6Months = await GetMessagesCountForPeriod(180);
+            var messagesLastYear = await GetMessagesCountForPeriod(365);
 
-            return matchesCount;
-        }
-
-        public async Task<int> GetNumbersOfMessagesLastYear()
-        {
-            DateTime lastWeekStartDate = DateTime.UtcNow.AddDays(-365);
-
-            var matchesCount = await context.Messages
-                .Where(m => m.MessageSent >= lastWeekStartDate)
-                .CountAsync();
-
-            return matchesCount;
+            return new MessagesCountDto
+            {
+                MessagesLastDay = messagesLastDay,
+                MessagesLastWeek = messagesLastWeek,
+                MessagesLastMonth = messagesLastMonth,
+                MessagesLast3Months = messagesLast3Months,
+                MessagesLast6Months = messagesLast6Months,
+                MessagesLastYear = messagesLastYear
+            };
         }
 
         public async Task<int> DeleteUserMessages(int userId)

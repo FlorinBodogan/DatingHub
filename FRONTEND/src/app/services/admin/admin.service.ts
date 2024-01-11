@@ -4,6 +4,9 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../../interfaces/user';
 import { DeletePhoto, updateUserDetails, updateUserInfo } from 'src/app/interfaces/updateMember';
+import { UsersCount } from 'src/app/interfaces/statistics/usersCount';
+import { MatchesCount } from 'src/app/interfaces/statistics/matchesCount';
+import { MessagesCount } from 'src/app/interfaces/statistics/messagesCount';
 
 @Injectable({
   providedIn: 'root'
@@ -55,35 +58,15 @@ export class AdminService {
     return this.http.delete(url, options);
   };
 
-  getUsers7days(): Observable<any> {
-    return this.http.get(this.baseURL + 'admin/allUsers7days', this.httpOptions);
-  };
-  getUsers30days(): Observable<any> {
-    return this.http.get(this.baseURL + 'admin/allUsers30days', this.httpOptions);
-  };
-  getUsers365days(): Observable<any> {
-    return this.http.get(this.baseURL + 'admin/allUsers365days', this.httpOptions);
+  getUsersCount(): Observable<UsersCount> {
+    return this.http.get<UsersCount>(this.baseURL + 'admin/usersCount', this.httpOptions);
   };
 
-  getNumberOfMatchesLastWeek(): Observable<any> {
-    return this.http.get(this.baseURL + 'admin/matches-last-week', this.httpOptions);
+  getMatchesCount(): Observable<MatchesCount> {
+    return this.http.get<MatchesCount>(this.baseURL + 'admin/matchesCount', this.httpOptions);
   };
 
-  getNumberOfMatchesLastMonth(): Observable<any> {
-    return this.http.get(this.baseURL + 'admin/matches-last-month', this.httpOptions);
-  };
-
-  getNumberOfMatchesLastYear(): Observable<any> {
-    return this.http.get(this.baseURL + 'admin/matches-last-year', this.httpOptions);
-  };
-
-  getNumberOfMessagesLastWeek(): Observable<any> {
-    return this.http.get(this.baseURL + 'admin/messages-last-week', this.httpOptions);
-  };
-  getNumberOfMessagesLastMonth(): Observable<any> {
-    return this.http.get(this.baseURL + 'admin/messages-last-month', this.httpOptions);
-  };
-  getNumberOfMessagesLastYear(): Observable<any> {
-    return this.http.get(this.baseURL + 'admin/messages-last-year', this.httpOptions);
+  getMessagesCount(): Observable<MessagesCount> {
+    return this.http.get<MessagesCount>(this.baseURL + 'admin/messagesCount', this.httpOptions);
   };
 };

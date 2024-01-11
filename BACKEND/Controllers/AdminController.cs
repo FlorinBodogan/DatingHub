@@ -268,64 +268,27 @@ namespace BACKEND.Controllers
         }
 
         [Authorize(Policy = "RequireAdminRole")]
-        [HttpGet("allUsers7days")]
-        public async Task<int> GetNumberOfUsers7days()
+        [HttpGet("usersCount")]
+        public async Task<UsersCountDto> GetNumberOfUsers7days()
         {
-            var currentDate = DateTime.UtcNow;
-            var startDate = currentDate.AddDays(-7);
-
-            var recentUsers = await _userManager.Users
-                .Where(user => user.Created >= startDate && user.Created <= currentDate)
-                .ToListAsync();
-
-            return recentUsers.Count;
-        }
-
-        [Authorize(Policy = "RequireAdminRole")]
-        [HttpGet("matches-last-week")]
-        public async Task<int> GetNumberOfMatchesLastWeek()
-        {
-            var users = await _uow.LikesRepository.GetNumbersOfMatchesLastWeek();
+            var users = await _uow.UserRepository.GetNumbersOfUsers();
             return users;
         }
 
         [Authorize(Policy = "RequireAdminRole")]
-        [HttpGet("matches-last-month")]
-        public async Task<int> GetNumberOfMatchesLastMonth()
+        [HttpGet("matchesCount")]
+        public async Task<MatchesCountDto> GetNumberOfMatchesLastWeek()
         {
-            var users = await _uow.LikesRepository.GetNumbersOfMatchesLastMonth();
-            return users;
+            var matches = await _uow.LikesRepository.GetNumbersOfMatches();
+            return matches;
         }
 
         [Authorize(Policy = "RequireAdminRole")]
-        [HttpGet("matches-last-year")]
-        public async Task<int> GetNumberOfMatchesLastYear()
+        [HttpGet("messagesCount")]
+        public async Task<MessagesCountDto> GetNumberOfMessagesLastYear()
         {
-            var users = await _uow.LikesRepository.GetNumbersOfMatchesLastYear();
-            return users;
-        }
-
-        [Authorize(Policy = "RequireAdminRole")]
-        [HttpGet("messages-last-year")]
-        public async Task<int> GetNumberOfMessagesLastYear()
-        {
-            var users = await _uow.MessageRepository.GetNumbersOfMessagesLastYear();
-            return users;
-        }
-
-        [Authorize(Policy = "RequireAdminRole")]
-        [HttpGet("messages-last-month")]
-        public async Task<int> GetNumberOfMessagesLastMonth()
-        {
-            var users = await _uow.MessageRepository.GetNumbersOfMessagesLastMonth();
-            return users;
-        }
-        [Authorize(Policy = "RequireAdminRole")]
-        [HttpGet("messages-last-week")]
-        public async Task<int> GetNumberOfMessagesLastWeek()
-        {
-            var users = await _uow.MessageRepository.GetNumbersOfMessagesLastWeek();
-            return users;
+            var messages = await _uow.MessageRepository.GetNumbersOfMessages();
+            return messages;
         }
 
         //UTILS
