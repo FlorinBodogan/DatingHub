@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-body msg_card_body" #scrollMe style="overflow: scroll;"
         *ngIf="this.messageService.errorMessageBot && !(messageService.messageThread$ | async)?.length">
-        <div class="d-flex justify-content-start mb-4">
+        <div class="d-flex justify-content-start">
             <div class="img_cont_msg">
                 <img src="./assets/user.png" class="rounded-circle user_img_msg">
             </div>
@@ -14,7 +14,7 @@
 
     <div class="card-body msg_card_body" #scrollMe style="overflow: scroll;">
         <div *ngFor="let message of (messageService.messageThread$ | async); let last = last">
-            <div *ngIf="message.recipientUsername !== username" class="d-flex justify-content-start mb-4">
+            <div *ngIf="message.recipientUsername !== username" class="d-flex justify-content-start margin-class">
                 <div class="img_cont_msg">
                     <img src="{{message.senderPhotoUrl || './assets/user.png'}}" class="rounded-circle user_img_msg">
                 </div>
@@ -25,7 +25,7 @@
                     </span>
                 </div>
             </div>
-            <div *ngIf="message.recipientUsername === username" class="d-flex justify-content-end mb-4">
+            <div *ngIf="message.recipientUsername === username" class="d-flex justify-content-end margin-class">
                 <div class="msg_cotainer_send">
                     {{message.content}}
                     <span *ngIf="last && message.dateRead && message.recipientUsername === username"
@@ -41,8 +41,10 @@
     </div>
     <form class="card-footer" #messageForm="ngForm" (ngSubmit)="sendMessage()">
         <div class="input-group">
-            <textarea rows="2" name="messageContent" [(ngModel)]="messageContent" required class="form-control type_msg"
-                placeholder="Type your message...">
+            <input *ngIf="showTextarea" rows="2" name="messageContent" [(ngModel)]="messageContent" required
+                class="form-control type_msg" placeholder="Type your message...">
+            <textarea *ngIf="!showTextarea" rows="2" name="messageContent" [(ngModel)]="messageContent" required
+                class="form-control type_msg" placeholder="Type your message...">
             </textarea>
             <button class="send-button" [disabled]="!messageForm.valid || loading" mat-raised-button color="accent">
                 <mat-icon>send</mat-icon>

@@ -163,8 +163,6 @@ namespace BACKEND.Controllers
             user.KnownAs = userUpdateDto.KnownAs;
             user.Email = userUpdateDto.Email;
 
-            Console.WriteLine("Userul de trimis: " + user);
-
             var result = await _userManager.UpdateAsync(user);
 
             if (result.Succeeded)
@@ -212,8 +210,6 @@ namespace BACKEND.Controllers
         [HttpDelete("delete-photo/{photoId}")]
         public async Task<ActionResult> DeletePhoto([FromBody] DeletePhotoAdminDto deletePhotoAdminDto)
         {
-
-
             var user = await _uow.UserRepository.GetUserByUsernameAsync(deletePhotoAdminDto.Username);
 
             if (IsAdminUserName(deletePhotoAdminDto.Username))
@@ -240,36 +236,8 @@ namespace BACKEND.Controllers
 
         //STATISTICS
         [Authorize(Policy = "RequireAdminRole")]
-        [HttpGet("allUsers365days")]
-        public async Task<int> GetNumberOfUsers365()
-        {
-            var currentDate = DateTime.UtcNow;
-            var startDate = currentDate.AddDays(-30);
-
-            var recentUsers = await _userManager.Users
-                .Where(user => user.Created >= startDate && user.Created <= currentDate)
-                .ToListAsync();
-
-            return recentUsers.Count;
-        }
-
-        [Authorize(Policy = "RequireAdminRole")]
-        [HttpGet("allUsers30days")]
-        public async Task<int> GetNumberOfUsers30()
-        {
-            var currentDate = DateTime.UtcNow;
-            var startDate = currentDate.AddDays(-30);
-
-            var recentUsers = await _userManager.Users
-                .Where(user => user.Created >= startDate && user.Created <= currentDate)
-                .ToListAsync();
-
-            return recentUsers.Count;
-        }
-
-        [Authorize(Policy = "RequireAdminRole")]
         [HttpGet("usersCount")]
-        public async Task<UsersCountDto> GetNumberOfUsers7days()
+        public async Task<UsersCountDto> GetNumberOfUsers()
         {
             var users = await _uow.UserRepository.GetNumbersOfUsers();
             return users;
@@ -277,7 +245,7 @@ namespace BACKEND.Controllers
 
         [Authorize(Policy = "RequireAdminRole")]
         [HttpGet("matchesCount")]
-        public async Task<MatchesCountDto> GetNumberOfMatchesLastWeek()
+        public async Task<MatchesCountDto> GetNumberOfMatches()
         {
             var matches = await _uow.LikesRepository.GetNumbersOfMatches();
             return matches;
@@ -285,7 +253,7 @@ namespace BACKEND.Controllers
 
         [Authorize(Policy = "RequireAdminRole")]
         [HttpGet("messagesCount")]
-        public async Task<MessagesCountDto> GetNumberOfMessagesLastYear()
+        public async Task<MessagesCountDto> GetNumberOfMessages()
         {
             var messages = await _uow.MessageRepository.GetNumbersOfMessages();
             return messages;

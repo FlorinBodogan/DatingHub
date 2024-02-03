@@ -5,7 +5,6 @@ using BACKEND.Interfaces;
 using BACKEND.services;
 using BACKEND.Services;
 using BACKEND.SignalR;
-using Microsoft.EntityFrameworkCore;
 
 namespace BACKEND.Extensions
 {

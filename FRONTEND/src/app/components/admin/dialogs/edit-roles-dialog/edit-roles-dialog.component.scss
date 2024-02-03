@@ -5,4 +5,23 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background-color: #222;
+
+    .header {
+        font-size: 1.5rem;
+        color: #fff;
+        margin-bottom: 2rem;
+    }
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+@media (max-width:500px) {
+    .dialog-container {
+        width: 80vw;
+    }
 }

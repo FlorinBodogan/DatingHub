@@ -101,6 +101,7 @@ export class StatisticsComponent implements OnInit {
       }
     });
   }
+
   createChartMatches() {
     this.chartMatches = new Chart('chartMatches', {
       type: 'bar',

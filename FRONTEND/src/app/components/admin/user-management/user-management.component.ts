@@ -66,8 +66,6 @@ export class UserManagementComponent implements OnInit {
     })
   };
 
-
-
   openDialogRoles(user: any) {
     const dialogRef = this.dialog.open(EditRolesDialogComponent, {
       data: {

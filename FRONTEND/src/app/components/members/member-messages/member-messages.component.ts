@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MessageService } from 'src/app/services/messages/message.service';
 import { TimeagoModule } from 'ngx-timeago';
@@ -23,7 +23,6 @@ import { User } from 'src/app/interfaces/user';
 })
 export class MemberMessagesComponent implements OnInit, OnDestroy {
   @ViewChild('scrollMe') private myScrollContainer!: ElementRef;
-
   @ViewChild('messageForm') messageForm?: NgForm;
   @Input() username?: string;
   @Input() user?: User;
@@ -31,16 +30,29 @@ export class MemberMessagesComponent implements OnInit, OnDestroy {
   messageContent = '';
   lastMessage = false;
   loading = false;
+  showTextarea = false;
 
   constructor(public messageService: MessageService) { }
 
   ngOnInit(): void {
     this.createHubConnection();
     this.scrollToBottom();
+    this.checkScreenWidth();
   };
 
   ngAfterViewChecked() {
     this.scrollToBottom();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event): void {
+    this.checkScreenWidth();
+  };
+
+  checkScreenWidth(): void {
+    const screenWidthThreshold = 990;
+
+    this.showTextarea = window.innerWidth > screenWidthThreshold;
   }
 
   scrollToBottom(): void {

@@ -1,4 +1,5 @@
 .card {
+    height: calc(87vh - 48px);
     border-radius: 15px !important;
     background-color: #111;
 }
@@ -48,7 +49,12 @@
     width: 40px;
 }
 
+.margin-class {
+    margin-bottom: 10px;
+}
+
 .msg_cotainer {
+    max-width: 80%;
     margin-top: auto;
     margin-bottom: auto;
     margin-left: 10px;
@@ -60,6 +66,7 @@
 }
 
 .msg_cotainer_send {
+    max-width: 80%;
     margin-top: auto;
     margin-bottom: auto;
     margin-right: 10px;
@@ -119,22 +126,4 @@ mat-icon {
 ::-webkit-scrollbar-thumb:hover {
     background: #5454b6;
     display: none;
-}
-
-@media(max-height: 75rem) {
-    .card {
-        height: 82vh;
-    }
-}
-
-@media(max-height: 65rem) {
-    .card {
-        height: 80vh;
-    }
-}
-
-@media (max-height: 45rem) and (min-width: 55rem) {
-    .card {
-        height: 79vh;
-    }
 }
