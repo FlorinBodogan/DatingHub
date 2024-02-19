@@ -41,13 +41,14 @@
     </div>
     <form class="card-footer" #messageForm="ngForm" (ngSubmit)="sendMessage()">
         <div class="input-group">
-            <input *ngIf="showTextarea" rows="2" name="messageContent" [(ngModel)]="messageContent" required
-                class="form-control type_msg" placeholder="Type your message...">
-            <textarea *ngIf="!showTextarea" rows="2" name="messageContent" [(ngModel)]="messageContent" required
-                class="form-control type_msg" placeholder="Type your message...">
+            <input autocomplete="off" *ngIf="showTextarea" rows="2" name="messageContent" [(ngModel)]="messageContent"
+                required class="form-control type_msg" placeholder="Type your message...">
+            <textarea autocomplete="off" *ngIf="!showTextarea" rows="2" name="messageContent"
+                [(ngModel)]="messageContent" required class="form-control type_msg" placeholder="Type your message...">
             </textarea>
-            <button class="send-button" [disabled]="!messageForm.valid || loading" mat-raised-button color="accent">
-                <mat-icon>send</mat-icon>
+            <button style="width: 50px; background-color: #222; border: none; cursor: pointer;"
+                [disabled]="!messageForm.valid || loading">
+                <mat-icon color="accent">send</mat-icon>
             </button>
         </div>
     </form>

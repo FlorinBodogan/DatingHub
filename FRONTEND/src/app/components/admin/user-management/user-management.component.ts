@@ -73,7 +73,8 @@ export class UserManagementComponent implements OnInit {
           userName: user.userName,
           roles: user.roles
         }
-      }
+      },
+      autoFocus: false
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -89,7 +90,8 @@ export class UserManagementComponent implements OnInit {
         member: {
           userName: user.userName,
         }
-      }
+      },
+      autoFocus: false
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -106,7 +108,8 @@ export class UserManagementComponent implements OnInit {
           userName: username,
           userId: userId
         }
-      }
+      },
+      autoFocus: false
     });
 
     dialogRef.afterClosed().subscribe(result => {
